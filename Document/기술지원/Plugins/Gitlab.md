@@ -1,4 +1,4 @@
-# [A203] Mattermost - Gitlab Plugin
+# [A203] Mattermost에서 Gitlab Plugin
 
 ## Mattermost slash commands
 

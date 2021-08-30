@@ -15,6 +15,8 @@ https://docs.gitlab.com/ee/user/project/integrations/mattermost_slash_commands.h
 
 
 
+## 연결 방법
+
 Mattermost 채널에서 바로 입력하는 것으로 별도의 설치 없이 (원래는 설치를 해야 하지만 SSAFY Mattermost 서버에 이미 설치가 되어 있는 것으로 보인다.) Gitlab 플러그인을 이용할 수 있다.
 
 1. 

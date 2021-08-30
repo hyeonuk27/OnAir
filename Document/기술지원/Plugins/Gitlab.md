@@ -1,4 +1,4 @@
-# [A203] Mattermost에서 Gitlab Plugin
+# Mattermost | Gitlab Plugin
 
 작성자: 박지우
 

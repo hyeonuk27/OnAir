@@ -1,8 +1,8 @@
-# [A203] Connect GitLab &  Jira 
+# Connect GitLab &  Jira 
 
 작성자: 박지우
 
-Google Chrome을 기준으로 작성되었습니다.
+*Google Chrome을 기준으로 작성되었습니다.*
 
 
 

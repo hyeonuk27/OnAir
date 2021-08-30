@@ -8,7 +8,18 @@ https://docs.gitlab.com/ee/user/project/integrations/mattermost_slash_commands.h
 - `/gitlab disconnect` - Disconnect your Mattermost account from your GitLab account
 - `/gitlab todo` - Get a list of unread messages and merge requests awaiting your review
 - `/gitlab subscribe list` - Will list the current channel subscriptions
-- `/gitlab subscribe owner[/repo] [features]` - Subscribe the current channel to receive notifications about opened merge requests and issues for a group or repository`features` is a comma-delimited list of one or more the following:issues - includes new and closed issuesmerges - includes new and closed merge requestspushes - includes pushesissue_comments - includes new issue commentsmerge_request_comments - include new merge-request commentspipeline - include pipelinetag - include tag creationpull_reviews - includes merge request reviewslabel:"<labelname>" - must include "merges" or "issues" in feature list when using a labelDefaults to "merges,issues,tag"
+- `/gitlab subscribe owner[/repo] [features]` - Subscribe the current channel to receive notifications about opened merge requests and issues for a group or repository
+  - `features` is a comma-delimited list of one or more the following:
+    - issues - includes new and closed issues
+    - merges - includes new and closed merge requests
+    - pushes - includes pushes
+    - issue_comments - includes new issue comments
+    - merge_request_comments - include new merge-request comments
+    - pipeline - include pipeline
+    - tag - include tag creation
+    - pull_reviews - includes merge request reviews
+    - label:"`<labelname>`" - must include "merges" or "issues" in feature list when using a label
+    - Defaults to "merges,issues,tag"
 - `/gitlab unsubscribe owner/repo` - Unsubscribe the current channel from a repository
 - `/gitlab me` - Display the connected GitLab account
 - `/gitlab settings [setting] [value]` - Update your user settings`setting` can be "notifications" or "reminders"`value` can be "on" or "off"
@@ -58,3 +69,21 @@ Mattermost 채널에서 바로 입력하는 것으로 별도의 설치 없이 (�
 
 
 ##### 연결이 완료되었다.
+
+
+
+## Feature에 관하여
+
+맨 처음 Gitlab slash commands를 입력하여 subscribe 하면 issues와 merges, tags가 발생하면 알림이 오도록 설정된다. 나는 Push가 발생해도 알림이 오도록 변경하고 싶다. 이를 변경하기 위해서는 `comma-delimited list`, 즉 공백없이 쉼표로 구분된 리스트를 입력하여 변경할 수 있다.
+
+예시
+
+```
+/gitlab subscribe s05-bigdata-dist/S05P21A203 merges,pushes,issue_comments,merge_request_comments,pipeline,tag,pull_reviews
+```
+
+
+
+##### 연결이 잘 되었다.
+
+근데 왜 알림이 안 올까? 😰

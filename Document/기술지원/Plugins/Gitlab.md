@@ -1,5 +1,11 @@
 # [A203] Mattermost에서 Gitlab Plugin
 
+작성자: 박지우
+
+*Google Chrome을 기준으로 작성되었습니다.*
+
+
+
 ## Mattermost slash commands
 
 https://docs.gitlab.com/ee/user/project/integrations/mattermost_slash_commands.html

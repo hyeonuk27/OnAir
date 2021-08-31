@@ -5,10 +5,11 @@
 
 <br>
 
-| [01 MapReduce](./01_MapReduce.md)             |
-| --------------------------------------------- |
-| [**02 Hadoop**](./02 Hadoop.md)               |
-| [**03 MapReduce구현**](./03_MapReduce구현.md) |
+| 학습 내용                                 |
+| ----------------------------------------- |
+| [01 MapReduce](./01_MapReduce.md)         |
+| [02 Hadoop](./02_Hadoop.md)               |
+| [03 MapReduce구현](./03_MapReduce구현.md) |
 
 <br>
 

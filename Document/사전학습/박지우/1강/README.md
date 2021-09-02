@@ -1,6 +1,22 @@
-# [1강] - MapReduce 소개 및 기본 알고리즘 강의
+# [1강] Hadoop Intro & 기본 알고리즘
 
-### 맵리듀스 프레임워크란?
+## 목차
+
+#### 병렬 분산 시스템이란?
+
+Scale-out: 아주 많은 값싼 서버 이용
+
+Scale-up: 적은 수의 값비싼 서버 이용
+
+
+
+
+
+#### 맵리듀스 프레임워크란?
+
+병렬 분산 알고리즘 구현을 위해 고안된 프레임워크
+
+
 
 <img src="README.assets/Screen Shot 2021-08-27 at 1.30.52.png" alt="Screen Shot 2021-08-27 at 1.30.52" style="zoom:50%;" />
 

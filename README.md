@@ -8,20 +8,19 @@
 
   > 1주차 사전학습 클론코딩 및 주제 기획 문서
 
-  - [기술지원](./Document/기술지원)
+  - ##### [기술지원](./Document/기술지원)
 
     > 원활한 프로젝트 진행을 위한 모든 기술 솔루션 마크다운
 
-    - Integrations 
+    - ##### Integrations 
       - [깃 - 지라 통합 문서](./Document/기술지원/Integrations/Jira_Integration.md)
 
-    - Plugins (매터모스트 플러그인)
+    - ##### Plugins (매터모스트 플러그인)
       - [매터모스트 - Gitlab 플러그인](./Document/기술지원/Plugins/Gitlab.md)
       - [매터모스트 - Jira 플러그인](./Document/기술지원/Plugins/Jira.md)
 
   
-
-  - [사전학습](./Document/사전학습)
+  - ##### [사전학습](./Document/사전학습)
 
     > 사전학습 내용 요약 및 과제
 
@@ -35,7 +34,7 @@
 
     
 
-  - [주제기획](./Document/주제기획)
+  - ##### [주제기획](./Document/주제기획)
 
     > 아이디어 회의 내용 및 피드백
 

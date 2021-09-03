@@ -16,12 +16,18 @@
         <li><a href="1강/00_hadoop_env.md">Hadoop 설치</a></li>
         <li><a href="1강/01_hadoop.md">Hadoop</a></li>
         <li><a href="1강/02_map_reduce.md">MapReduce</a></li>
+        <li>Word Count</li>
     </ul>
 </details>
 <details>
     <summary>2강</summary>
+    <ul>
+        <li><a href="2강/00_inverted_index.md">Inverted Index</a></li>
+        <li><a href="2강/01_matrix_addition.md">Matrix Addition</a></li>
+        <li>Inverted Index</li>
+        <li>Matrix Addition</li>
+    </ul>
 </details>
-
 <br>
 
 ### 기본 코드 실행 명령어

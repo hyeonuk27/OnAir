@@ -1,6 +1,6 @@
 # Inverted Index
 
-> 각 단어마나다 그 단어가 나타나는 문서 아이디 doc와 그 문서에서 나오는 위치 position을 `doc:postition` 형태로 리스트를 만든다.
+> 각 단어마다 그 단어가 나타나는 문서 아이디 doc와 그 문서에서 나오는 위치 position을 `doc:postition` 형태로 리스트를 만든다.
 
 ## 1. 알고리즘
 

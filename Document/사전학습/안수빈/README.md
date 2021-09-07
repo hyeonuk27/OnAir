@@ -30,12 +30,12 @@
     <summary>3강</summary>
     <ul>
         <li><a href="3강/00_matrix_multiplication.md">Matrix Multiplication</a></li>
-        <li><a href="3강/01_all_pair_partition.md">Equi join</a></li>
     </ul>
 </details>
 <details>
     <summary>4강</summary>
     <ul>
+        <li><a href="4강/01_all_pair_partition.md">Equi join</a></li>
         <li><a href="4강/00_repartition.md">Repartition Equi Join</a></li>
         <li><a href="4강/01_vec_sim_join.md">Similarity Vector Self-Join</a></li>
     </ul>

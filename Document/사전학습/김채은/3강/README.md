@@ -2,9 +2,8 @@
 
 <br>
 
-| 학습 내용                                         |
-| ------------------------------------------------- |
-| [01 Partitioner Class](./01_Partitioner_Class.md) |
-| [02 Inverted Index](./02_Inverted_Index.md)       |
-| [03 Matrix Addition](./03_Matrix_Addition.md)     |
+| 학습 내용                                                    |
+| ------------------------------------------------------------ |
+| [01 Phase Matrix Multiplication](./01_Phase_Matrix_Multiplication.md) |
+| [02 Phase Matrix Multiplication](./02_Phase_Matrix_Multiplication.md) |
 

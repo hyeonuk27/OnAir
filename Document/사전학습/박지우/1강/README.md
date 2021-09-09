@@ -1,12 +1,16 @@
+
+
 # [1강] MapReduce Intro & 기본 알고리즘(1)
 
 ## 목차
 
-[요약](요약)
+[요약](#요약)
 
-[설치과정](설치과정)
+[설치과정](#설치과정)
 
-[과제](과제)
+[Linux와 HDFS](#Linux와 HDFS)
+
+[예제 코드 실행](#예제 코드 실행)
 
 ## 요약
 
@@ -53,9 +57,50 @@
 
 ## 설치과정
 
+1. VMware 설치 및 실행 후 새로운 가상머신 생성
+2. Ubuntu iso 다운 후 불러오기
+3. hadoop 계정 생성
+4. default 설정으로 가상 머신 생성
+
+#### ubuntu 에서 hadoop 실행을 위한 준비
+
+|                    과정                     |                             결과                             |
+| :-----------------------------------------: | :----------------------------------------------------------: |
+|            1. ssh key 까지 생성             | ![Screen Shot 2021-09-09 at 12.42.43](IMG/Screen Shot 2021-09-09 at 12.42.43.png) |
+| 2. 모든 명령은 hadoop 계정에서 하도록 한다. | ![Screen Shot 2021-09-09 at 13.36.40](IMG/Screen Shot 2021-09-09 at 13.36.40.png) |
+|       3. Namenode 포맷 후 Daemon 시작       | ![Screen Shot 2021-09-09 at 13.39.01](IMG/Screen Shot 2021-09-09 at 13.39.01.png) |
+|                   4. 확인                   | ![Screen Shot 2021-09-09 at 13.41.39](IMG/Screen Shot 2021-09-09 at 13.41.39.png) |
+|     5. hadoop 계정의 HDFS 디렉토리 생성     | ![Screen Shot 2021-09-09 at 13.52.12](IMG/Screen Shot 2021-09-09 at 13.52.12.png) |
 
 
-## 과제
+
+## Linux와 HDFS
+
+데이터 생성이나 코딩은 Linux에서 하고 MapReduce 코드와 입력 데이터는 HDFS에 옮겨서 MapReduce알고리즘을 수행한다.
+
+#### Linux 폴더 구조
+
+|                        전체 폴더 구조                        |                         Project 폴더                         |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| ![Screen Shot 2021-09-09 at 13.55.31](IMG/Screen Shot 2021-09-09 at 13.55.31.png) | ![Screen Shot 2021-09-09 at 13.54.06](IMG/Screen Shot 2021-09-09 at 13.54.06.png) |
+
+#### HDFS 구조
+
+- wordcount_test/
+- wordcount_test_out/
+
+
+
+## 예제 코드 실행
+
+|                             과정                             |                             내용                             |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| 1. src 디렉토리에 새로운 코드를 만들 때마다 src 디렉토리에 있는 Driver.java 파일에 pgd.addClass를 새로 하나 넣어 주어야 함 | ![Screen Shot 2021-09-09 at 14.09.20](IMG/Screen Shot 2021-09-09 at 14.09.20.png) |
+| 2. 수정 후 빌드<br />(자바 표준 빌드 도구. `Javac`도 있지만 `ant`는 여러 dependency를 고려하여 소스파일을 컴파일, `src`디렉토리에 있는 것을 다 모아서 컴파일한 후에 `ssafy.jar`를 생성한다. Project 디렉토리에 있는 `build.xml` 파일에 정의한 대로 수행된다.) | ![Screen Shot 2021-09-09 at 14.19.17](IMG/Screen Shot 2021-09-09 at 14.19.17.png) |
+| 3. 반드시 맵리듀스 프로그램이 결과를 저장할 디렉토리를 삭제한 후 프로그램을 실행한다. | 아직 아무것도 만든 것이 없으므로 생략하고 진행<br />`hdfs dfs -rm -r <directory name>` |
+|                4. 테스트 데이터를 HDFS에 넣음                | ![Screen Shot 2021-09-09 at 14.24.00](IMG/Screen Shot 2021-09-09 at 14.24.00.png) |
+| 5. 알고리즘 코드 실행<br />(`Driver.java`에 표시한대로 wordcount를 써서 맵리듀스 코드를 실행) | `hadoop jar [jar file] [program name] <input arguments ...>`<br /> |
+|                                                              |                                                              |
 
 
 

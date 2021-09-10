@@ -35,9 +35,7 @@
 <details>
     <summary>4강</summary>
     <ul>
-        <li><a href="4강/01_all_pair_partition.md">Equi join</a></li>
-        <li><a href="4강/00_repartition.md">Repartition Equi Join</a></li>
-        <li><a href="4강/01_vec_sim_join.md">Similarity Vector Self-Join</a></li>
+        <li><a href="4강/00_all_pair_partition.md">All Pair Partition</a></li>
     </ul>
 </details>
 

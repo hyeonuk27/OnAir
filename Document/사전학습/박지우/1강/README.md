@@ -62,15 +62,31 @@
 3. hadoop 계정 생성
 4. default 설정으로 가상 머신 생성
 
+
+
 #### ubuntu 에서 hadoop 실행을 위한 준비
 
-|                    과정                     |                             결과                             |
-| :-----------------------------------------: | :----------------------------------------------------------: |
-|            1. ssh key 까지 생성             | ![Screen Shot 2021-09-09 at 12.42.43](IMG/Screen Shot 2021-09-09 at 12.42.43.png) |
-| 2. 모든 명령은 hadoop 계정에서 하도록 한다. | ![Screen Shot 2021-09-09 at 13.36.40](IMG/Screen Shot 2021-09-09 at 13.36.40.png) |
-|       3. Namenode 포맷 후 Daemon 시작       | ![Screen Shot 2021-09-09 at 13.39.01](IMG/Screen Shot 2021-09-09 at 13.39.01.png) |
-|                   4. 확인                   | ![Screen Shot 2021-09-09 at 13.41.39](IMG/Screen Shot 2021-09-09 at 13.41.39.png) |
-|     5. hadoop 계정의 HDFS 디렉토리 생성     | ![Screen Shot 2021-09-09 at 13.52.12](IMG/Screen Shot 2021-09-09 at 13.52.12.png) |
+```
+$ wget http://kdd.snu.ac.kr/~kddlab/Project.tar.gz
+$ tar zxf Project.tar.gz
+$ sudo chown -R hadoop:hadoop Project
+$ cd Project
+$ sudo mv hadoop-3.2.2 /usr/local/hadoop
+$ sudo apt update
+$ sudo apt install ssh openjdk-8-jdk ant -y
+$ ./set_hadoop_env.sh
+$ source ~/.bashrc
+```
+
+
+
+|                             과정                             |                             결과                             |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+|               1. empty ssh key 까지 생성한다.                | <img src="IMG/Screen Shot 2021-09-09 at 12.42.43.png" alt="Screen Shot 2021-09-09 at 12.42.43" /> |
+|         2. 모든 명령은 hadoop 계정에서 하도록 한다.          | ![Screen Shot 2021-09-09 at 13.36.40](IMG/Screen Shot 2021-09-09 at 13.36.40.png) |
+|               3. Namenode 포맷 후 Daemon 시작                | ![Screen Shot 2021-09-09 at 13.39.01](IMG/Screen Shot 2021-09-09 at 13.39.01.png) |
+|                           4. 확인                            | ![Screen Shot 2021-09-09 at 13.41.39](IMG/Screen Shot 2021-09-09 at 13.41.39.png) |
+|             5. hadoop 계정의 HDFS 디렉토리 생성              | ![Screen Shot 2021-09-09 at 13.52.12](IMG/Screen Shot 2021-09-09 at 13.52.12.png) |
 
 
 
@@ -96,11 +112,16 @@
 |                             과정                             |                             내용                             |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | 1. src 디렉토리에 새로운 코드를 만들 때마다 src 디렉토리에 있는 Driver.java 파일에 pgd.addClass를 새로 하나 넣어 주어야 함 | ![Screen Shot 2021-09-09 at 14.09.20](IMG/Screen Shot 2021-09-09 at 14.09.20.png) |
-| 2. 수정 후 빌드<br />(자바 표준 빌드 도구. `Javac`도 있지만 `ant`는 여러 dependency를 고려하여 소스파일을 컴파일, `src`디렉토리에 있는 것을 다 모아서 컴파일한 후에 `ssafy.jar`를 생성한다. Project 디렉토리에 있는 `build.xml` 파일에 정의한 대로 수행된다.) | ![Screen Shot 2021-09-09 at 14.19.17](IMG/Screen Shot 2021-09-09 at 14.19.17.png) |
+| ‼️**오류**<br />2. 수정 후 빌드<br />(자바 표준 빌드 도구. `Javac`도 있지만 `ant`는 여러 dependency를 고려하여 소스파일을 컴파일, `src`디렉토리에 있는 것을 다 모아서 컴파일한 후에 `ssafy.jar`를 생성한다. Project 디렉토리에 있는 `build.xml` 파일에 정의한 대로 수행된다.) | ![Screen Shot 2021-09-09 at 14.19.17](IMG/Screen Shot 2021-09-09 at 14.19.17.png) |
+| -> 오류 수정 사항<br />`build.xml` 파일 속 hadoop 경로가 강의 시점과 달라진 것으로 추정.<br /><br /> ` <property name="lib.dir" value="/home/hadoop/hadoop-3.2.2/share/hadoop/"/>` 를  `<property name="lib.dir" value="/home/hadoop/hadoop/share/hadoop/"/>`로 수정하여 해결 | ![Screen Shot 2021-09-10 at 11.18.42](IMG/Screen Shot 2021-09-10 at 11.18.42.png) |
 | 3. 반드시 맵리듀스 프로그램이 결과를 저장할 디렉토리를 삭제한 후 프로그램을 실행한다. | 아직 아무것도 만든 것이 없으므로 생략하고 진행<br />`hdfs dfs -rm -r <directory name>` |
 |                4. 테스트 데이터를 HDFS에 넣음                | ![Screen Shot 2021-09-09 at 14.24.00](IMG/Screen Shot 2021-09-09 at 14.24.00.png) |
-| 5. 알고리즘 코드 실행<br />(`Driver.java`에 표시한대로 wordcount를 써서 맵리듀스 코드를 실행) | `hadoop jar [jar file] [program name] <input arguments ...>`<br /> |
-|                                                              |                                                              |
+| 5. 알고리즘 코드 실행<br />(`Driver.java`에 표시한대로 wordcount를 써서 맵리듀스 코드를 실행) | ![Screen Shot 2021-09-10 at 11.28.53](IMG/Screen Shot 2021-09-10 at 11.28.53.png) |
+|                         6. 결과 확인                         | ![Screen Shot 2021-09-10 at 11.30.30](IMG/Screen Shot 2021-09-10 at 11.30.30.png) |
+
+
+
+
 
 
 

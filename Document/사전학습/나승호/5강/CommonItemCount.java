@@ -34,7 +34,7 @@ public class CommonItemCount {
 
 			// emit: item, rid
 			while (itr.hasMoreTokens()) {
-				item.set(rid);
+				item.set(itr.nextToken());
 				context.write(item, rid);
 			}
 		}

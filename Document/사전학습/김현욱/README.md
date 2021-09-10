@@ -27,44 +27,54 @@
 <details>
 <summary>1강</summary>
 <div markdown="1">
-  <li><a href="1강/과제.md">과제</a></li>
-  <li><a href="1강/Driver.java">Driver.java</a></li>
-  <li><a href="1강/Wordcount1char.java">Wordcount1char.java</a></li>
+  <ul>
+    <li><a href="1강/과제.md">과제</a></li>
+    <li><a href="1강/Driver.java">Driver.java</a></li>
+    <li><a href="1강/Wordcount1char.java">Wordcount1char.java</a></li>
+  </ul>    
 </div>
 </details>
 
 <details>
 <summary>2강</summary>
 <div markdown="1">
-  <li><a href="2강/과제.md">과제</a></li>
-  <li><a href="2강/Driver.java">Driver.java</a></li>
-  <li><a href="2강/InvertedIndex.java">InvertedIndex.java</a></li>
-  <li><a href="2강/MatrixAdd.java">MatrixAdd.java</a></li>
+  <ul>  
+    <li><a href="2강/과제.md">과제</a></li>
+    <li><a href="2강/Driver.java">Driver.java</a></li>
+    <li><a href="2강/InvertedIndex.java">InvertedIndex.java</a></li>
+    <li><a href="2강/MatrixAdd.java">MatrixAdd.java</a></li>
+  </ul>
 </div>
 </details>     
 
 <details>
 <summary>3강</summary>
 <div markdown="1">
-  <li><a href="3강/Driver.java">Driver.java</a></li>
-  <li><a href="3강/MatrixMulti.java">MatrixMulti.java</a></li>
+  <ul>
+  	<li><a href="3강/Driver.java">Driver.java</a></li>
+  	<li><a href="3강/MatrixMulti.java">MatrixMulti.java</a></li>
+  </ul>
 </div>
 </details>
 
 <details>
 <summary>4강</summary>
 <div markdown="1">
-  <li><a href="4강/Driver.java">Driver.java</a></li>
-  <li><a href="4강/AllPairPartition.java">AllPairPartition.java</a></li>
-  <li><a href="4강/AllPairPartitionSelf.java">AllPairPartitionSelf.java</a></li>
+  <ul>
+    <li><a href="4강/Driver.java">Driver.java</a></li>
+    <li><a href="4강/AllPairPartition.java">AllPairPartition.java</a></li>
+    <li><a href="4강/AllPairPartitionSelf.java">AllPairPartitionSelf.java</a></li>
+  </ul>
 </div>
 </details>
 
 <details>
 <summary>5강</summary>
 <div markdown="1">
-  <li><a href="5강/Driver.java">Driver.java</a></li>
-  <li><a href="5강/CommonItemCount.java">CommonItemCount.java</a></li>
-  <li><a href="5강/TopKSearch.java">TopKSearch.java</a></li>
+  <ul>
+    <li><a href="5강/Driver.java">Driver.java</a></li>
+    <li><a href="5강/CommonItemCount.java">CommonItemCount.java</a></li>
+    <li><a href="5강/TopKSearch.java">TopKSearch.java</a></li>
+  </ul>
 </div>
 </details>

@@ -1,4 +1,4 @@
-# [A203] Sub PJT I - 분산 처리 시스템 이해 및 활용
+# [A203] 분산 처리 시스템 이해 및 활용
 
 ### [💫Team Notion](https://www.notion.so/jiu-park/8d8a98436ed448d38bc4381f707df3b5)
 

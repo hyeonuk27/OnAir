@@ -1,5 +1,3 @@
-
-
 # [1강] MapReduce Intro & 기본 알고리즘(1)
 
 ## 목차
@@ -11,6 +9,10 @@
 [Linux와 HDFS](#Linux와 HDFS)
 
 [예제 코드 실행](#예제 코드 실행)
+
+ [예제 코드 해설](#예제 코드 해설)
+
+
 
 ## 요약
 
@@ -53,7 +55,14 @@
       - 각 (key, value-list) 쌍 마다 함수 호출
       - Reduce 함수: key, value의 형태 (수행하지 않을 수 있다.)
 
-
+- Hadoop 맵리듀스 입출력에 사용가능한 Default 클래스
+  - Object(All)
+  - Text: string
+  - IntWritable: int
+  - LongWritable: long
+  - FloatWritable: float
+  - DoubleWritable: double
+- java 타입을 그대로 쓸 수 없고 shuffling phase에서 key로 sorting 함수 작성 시 정의된 객체만 입출력으로 사용해야 한다.
 
 ## 설치과정
 
@@ -121,7 +130,26 @@ $ source ~/.bashrc
 
 
 
+## 예제 코드 해설
 
 
 
+![PNG image](IMG/PNG image.png)
 
+
+
+- class Mapper 상속
+- Map 함수 입력 key value: Object, Text
+- Map 함수 출력 key value: Text, IntWritable
+
+- 변수 `one`
+  - type: IntWritable
+  - 값 1 할당
+- 변수 `word`
+  - type: Text
+  - 값 '' 할당
+
+- Context context: hadoop에서 필요로 하는 문법
+- StringTokenizer(): java의 함수는 string 타입 사용, hadoop은 text 타입 사용.
+  따라서 text -> toString() 작업 필요
+- 

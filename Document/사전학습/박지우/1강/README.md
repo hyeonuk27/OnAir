@@ -132,24 +132,31 @@ $ source ~/.bashrc
 
 ## 예제 코드 해설
 
+|                                 |      |
+| ------------------------------- | ---- |
+| ![PNG image](IMG/PNG image.png) |      |
 
 
-![PNG image](IMG/PNG image.png)
+
+
 
 
 
 - class Mapper 상속
 - Map 함수 입력 key value: Object, Text
 - Map 함수 출력 key value: Text, IntWritable
-
 - 변수 `one`
   - type: IntWritable
   - 값 1 할당
 - 변수 `word`
   - type: Text
   - 값 '' 할당
-
-- Context context: hadoop에서 필요로 하는 문법
-- StringTokenizer(): java의 함수는 string 타입 사용, hadoop은 text 타입 사용.
+- `Context context`: hadoop에서 필요로 하는 문법
+- `StringTokenizer()`: java의 함수는 string 타입 사용, hadoop은 text 타입 사용.
   따라서 text -> toString() 작업 필요
-- 
+- `context.write()`: 출력 
+
+
+
+
+

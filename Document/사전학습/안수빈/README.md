@@ -38,6 +38,14 @@
         <li><a href="4강/00_all_pair_partition.md">All Pair Partition</a></li>
     </ul>
 </details>
+<details>
+    <summary>5강</summary>
+    <ul>
+        <li>Common Item Counting for Every Pair of Sets</li>
+        <li>Top-K Closest Point Search Alogrithm</li>
+    </ul>
+</details>
+
 
 
 <br>

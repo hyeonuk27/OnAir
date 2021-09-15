@@ -16,6 +16,7 @@ public class Driver {
 			pgd.addClass("allpair", AllPairPartition.class, "A map/reduce program that partitions all pairs of tuples from both tables");
 			pgd.addClass("allpairself", AllPairPartitionSelf.class, "A map/reduce program that partitions all pairs of tuples from both tables");
 			pgd.addClass("itemcount", CommonItemCount.class, "A map/reduce program that performs the common item count using the inverted index for a single input file");
+			pgd.addClass("topksearch", TopKSearch.class, "A map/reduce program that performs the top-k search for a single input file");
 			
       			pgd.driver(args);
 			exitCode = 0;

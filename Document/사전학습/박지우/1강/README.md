@@ -12,7 +12,7 @@
 
 [예제 코드 해설](#예제 코드 해설)
 
-
+[과제 코드](#과제 코드)
 
 ## 요약
 
@@ -132,31 +132,55 @@ $ source ~/.bashrc
 
 ## 예제 코드 해설
 
-|                                 |      |
-| ------------------------------- | ---- |
-| ![PNG image](IMG/PNG image.png) |      |
+
+
+|                                 |
+| ------------------------------- |
+| ![PNG image](IMG/PNG image.png) |
+
+- 해설 포인트
+
+  - class Mapper 상속
+  - Map 함수 입력 key value: Object, Text
+  - Map 함수 출력 key value: Text, IntWritable
+  - 변수 `one`
+    - type: IntWritable
+    - 값 1 할당
+  - 변수 `word`
+    - type: Text
+    - 값 '' 할당
+  - `Context context`: hadoop에서 필요로 하는 문법
+  - `StringTokenizer()`: java의 함수는 string 타입 사용, hadoop은 text 타입 사용.
+    따라서 text -> toString() 작업 필요
+  - `context.write()`: 출력 
+
+  
+
+|                                                              |
+| ------------------------------------------------------------ |
+| ![Screen Shot 2021-09-16 at 1.28.12](IMG/Screen Shot 2021-09-16 at 1.28.12.png) |
+
+- 해설 포인트
+
+  - reduce 함수의 values 리스트를 하나씩 꺼내 sum에 저장하는 for문 잘 보기
+
+  - `get()`: val안의 값을 int값으로 꺼내주는 함수
+
+  - `set()`: 값을 할당하는 함수
+
+|                                                              |
+| ------------------------------------------------------------ |
+| ![Screen Shot 2021-09-16 at 2.16.04](IMG/Screen Shot 2021-09-16 at 2.16.04.png) |
+
+- 해설 포인트
+  - 출력 타입에 따라 클래스 선언
+  - map-reduce 함수의 key value type이 같다면 reduce만 선언해도 된다!
 
 
 
+#### 핵심 과정
 
+![Screen Shot 2021-09-16 at 21.28.00](IMG/Screen Shot 2021-09-16 at 21.28.00.png)
 
-
-
-- class Mapper 상속
-- Map 함수 입력 key value: Object, Text
-- Map 함수 출력 key value: Text, IntWritable
-- 변수 `one`
-  - type: IntWritable
-  - 값 1 할당
-- 변수 `word`
-  - type: Text
-  - 값 '' 할당
-- `Context context`: hadoop에서 필요로 하는 문법
-- `StringTokenizer()`: java의 함수는 string 타입 사용, hadoop은 text 타입 사용.
-  따라서 text -> toString() 작업 필요
-- `context.write()`: 출력 
-
-
-
-
+![Screen Shot 2021-09-16 at 21.28.46](IMG/Screen Shot 2021-09-16 at 21.28.46.png)
 

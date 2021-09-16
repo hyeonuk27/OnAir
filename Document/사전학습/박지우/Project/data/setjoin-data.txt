@@ -1,0 +1,5 @@
+0	A B K E F 
+1	B C Q
+2	A C F K
+3	B C E H K
+4	A B C E F

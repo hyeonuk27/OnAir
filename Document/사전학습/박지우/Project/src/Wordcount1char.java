@@ -1,8 +1,10 @@
 package ssafy;
 
+// java
 import java.io.IOException;
 import java.util.StringTokenizer;
 
+// hadoop library & functions
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -14,7 +16,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 
-public class Wordcount {
+public class Wordcount1char {
 	/* 
 	Object, Text : input key-value pair type (always same (to get a line of input file))
 	Text, IntWritable : output key-value pair type
@@ -33,7 +35,7 @@ public class Wordcount {
 			// value.toString() : get a line
 			StringTokenizer itr = new StringTokenizer(value.toString());
 			while ( itr.hasMoreTokens() ) {
-				word.set(itr.nextToken());
+				word.set(itr.nextToken().substring(0,1));
 
 				// emit a key-value pair
 				context.write(word,one);
@@ -68,14 +70,14 @@ public class Wordcount {
 
 	/* Main function */
 	public static void main(String[] args) throws Exception {
-		Configuration conf = new Configuration();
+		Configuration conf = new Configuration(); //job수행하기 위한 설정 초기화
 		String[] otherArgs = new GenericOptionsParser(conf,args).getRemainingArgs();
 		if ( otherArgs.length != 2 ) {
 			System.err.println("Usage: <in> <out>");
 			System.exit(2);
 		}
 		Job job = new Job(conf,"word count");
-		job.setJarByClass(Wordcount.class);
+		job.setJarByClass(Wordcount1char.class);
 
 		// let hadoop know my map and reduce classes
 		job.setMapperClass(TokenizerMapper.class);

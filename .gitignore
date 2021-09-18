@@ -1,24 +1,6 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/windows,macos,apachehadoop,python,java,vuejs,linux,django
-# Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,apachehadoop,python,java,vuejs,linux,django
-
-### ApacheHadoop ###
-*.iml
-*.ipr
-*.iws
-*.orig
-*.rej
-.idea
-.svn
-.classpath
-.project
-.settings
-target
-hadoop-common-project/hadoop-kms/downloads/
-hadoop-hdfs-project/hadoop-hdfs/downloads
-hadoop-hdfs-project/hadoop-hdfs-httpfs/downloads
-hadoop-common-project/hadoop-common/src/test/resources/contract-test-options.xml
-hadoop-tools/hadoop-openstack/src/test/resources/contract-test-options.xml
+# Created by https://www.toptal.com/developers/gitignore/api/python,django,visualstudiocode,windows,macos
+# Edit at https://www.toptal.com/developers/gitignore?templates=python,django,visualstudiocode,windows,macos
 
 ### Django ###
 *.log
@@ -168,45 +150,6 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-### Java ###
-# Compiled class file
-*.class
-
-# Log file
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-
-### Linux ###
-*~
-
-# temporary files which can be created if a process still has a handle open of a deleted file
-.fuse_hidden*
-
-# KDE directory preferences
-.directory
-
-# Linux trash folder which might appear on any partition or disk
-.Trash-*
-
-# .nfs files are created when an open file is removed but is still being accessed
-.nfs*
-
 ### macOS ###
 # General
 .DS_Store
@@ -300,12 +243,21 @@ Temporary Items
 
 # Cython debug symbols
 
-### Vuejs ###
-# Recommended template: Node.gitignore
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
 
-node_modules/
-npm-debug.log
-yarn-error.log
+# Local History for Visual Studio Code
+.history/
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide
 
 ### Windows ###
 # Windows thumbnail cache files
@@ -333,4 +285,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/windows,macos,apachehadoop,python,java,vuejs,linux,django
+# End of https://www.toptal.com/developers/gitignore/api/python,django,visualstudiocode,windows,macos

@@ -30,9 +30,9 @@
 
 - #### 디자인 컨셉
 
-![디자인](./Document/디자인/디자인컨셉/IMG/디자인1.png)
+![디자인](./Document/디자인/Concept/Image/d-1.png)
 
-![디자인-2](./Document/디자인/디자인컨셉/IMG/디자인2.png)
+![디자인-2](./Document/디자인/Concept/Image/d-2.png)
 
 
 

@@ -30,9 +30,11 @@
 
 - #### 디자인 컨셉
 
-![디자인](./Document/디자인/Concept/Image/d-1.png)
+<img src="./Document/디자인/디자인컨셉/Image/d-1.png" style="zoom:67%;">
 
-![디자인-2](./Document/디자인/Concept/Image/d-2.png)
+<img src="./Document/디자인/디자인컨셉/Image/d-2.png" style="zoom:67%;">
+
+
 
 
 
@@ -85,6 +87,4 @@
   | <img src="https://static.djangoproject.com/img/logos/django-logo-negative.png" alt="django logo" style="zoom: 20%;" /> | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/1184px-Vue.js_Logo_2.svg.png" alt="vuejs logo" style="zoom: 20%;" /> | <img src="https://d0.awsstatic.com/logos/powered-by-aws.png" alt="awslogo" style="zoom:;" /> | <img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Hadoop_logo_new.svg" alt="hadoop" style="zoom:15%;" /> |
   |                         `Django 3.2`                         |                         `Vue.js 2.0`                         |                          `AWS EC2`                           |                      `Apache Hadoop 3`                       |
   
-
-
 

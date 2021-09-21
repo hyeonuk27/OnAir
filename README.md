@@ -30,11 +30,9 @@
 
 - #### 디자인 컨셉
 
-<img src="./Document/디자인/디자인컨셉/Image/d-1.png" style="zoom:67%;">
+![디자인](./Document/디자인/디자인컨셉/Image/d-1.png)
 
-<img src="./Document/디자인/디자인컨셉/Image/d-2.png" style="zoom:67%;">
-
-
+![디자인-2](./Document/디자인/디자인컨셉/Image/d-2.png)
 
 
 

@@ -55,9 +55,30 @@ def predict(airline):
     #     index=['MAPE'])
 
     if MAPE(df_test, forecast_3) < MAPE(df_test, forecast_5):
-        return Holt(df, exponential=True).fit().forecast(3).values
+        Holt(df, exponential=True).fit().forecast(3).astype(int).reset_index().rename(columns={'index':'date', 0:'passengers'}).to_csv('./predict_data/%s.csv' % airline)
     else:
-        return Holt(df, exponential=True, damped_trend=True).fit().forecast(3).values
+        Holt(df, exponential=True, damped_trend=True).fit().forecast(3).astype(int).reset_index().rename(columns={'index':'date', 0:'passengers'}).to_csv('./predict_data/%s.csv' % airline)
 
 
-# print(predict('티웨이항공'))
+airline_set = {
+    '중국남방항공', 
+    '중국동방항공', 
+    '델타항공', 
+    'KLM네덜란드항공', 
+    '대한항공', 
+    '카타르항공', 
+    '아메리칸항공', 
+    '아시아나항공', 
+    '루프트한자 독일항공', 
+    '에미레이트항공', 
+    '캐나다항공', 
+    '유나이티드항공', 
+    '에어 프랑스',
+    '진에어',
+    '티웨이항공',
+    '제주항공',
+    '에어서울'
+}
+
+for airline in airline_set:
+    predict(airline)

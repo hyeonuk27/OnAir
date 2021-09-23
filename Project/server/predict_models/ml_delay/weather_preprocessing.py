@@ -18,4 +18,5 @@ dt_time = pd.DatetimeIndex(df['time'])
 dt_time = dt_time.tz_convert('Asia/Seoul')
 # 형식 바꾸기
 df['time'] = dt_time.strftime('%Y-%m-%d %H:%M:%S')
+df = df.drop_duplicates(subset=['time'])
 df.to_csv('./weather_processed.csv')

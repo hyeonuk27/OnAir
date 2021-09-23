@@ -21,7 +21,7 @@ import glob
 # 9. isDelayed 열 추가, 지연일 경우에 1, 출발/취소일 경우에 0
 
 # 공통
-# 10. 추가 - 운행기록이 500번 이하인 나라는 제거
+# 10. 추가 - 운행기록이 통계 데이터 기준 500번 이하인 나라는 제거 (머신러닝은 그에 맞춤)
 
 # 목적지 모으기(DB용)
 # 목적지 열 csv뽑기
@@ -143,11 +143,12 @@ for f in glob.glob('./data/*.csv'):
     df_statistics = df_statistics.append(df, ignore_index=True)
     df_ml = df_ml.append(df2, ignore_index=True)
 
+# 500번 운항 미만 나라 컷
+df_statistics = df_statistics[df_statistics.groupby('togo')['togo'].transform('count').ge(500)]
+df_togo = df_statistics['togo'].to_frame().drop_duplicates()
+# 취한 나라 리스트
+togo_list = df_togo['togo'].values.tolist()
+df_ml = df_ml.loc[df_ml['togo'].isin(togo_list)]
 df_statistics.to_csv('./statistics_data.csv')
 df_ml.to_csv('./ml_data.csv')
-df_statistics = df_statistics[df_statistics.groupby('togo')['togo'].transform('count').ge(500)]
-df_ml = df_ml[df_ml.groupby('togo')['togo'].transform('count').ge(500)]
-df_togo = df_statistics['togo'].to_frame().drop_duplicates()
 df_togo.to_csv('./togo_data.csv')
-print(df_statistics['togo'].value_counts())
-print(df_ml['togo'].value_counts())

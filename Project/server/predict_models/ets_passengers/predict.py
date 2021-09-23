@@ -8,7 +8,7 @@ from sklearn.metrics import mean_absolute_error as MAE
 
 def predict(airline):
     df = pd.read_csv('./%s.csv' % airline, index_col='date', parse_dates=True)
-    df = df.drop(['Unnamed: 0', 'index'], axis=1)
+    df = df.drop(['Unnamed: 0'], axis=1)
     # 결측치 보간 필요
     df = df.resample('M').first()
     df = df.interpolate(method='time')

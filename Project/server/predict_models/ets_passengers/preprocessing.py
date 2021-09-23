@@ -50,5 +50,5 @@ for airline in airline_set:
     group = groups.get_group(airline)
     # 0인 값 제거
     condition_not_zero = group[group['passengers'] == 0].index
-    group = group.drop(['airline'], axis=1).drop(condition_not_zero).sort_values(by=['date'], axis=0).reset_index()
+    group = group.drop(['airline'], axis=1).drop(condition_not_zero).sort_values(by=['date'], axis=0).reset_index(drop=True)
     group.to_csv('./%s.csv' % airline)

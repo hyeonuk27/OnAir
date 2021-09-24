@@ -33,12 +33,15 @@ ALLOWED_HOSTS = ['j5a203.p.ssafy.io', 'localhost', '127.0.0.1', '0.0.0.0:8000']
 
 INSTALLED_APPS = [
     'hadoop',
+    'accounts',
+    'airlines',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +132,6 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# custome user model
+AUTH_USER_MODEL = 'accounts.User'

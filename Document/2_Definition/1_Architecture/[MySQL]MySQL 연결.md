@@ -19,20 +19,20 @@
 
 + MySQL Workbench에서 새로운 Connection 생성
 
-![image-20210919010120494](MySQL 연결.assets/image-20210919010120494.png)
+![image-20210919010120494](IMG/image-20210919010120494.png)
 
 + Hostname: onair
 
 + Password: 비밀
 + Test Connection으로 확인
 
-![image-20210919010221845](MySQL 연결.assets/image-20210919010221845.png)
+![image-20210919010221845](IMG/image-20210919010221845.png)
 
 <br/>
 
 ## 기본 MySQL 설정
 
-<img src="MySQL 연결.assets/image-20210919011617418.png" alt="image-20210919011617418"  />
+<img src="IMG/image-20210919011617418.png" alt="image-20210919011617418"  />
 
 <br/>
 

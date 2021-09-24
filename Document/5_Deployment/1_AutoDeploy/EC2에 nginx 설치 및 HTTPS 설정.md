@@ -16,7 +16,7 @@
 + `sudo netstat -ntlp` : 현재 netstat 확인, nginx의 포트 확인
   + 아래 그림을 보면 80번 포트를 사용함을 알 수 있음
 
-![image-20210919182050487](EC2에 nginx 설치 및 HTTPS 설정.assets/image-20210919182050487.png)
+![image-20210919182050487](IMG/image-20210919182050487.png)
 
 + `sudo service nginx stop` : nginx 중단
 
@@ -30,7 +30,7 @@
 + ` sudo vi /etc/nginx/sites-available/default`
   + `server_name 도메인주소`로 편집
 
-![image-20210919204356686](EC2에 nginx 설치 및 HTTPS 설정.assets/image-20210919204356686.png)
+![image-20210919204356686](IMG/image-20210919204356686.png)
 
 + `sudo nginx -t`
 + `sudo systemctl restart nginx` : nginx를 재시작하여 변경내용 적용
@@ -43,5 +43,5 @@
 + `sudo vi /etc/nginx/sites-available/default`
   + 다시 열어보면 기존에 없었던 HTTPS 설정이 추가되어 있다.
 
-![image-20210919204325472](EC2에 nginx 설치 및 HTTPS 설정.assets/image-20210919204325472.png)
+![image-20210919204325472](IMG/image-20210919204325472.png)
 

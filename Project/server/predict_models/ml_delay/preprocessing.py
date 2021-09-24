@@ -133,6 +133,8 @@ for f in glob.glob('./data/*.csv'):
     df_weather['time'] = pd.to_datetime(df_weather['time'], format='%Y-%m-%d %H:%M:%S')
     df2 = pd.merge(left=df2, right=df_weather, how='left', on=['time'], sort=False)
     df2 = df2.drop(['Unnamed: 0', 'time', 'date', 'reason'], axis=1)
+    # 날씨가 Nan인 값이 있다.
+    df2.dropna(subset=['weather'], inplace=True)
 
     # 9.
     df2.loc[(df2.state == '지연'), 'state'] = 1

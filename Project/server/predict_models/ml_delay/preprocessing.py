@@ -147,9 +147,9 @@ for f in glob.glob('./data/*.csv'):
 df_statistics = df_statistics[df_statistics.groupby('togo')['togo'].transform('count').ge(500)]
 df_arrival = df_statistics['togo'].to_frame().drop_duplicates()
 
-# 11. togo => arrival
-df_ml.rename(columns = {'togo': 'arrival'}, inplace=True)
-df_statistics.rename(columns = {'togo' : 'arrival'}, inplace = True)
+# 11. togo => arrival, delayedTime => delayed_time
+df_ml.rename(columns = {'togo': 'arrival', 'delayedTime': 'delayed_time'}, inplace=True)
+df_statistics.rename(columns = {'togo' : 'arrival', 'delayedTime': 'delayed_time'}, inplace = True)
 df_arrival.rename(columns = {'togo' : 'arrival'}, inplace = True)
 
 # 취한 나라 리스트

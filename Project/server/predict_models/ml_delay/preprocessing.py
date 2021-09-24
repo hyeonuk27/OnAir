@@ -16,7 +16,7 @@ import glob
 
 # 머신러닝 전처리
 # 1 ~ 6 동일
-# 7. state열이 취소면 삭제
+# 7. state열이 취소, 회항이면 삭제
 # 8. 년, 월, 일로 날씨 추가
 # 9. isDelayed 열 추가, 지연일 경우에 1, 출발/취소일 경우에 0
 
@@ -116,7 +116,7 @@ for f in glob.glob('./data/*.csv'):
 
     # 머신러닝
     # 7. 
-    condition_state = df2[df2['state'] == '취소'].index
+    condition_state = df2[(df2['state'] == '취소') | (df2['state'] == '회항')].index
     df2 = df2.drop(condition_state)
 
     # 8.
@@ -137,6 +137,7 @@ for f in glob.glob('./data/*.csv'):
     # 9.
     df2.loc[(df2.state == '지연'), 'state'] = 1
     df2.loc[(df2.state == '출발'), 'state'] = 0
+
     # 열 순서 바꾸기
     df2 = df2[['airline', 'togo', 'passengers', 'weather', 'state', 'delayedTime']]
     

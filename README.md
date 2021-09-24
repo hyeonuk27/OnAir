@@ -30,9 +30,9 @@
 
 - #### 디자인 컨셉
 
-![디자인](./Document/2_Definition/3_Design/1_ArtConcept/Image/d-1.png)
+![디자인](./Document/2_Definition/3_Design/1_Art/IMG/d-1.png)
 
-![디자인-2](./Document/2_Definition/3_Design/1_ArtConcept/Image/d-2.png)
+![디자인-2](./Document/2_Definition/3_Design/1_Art/IMG/d-2.png)
 
 
 

@@ -22,7 +22,7 @@ import glob
 
 # 공통
 # 10. 추가 - 운행기록이 통계 데이터 기준 500번 이하인 나라는 제거 (머신러닝은 그에 맞춤)
-
+# 11. 추가 - 'togo' column 'arrival'로 수정
 # 목적지 모으기(DB용)
 # 목적지 열 csv뽑기
 
@@ -145,10 +145,16 @@ for f in glob.glob('./data/*.csv'):
 
 # 500번 운항 미만 나라 컷
 df_statistics = df_statistics[df_statistics.groupby('togo')['togo'].transform('count').ge(500)]
-df_togo = df_statistics['togo'].to_frame().drop_duplicates()
+df_arrival = df_statistics['togo'].to_frame().drop_duplicates()
+
+# 11. togo => arrival
+df_ml.rename(columns = {'togo': 'arrival'}, inplace=True)
+df_statistics.rename(columns = {'togo' : 'arrival'}, inplace = True)
+df_arrival.rename(columns = {'togo' : 'arrival'}, inplace = True)
+
 # 취한 나라 리스트
-togo_list = df_togo['togo'].values.tolist()
-df_ml = df_ml.loc[df_ml['togo'].isin(togo_list)]
+arrival_list = df_arrival['arrival'].values.tolist()
+df_ml = df_ml.loc[df_ml['arrival'].isin(arrival_list)]
 df_statistics.to_csv('./statistics_data.csv')
 df_ml.to_csv('./ml_data.csv')
-df_togo.to_csv('./togo_data.csv')
+df_arrival.to_csv('./arrival_data.csv')

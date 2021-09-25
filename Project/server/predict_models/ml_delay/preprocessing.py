@@ -9,7 +9,7 @@ import glob
 # 0. date, airport, togo, type, state열이 빈문자열이면 삭제
 # 1. 항공사 우리 것으로 필터링
 # 2. type가 화물인 행 제거
-# 3. CEB()는 CEB(세부)로 바꾸기
+# 3. 도착지 이름 이상한 것 바꾸기
 # 4. flightNo, type 열 삭제
 # 5. date열 날짜 타입으로 바꾸고 년, 월, 일 뽑아와서 년, 월로 월별 이용객수 열 추가 -> merge 이용
 # 6. delayedTime 열 추가, state가 지연일 경우에만 departTime - originTime, 나머지는 0 -> 한 다음 originTime, departTime 열 삭제
@@ -80,6 +80,19 @@ for f in glob.glob('./data/*.csv'):
 
     # 3.
     df.loc[(df.togo == 'CEB()'), 'togo'] = 'CEB(세부)'
+    df.loc[(df.togo == 'IAD(워싱톤)'), 'togo'] = 'IAD(워싱턴)'
+    df.loc[(df.togo == 'BKK(수안나폼(방콕))'), 'togo'] = 'BKK(수완나품(방콕))'
+    df.loc[(df.togo == 'SGN(떤선녀엇(호찌민))'), 'togo'] = 'SGN(떤선녓(호치민))'
+    df.loc[(df.togo == 'HKT(푸껫)'), 'togo'] = 'HKT(푸켓)'
+    df.loc[(df.togo == 'TSN(천진)'), 'togo'] = 'TSN(톈진)'
+    df.loc[(df.togo == 'SYX(산야)'), 'togo'] = 'SYX(싼야)'
+    df.loc[(df.togo == 'YNT(연대)'), 'togo'] = 'YNT(연태)'
+    df.loc[(df.togo == 'ULN(부얀트 우카(울란바타르))'), 'togo'] = 'ULN(보얀트 오하(울란바토르))'
+    df.loc[(df.togo == 'KKJ(기타규슈)'), 'togo'] = 'KKJ(기타큐슈)'
+    df.loc[(df.togo == 'JHB(조호바루)'), 'togo'] = 'JHB(조호르바루)'
+    df.loc[(df.togo == 'VIE(비엔나)'), 'togo'] = 'VIE(빈)'
+    df.loc[(df.togo == 'JHB(조호바루)'), 'togo'] = 'JHB(조호르바루)'
+    df.loc[(df.togo == 'JHB(조호바루)'), 'togo'] = 'JHB(조호르바루)'
 
     # 4.
     df = df.drop(columns=['flightNo', 'type'])

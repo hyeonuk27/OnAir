@@ -16,13 +16,13 @@ import glob
 
 # 머신러닝 전처리
 # 1 ~ 6 동일
-# 7. state열이 취소면 삭제
+# 7. state열이 취소, 회항이면 삭제
 # 8. 년, 월, 일로 날씨 추가
 # 9. isDelayed 열 추가, 지연일 경우에 1, 출발/취소일 경우에 0
 
 # 공통
 # 10. 추가 - 운행기록이 통계 데이터 기준 500번 이하인 나라는 제거 (머신러닝은 그에 맞춤)
-
+# 11. 추가 - 'togo' column 'arrival'로 수정
 # 목적지 모으기(DB용)
 # 목적지 열 csv뽑기
 
@@ -116,7 +116,7 @@ for f in glob.glob('./data/*.csv'):
 
     # 머신러닝
     # 7. 
-    condition_state = df2[df2['state'] == '취소'].index
+    condition_state = df2[(df2['state'] == '취소') | (df2['state'] == '회항')].index
     df2 = df2.drop(condition_state)
 
     # 8.
@@ -133,10 +133,13 @@ for f in glob.glob('./data/*.csv'):
     df_weather['time'] = pd.to_datetime(df_weather['time'], format='%Y-%m-%d %H:%M:%S')
     df2 = pd.merge(left=df2, right=df_weather, how='left', on=['time'], sort=False)
     df2 = df2.drop(['Unnamed: 0', 'time', 'date', 'reason'], axis=1)
+    # 날씨가 Nan인 값이 있다.
+    df2.dropna(subset=['weather'], inplace=True)
 
     # 9.
     df2.loc[(df2.state == '지연'), 'state'] = 1
     df2.loc[(df2.state == '출발'), 'state'] = 0
+
     # 열 순서 바꾸기
     df2 = df2[['airline', 'togo', 'passengers', 'weather', 'state', 'delayedTime']]
     
@@ -145,10 +148,16 @@ for f in glob.glob('./data/*.csv'):
 
 # 500번 운항 미만 나라 컷
 df_statistics = df_statistics[df_statistics.groupby('togo')['togo'].transform('count').ge(500)]
-df_togo = df_statistics['togo'].to_frame().drop_duplicates()
+df_arrival = df_statistics['togo'].to_frame().drop_duplicates()
+
+# 11. togo => arrival, delayedTime => delayed_time
+df_ml.rename(columns = {'togo': 'arrival', 'delayedTime': 'delayed_time'}, inplace=True)
+df_statistics.rename(columns = {'togo' : 'arrival', 'delayedTime': 'delayed_time'}, inplace = True)
+df_arrival.rename(columns = {'togo' : 'arrival'}, inplace = True)
+
 # 취한 나라 리스트
-togo_list = df_togo['togo'].values.tolist()
-df_ml = df_ml.loc[df_ml['togo'].isin(togo_list)]
+arrival_list = df_arrival['arrival'].values.tolist()
+df_ml = df_ml.loc[df_ml['arrival'].isin(arrival_list)]
 df_statistics.to_csv('./statistics_data.csv')
 df_ml.to_csv('./ml_data.csv')
-df_togo.to_csv('./togo_data.csv')
+df_arrival.to_csv('./arrival_data.csv')

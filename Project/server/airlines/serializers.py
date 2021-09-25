@@ -18,3 +18,10 @@ class ArrivalListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Arrival
         fields = ('id', 'name', 'image_url')
+
+class LogSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Log
+        fields = ('id', 'user', 'airline', 'arrival', 'reg_dt')
+        read_only_fields = ('id', 'user', 'airline', 'arrival', 'reg_dt')

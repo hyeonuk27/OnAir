@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404
 
-from .models import Review, Log
+from .models import Arrival, Review, Log
 from accounts.models import User
-from .serializers import ReviewListSerializer, LogListSerializer
+from .serializers import ReviewListSerializer, LogListSerializer, ArrivalListSerializer
 
 from django.core.paginator import Paginator
 
@@ -35,5 +35,14 @@ def user_review_list(request, user_pk):
 def user_log_list(request):
     logs = Log.objects.order_by('-reg_dt')
     serializer = LogListSerializer(logs, many=True)
+    data = serializer.data
+    return Response(data)
+
+
+# 검색 시 도착지 목록; 로그인 불필요
+@api_view(['GET'])
+def arrival_list(request):
+    arrivals = Arrival.objects.all()
+    serializer = ArrivalListSerializer(arrivals, many=True)
     data = serializer.data
     return Response(data)

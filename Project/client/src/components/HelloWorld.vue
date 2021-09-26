@@ -1,6 +1,10 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <!-- <div class="g-signin2" id="google-signin-btn" data-onsuccess="onSignIn"></div> -->
+    <!-- <div class="g-signin2" id="google-signin-btn"></div> -->
+    <div id="my-signin2"></div>
+    <a href="#" @click="signOut">로그아웃</a>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -30,12 +34,50 @@
   </div>
 </template>
 
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 <script>
+import axios from 'axios'
+
+
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
-  }
+  },
+  methods: {
+    onSuccess(googleUser) {
+      const accessToken = googleUser.getAuthResponse().id_token
+      axios.get("http://localhost:8000/api/v1/auth/login", {
+        headers: {
+            Authorization: accessToken
+        }
+      })
+      .then((res) => {
+        console.log(res.data)
+      })
+    },
+    onFailure(error) {
+      console.log(error);
+    },
+    signOut() {
+      const auth2 = gapi.auth2.getAuthInstance()
+      auth2.signOut().then(function () {
+        console.log('로그아웃')
+      })
+      auth2.disconnect()
+    }
+  },
+  mounted() {
+    window.gapi.signin2.render('my-signin2', {
+      scope: 'profile email',
+      width: 240,
+      height: 50,
+      longtitle: true,
+      theme: 'dark',
+      onsuccess: this.onSuccess,
+      onfailure: this.onFailure,
+    });
+  },
 }
 </script>
 

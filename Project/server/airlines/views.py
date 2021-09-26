@@ -120,24 +120,26 @@ def arrival_list(request):
 @api_view(['GET'])
 def airline_list(request, arrival_id):
     arrival = get_object_or_404(Arrival, pk=arrival_id)
-    data = {'Airlines': []}
+    # 직접 JSON 형태의 데이터를 만들어서 반환
+    response_data = {'Airlines': []}
     airlines = get_list_or_404(Airline)
+    # 머신러닝 모델 및 인코더 로딩
+    model = joblib.load('predict_models/ml_delay/delay_rate_predict.pkl')
+    labelencoder = joblib.load('predict_models/ml_delay/labelencoder_dict.pkl')
+    onehotencoder = joblib.load('predict_models/ml_delay/onehotencoder_dict.pkl')
+    # Openweathermap API로 인천 공항의 현재 날씨 받아오기
+    URL = 'https://api.openweathermap.org/data/2.5/weather?lat=37.46&lon=126.44&appid=%s' % config('WEATHER_API_KEY')
+    weather = requests.get(url=URL).json().get('weather')[0].get('main')
     for airline in airlines:
         # 목적지, 항공사에 해당하는 통계 결과 가져오기
         statistics_result = StatisticsResult.objects.filter(airline=airline.name, arrival=arrival.name).first()
-        # Openweathermap API로 인천 공항의 현재 날씨 받아오기
-        URL = 'https://api.openweathermap.org/data/2.5/weather?lat=37.46&lon=126.44&appid=%s' % config('WEATHER_API_KEY')
-        weather = requests.get(url=URL).json().get('weather')[0].get('main')
         # 목적지, 항공사에 해당하는 이번달 이용객수 예측값 가져오기
-        df = pd.read_csv('../predict_models/ets_passengers/predict_data/%s.csv' % airline.name)
+        df = pd.read_csv('predict_models/ets_passengers/predict_data/%s.csv' % airline.name)
         predicted_data = df[df['date'].str.startswith('%s' % datetime.today().strftime("%Y-%m"))]['passengers'][0]
         # 머신러닝 모델 가져와서 오늘 날씨, 이번달 이용객수의 지연률 예측
-        model = joblib.load('../predict_models/ml_delay/delay_rate_predict.pkl')
-        labelencoder = joblib.load('../predict_models/ml_delay/labelencoder_dict.pkl')
-        onehotencoder = joblib.load('../predict_models/ml_delay/onehotencoder_dict.pkl')
         data = pd.DataFrame([[airline.name, arrival.name, weather, predicted_data]], columns = ['airline', 'arrival', 'weather', 'passengers'])
         input_data = get_encoded(data, labelencoder, onehotencoder)
-        data.get('Airlines').append(
+        response_data.get('Airlines').append(
             {
                 'id': airline.id,
                 'name': airline.name,
@@ -145,7 +147,9 @@ def airline_list(request, arrival_id):
                 'total': statistics_result.total,
                 'delay_rate': statistics_result.delay_rate,
                 'delay_time': statistics_result.delay_time,
-                'predicted_delay_rate': model.predict_proba(input_data)
+                'predicted_delay_rate': round(model.predict_proba(input_data)[0, 0] * 100, 2)
             }
         )
-        return HttpResponse(json.dumps(data), content_type = 'application/javascript; charset=utf8')
+    
+    # Python의 dictionary를 Json형태로 반환하기 위함
+    return HttpResponse(json.dumps(response_data), content_type = 'application/javascript; charset=utf8')

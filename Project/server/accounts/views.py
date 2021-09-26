@@ -30,7 +30,6 @@ def login(request):
 
     # 로그인
     if User.objects.filter(google_id = user['sub']).exists():
-        print('로그인')
         user_info = User.objects.get(google_id=user['sub'])
         encoded_jwt = jwt.encode({'id': user["sub"]}, JWT_SECRET_KEY, algorithm='HS256')
         serializer = UserSerializer(user_info)

@@ -7,10 +7,6 @@ def make_random_id():
     return ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(13))
 
 df = read_csv('./statistics_data.csv')
-df_reason = df['reason'].value_counts()
-
-df_reason.to_csv('./delay_reasons.csv')
-
 df = df['airline'].drop_duplicates().reset_index(drop=True)
 df = pd.DataFrame(df, columns=['airline'])
 

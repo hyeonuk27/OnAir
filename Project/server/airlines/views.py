@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404
 
-from .models import Arrival, Review, Log
+from .models import Airline, Arrival, Review, Log
 from accounts.models import User
-from .serializers import ReviewListSerializer, LogListSerializer, ArrivalListSerializer
+from .serializers import ReviewListSerializer, LogListSerializer, ArrivalListSerializer, LogSerializer
 
 from django.core.paginator import Paginator
 
@@ -11,6 +11,18 @@ from rest_framework.decorators import api_view
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework import status
+
+from airlines import serializers
+
+import string
+import random
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+
+
+def make_random_id():
+    return ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(13))
 
 
 # 유저가 작성한 리뷰 리스트 + 계정 정보
@@ -29,14 +41,36 @@ def user_review_list(request, user_pk):
 
 
 # 로그인 필요
-@api_view(['GET'])
+@swagger_auto_schema(
+    method='post',
+    request_body=openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+            'airline_id': openapi.Schema(type=openapi.TYPE_STRING, description='The desc'),
+            'arrival_id': openapi.Schema(type=openapi.TYPE_STRING, description='The desc'),
+        }))
+@api_view(['GET', 'POST'])
 @authentication_classes([JSONWebTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def user_log_list(request):
-    logs = Log.objects.order_by('-reg_dt')
-    serializer = LogListSerializer(logs, many=True)
-    data = serializer.data
-    return Response(data)
+    if request.method == 'GET':
+        logs = Log.objects.order_by('-reg_dt')
+        serializer = LogListSerializer(logs, many=True)
+        data = serializer.data
+        return Response(data)
+    elif request.method == 'POST':
+        airline = get_object_or_404(Airline, pk=request.data.get('airline_id'))
+        arrival = get_object_or_404(Arrival, pk=request.data.get('arrival_id'))
+        while True:
+            id = make_random_id()
+            if(Log.objects.filter(id=id).exists()):
+                continue
+            else:
+                break
+        serializer = LogSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(id=id, user=request.user, airline=airline, arrival=arrival)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 # 검색 시 도착지 목록; 로그인 불필요

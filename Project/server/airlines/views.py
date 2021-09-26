@@ -62,9 +62,9 @@ def get_encoded(data,labelencoder_dict,onehotencoder_dict):
 # 유저가 작성한 리뷰 리스트 + 계정 정보
 # 로그인 불필요
 @api_view(['GET'])
-def user_review_list(request, user_pk):
-    user_reviews = Review.objects.filter(user_pk=request.user.id).order_by('-created_at')
-    user_profile = get_object_or_404(User, pk=user_pk)
+def user_review_list(request, user_id):
+    user_reviews = Review.objects.filter(user_id=request.user.id).order_by('-created_at')
+    user_profile = get_object_or_404(User, pk=user_id)
     page = request.GET.get('page', '1')
     paginator = Paginator(user_reviews, 5)
     user_reviews = paginator.get_page(page)

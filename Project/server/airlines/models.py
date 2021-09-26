@@ -11,7 +11,7 @@ class Airline(models.Model):
     phone_number = models.TextField()
     site_url = models.TextField()
     corona_url = models.TextField()
-    is_skypass = models.BooleanField(null=True, blank=True)
+    is_skyteam = models.BooleanField(null=True, blank=True)
     is_star = models.BooleanField(null=True, blank=True)
     is_oneworld = models.BooleanField(null=True, blank=True)
 
@@ -56,3 +56,19 @@ class Statistics(models.Model):
     reason = models.CharField(max_length=50, null=True, blank=True)
     passengers = models.IntegerField()
     delayed_time = models.IntegerField()
+
+
+class StatisticsResult(models.Model):
+    id = models.CharField(max_length=13, primary_key=True)
+    # 목적지에 대한 총운항횟수
+    total = models.IntegerField()
+    # 10분내 출발확률
+    under_10 = models.FloatField()
+    # 10분 초과 30분 이하 출발확률
+    under_30 = models.FloatField()
+    # 30분 초과 출발확률
+    over_30 = models.FloatField()
+    # 지연률
+    delay_rate = models.FloatField()
+    # 평균 지연시간
+    delay_time = models.IntegerField()

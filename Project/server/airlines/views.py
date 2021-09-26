@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 from .models import Airline, Arrival, Review, Log, StatisticsResult
 from accounts.models import User
-from .serializers import ReviewListSerializer, LogListSerializer, ArrivalListSerializer, LogSerializer
+from .serializers import AirlineDetailSerializer, AirlineReportSerializer, ReviewListSerializer, LogListSerializer, ArrivalListSerializer, LogSerializer
 
 from django.core.paginator import Paginator
 
@@ -153,3 +153,21 @@ def airline_list(request, arrival_id):
     
     # Python의 dictionary를 Json형태로 반환하기 위함
     return HttpResponse(json.dumps(response_data), content_type = 'application/javascript; charset=utf8')
+
+@api_view(['GET'])
+def airline_report(request, arrival_id, airline_id):
+    # airline = get_object_or_404(Airline, pk=airline_id)
+    # arrival = get_object_or_404(Arrival, pk=arrival_id)
+    # statistics_result = StatisticsResult.objects.filter(airline=airline.name, arrival=arrival.name).first()
+    # airline, arrival 넣으면 통계 데이터를 가져오는 함수를 만들어야 하는데 아직 csv 파일 완성이 안되어서 이 부분만 시간이 좀 더 걸릴 것 같음
+    pass
+
+
+
+# 로그인 불필요
+@api_view(['GET'])
+def airline_details(request, airline_id):
+    airline = get_object_or_404(Airline, pk=airline_id)
+    serializer = AirlineDetailSerializer(airline)
+    data = serializer.data
+    return Response(data)

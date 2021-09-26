@@ -60,6 +60,10 @@ class Statistics(models.Model):
 
 class StatisticsResult(models.Model):
     id = models.CharField(max_length=13, primary_key=True)
+    # 목적지
+    arrival = models.CharField(max_length=50)
+    # 항공사
+    airline = models.CharField(max_length=20)
     # 목적지에 대한 총운항횟수
     total = models.IntegerField()
     # 10분내 출발확률

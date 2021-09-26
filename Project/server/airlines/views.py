@@ -1,6 +1,7 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
+from django.http import HttpResponse
 
-from .models import Airline, Arrival, Review, Log
+from .models import Airline, Arrival, Review, Log, StatisticsResult
 from accounts.models import User
 from .serializers import ReviewListSerializer, LogListSerializer, ArrivalListSerializer, LogSerializer
 
@@ -20,9 +21,42 @@ import random
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
+import json
+import pandas as pd
+import numpy as np
+import joblib
+from decouple import config
 
+import requests
+import json
+
+from datetime import datetime
+
+
+# id 생성
 def make_random_id():
     return ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(13))
+
+
+# 머신러닝 원핫인코딩 인코더
+def get_encoded(data,labelencoder_dict,onehotencoder_dict):
+    # except passengers
+    data_exc = data.iloc[:, :-1]
+    encoded_x = None
+    for i in range(0,data_exc.shape[1]):
+        label_encoder =  labelencoder_dict[i]
+        feature = label_encoder.transform(data_exc.iloc[:,i])
+        feature = feature.reshape(data_exc.shape[0], 1)
+        onehot_encoder = onehotencoder_dict[i]
+        feature = onehot_encoder.transform(feature)
+        if encoded_x is None:
+            encoded_x = feature
+        else:
+            encoded_x = np.concatenate((encoded_x, feature), axis=1)
+
+    encoded_x = np.concatenate((encoded_x, data.iloc[:, -1].to_numpy().reshape(-1, 1)), axis=1)
+
+    return encoded_x
 
 
 # 유저가 작성한 리뷰 리스트 + 계정 정보
@@ -76,7 +110,42 @@ def user_log_list(request):
 # 검색 시 도착지 목록; 로그인 불필요
 @api_view(['GET'])
 def arrival_list(request):
-    arrivals = Arrival.objects.all()
+    arrivals = get_list_or_404(Arrival)
     serializer = ArrivalListSerializer(arrivals, many=True)
     data = serializer.data
     return Response(data)
+
+
+# 검색 시 항공사 리스트
+@api_view(['GET'])
+def airline_list(request, arrival_id):
+    arrival = get_object_or_404(Arrival, pk=arrival_id)
+    data = {'Airlines': []}
+    airlines = get_list_or_404(Airline)
+    for airline in airlines:
+        # 목적지, 항공사에 해당하는 통계 결과 가져오기
+        statistics_result = StatisticsResult.objects.filter(airline=airline.name, arrival=arrival.name).first()
+        # Openweathermap API로 인천 공항의 현재 날씨 받아오기
+        URL = 'https://api.openweathermap.org/data/2.5/weather?lat=37.46&lon=126.44&appid=%s' % config('WEATHER_API_KEY')
+        weather = requests.get(url=URL).json().get('weather')[0].get('main')
+        # 목적지, 항공사에 해당하는 이번달 이용객수 예측값 가져오기
+        df = pd.read_csv('../predict_models/ets_passengers/predict_data/%s.csv' % airline.name)
+        predicted_data = df[df['date'].str.startswith('%s' % datetime.today().strftime("%Y-%m"))]['passengers'][0]
+        # 머신러닝 모델 가져와서 오늘 날씨, 이번달 이용객수의 지연률 예측
+        model = joblib.load('../predict_models/ml_delay/delay_rate_predict.pkl')
+        labelencoder = joblib.load('../predict_models/ml_delay/labelencoder_dict.pkl')
+        onehotencoder = joblib.load('../predict_models/ml_delay/onehotencoder_dict.pkl')
+        data = pd.DataFrame([[airline.name, arrival.name, weather, predicted_data]], columns = ['airline', 'arrival', 'weather', 'passengers'])
+        input_data = get_encoded(data, labelencoder, onehotencoder)
+        data.get('Airlines').append(
+            {
+                'id': airline.id,
+                'name': airline.name,
+                'profile_url': airline.profile_url,
+                'total': statistics_result.total,
+                'delay_rate': statistics_result.delay_rate,
+                'delay_time': statistics_result.delay_time,
+                'predicted_delay_rate': model.predict_proba(input_data)
+            }
+        )
+        return HttpResponse(json.dumps(data), content_type = 'application/javascript; charset=utf8')

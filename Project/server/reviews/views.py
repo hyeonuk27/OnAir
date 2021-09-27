@@ -5,11 +5,11 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-from .models import Review
+from airlines.models import Review
 from .serializers import ReviewListSerializer, ReviewSerializer
 
 
-@login_required
+# @login_required
 @api_view(['POST'])
 def review_create(request):
     serializer = ReviewSerializer(data=request.data)
@@ -18,7 +18,6 @@ def review_create(request):
       return Response(serializer.data, status=status.HTTP_201_CREATED)
     
 
-@login_required
 @api_view(['GET'])
 def review_list(request, airline_id):
     reviews = get_list_or_404(Review, pk=airline_id)
@@ -26,7 +25,7 @@ def review_list(request, airline_id):
     return Response(serializer.data)
     
 
-@login_required
+# @login_required
 @api_view(['DELETE', 'POST'])
 def review_detail(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)

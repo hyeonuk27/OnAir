@@ -123,10 +123,11 @@ def airline_list(request, arrival_id):
     # 직접 JSON 형태의 데이터를 만들어서 반환
     response_data = {'Airlines': []}
     airlines = get_list_or_404(Airline)
-    # 머신러닝 모델 및 인코더 로딩
+    # 머신러닝 모델 및 인코더, 스케일러 로딩
     model = joblib.load('predict_models/ml_delay/delay_rate_predict.pkl')
     labelencoder = joblib.load('predict_models/ml_delay/labelencoder_dict.pkl')
     onehotencoder = joblib.load('predict_models/ml_delay/onehotencoder_dict.pkl')
+    scaler = joblib.load('predict_models/ml_delay/passengers_min_max_scaler.pkl')
     # Openweathermap API로 인천 공항의 현재 날씨 받아오기
     URL = 'https://api.openweathermap.org/data/2.5/weather?lat=37.46&lon=126.44&appid=%s' % config('WEATHER_API_KEY')
     weather = requests.get(url=URL).json().get('weather')[0].get('main')
@@ -136,8 +137,9 @@ def airline_list(request, arrival_id):
         # 목적지, 항공사에 해당하는 이번달 이용객수 예측값 가져오기
         df = pd.read_csv('predict_models/ets_passengers/predict_data/%s.csv' % airline.name)
         predicted_data = df[df['date'].str.startswith('%s' % datetime.today().strftime("%Y-%m"))]['passengers'][0]
+        scaled_passengers = scaler.transform(pd.DataFrame([[predicted_data]]))
         # 머신러닝 모델 가져와서 오늘 날씨, 이번달 이용객수의 지연률 예측
-        data = pd.DataFrame([[airline.name, arrival.name, weather, predicted_data]], columns = ['airline', 'arrival', 'weather', 'passengers'])
+        data = pd.DataFrame([[airline.name, arrival.name, weather, scaled_passengers]], columns = ['airline', 'arrival', 'weather', 'passengers'])
         input_data = get_encoded(data, labelencoder, onehotencoder)
         response_data.get('Airlines').append(
             {
@@ -147,7 +149,7 @@ def airline_list(request, arrival_id):
                 'total': statistics_result.total,
                 'delay_rate': statistics_result.delay_rate,
                 'delay_time': statistics_result.delay_time,
-                'predicted_delay_rate': round(model.predict_proba(input_data)[0, 0] * 100, 2)
+                'predicted_delay_rate': round(model.predict_proba(input_data)[0, 1] * 100, 2)
             }
         )
     

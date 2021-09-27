@@ -8,7 +8,7 @@ from sklearn.preprocessing import LabelEncoder, OneHotEncoder, MinMaxScaler
 labelencoder_dict = {}
 onehotencoder_dict = {}
 df = pd.read_csv('./ml_data.csv', index_col = 0)
-df_X = df.drop(['state', 'delayed_time', 'passengers'], axis=1)
+df_X = df.drop(['state', 'delayed_time', 'weather', 'passengers'], axis=1)
 X = None
 for i in range(0, df_X.shape[1]):
     label_encoder = LabelEncoder()
@@ -38,7 +38,5 @@ lr.fit(train_input, train_target)
 print(lr.score(train_input, train_target))
 print(lr.score(test_input, test_target))
 
-joblib.dump(lr, './delay_rate_predict.pkl')
-joblib.dump(labelencoder_dict, './labelencoder_dict.pkl')
-joblib.dump(onehotencoder_dict, './onehotencoder_dict.pkl')
+joblib.dump(lr, './delay_rate_passengers_predict.pkl')
 joblib.dump(min_max_scaler, './passengers_min_max_scaler.pkl')

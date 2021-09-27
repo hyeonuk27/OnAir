@@ -86,7 +86,15 @@
 #### - 삭제
 
 - 행 삭제
+
 - 열 삭제
+
+  ```
+  df.drop(colums=['column', 'column'], inplace=True)
+  df = df.drop(colums=['column', 'column'])
+  ```
+
+  
 
 #### - 중복
 
@@ -98,6 +106,15 @@
 - 특정 행 추출
 - 특정 열 추출
 - 특정 조건 추출
+
+
+
+#### - Unnamed Column
+
+```
+input = pd.read_csv('data.csv', index_col = 0)
+input.drop(['Unnamed: 0'], axis = 1, inplace = True)
+```
 
 
 

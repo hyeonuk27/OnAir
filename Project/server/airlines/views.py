@@ -88,7 +88,7 @@ def user_review_list(request, user_id):
 @permission_classes([IsAuthenticated])
 def user_log_list(request):
     if request.method == 'GET':
-        logs = Log.objects.order_by('-reg_dt')
+        logs = Log.objects.filter(user_id=request.user.id).order_by('-reg_dt')[:10]
         serializer = LogListSerializer(logs, many=True)
         data = serializer.data
         return Response(data)

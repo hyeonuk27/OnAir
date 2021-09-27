@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from .models import Review
-# from .serializers import ReviewListSerializer, ReviewSerializer
+from .serializers import ReviewListSerializer, ReviewSerializer
 
 
 @login_required
@@ -43,13 +43,9 @@ def review_detail(request, review_pk):
 
 api_view(['GET'])
 def review_score(request, airline_id):
-    score = get_object_or_404(Score)
-    serializer = ScoreSerializer(score, many=True)
-    return Response(serializer.data)
+    pass
 
 
 api_view(['GET'])
 def review_keyword(request, airline_id):
-    keyword = get_object_or_404(Keyword)
-    serializer = KeywordSerializer(keyword, many=True)
-    return Response(serializer.data)
+    pass

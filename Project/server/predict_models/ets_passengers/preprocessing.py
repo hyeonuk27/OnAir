@@ -21,6 +21,26 @@ airline_set = {
     '에어서울'
 }
 
+convert_dict = {
+    '중국남방항공': '중국남방항공', 
+    '중국동방항공': '중국동방항공', 
+    '델타항공': '델타항공', 
+    'KLM네덜란드항공': '네덜란드항공', 
+    '대한항공': '대한항공', 
+    '카타르항공': '카타르항공', 
+    '아메리칸항공': '아메리칸항공', 
+    '아시아나항공': '아시아나항공', 
+    '루프트한자 독일항공': '독일항공', 
+    '에미레이트항공': '에미레이트항공', 
+    '캐나다항공': '캐나다항공', 
+    '유나이티드항공': '유나이티드항공', 
+    '에어 프랑스': '프랑스항공',
+    '진에어': '진에어',
+    '티웨이항공': '티웨이항공',
+    '제주항공': '제주항공',
+    '에어서울': '에어서울'
+}
+
 all_data = pd.DataFrame()
 
 for f in glob.glob("./*.xlsx"):
@@ -51,4 +71,4 @@ for airline in airline_set:
     # 0인 값 제거
     condition_not_zero = group[group['passengers'] == 0].index
     group = group.drop(['airline'], axis=1).drop(condition_not_zero).sort_values(by=['date'], axis=0).reset_index(drop=True)
-    group.to_csv('./%s.csv' % airline)
+    group.to_csv('./%s.csv' % convert_dict[airline])

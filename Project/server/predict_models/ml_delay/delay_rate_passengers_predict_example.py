@@ -22,11 +22,11 @@ def getEncoded(data,labelencoder_dict,onehotencoder_dict):
     return encoded_x
 
 
-model = joblib.load('./delay_rate_predict.pkl')
+model = joblib.load('./delay_rate_passengers_predict.pkl')
 labelencoder = joblib.load('./labelencoder_dict.pkl')
 onehotencoder = joblib.load('./onehotencoder_dict.pkl')
 scaler = joblib.load('./passengers_min_max_scaler.pkl')
-scaled_passengers = scaler.transform(pd.DataFrame([[150000]]))
-data = pd.DataFrame([['대한항공', 'HKG(홍콩)', 'Typhoon', scaled_passengers]], columns = ['airline', 'arrival', 'weather', 'passengers'])
+scaled_passengers = scaler.transform(pd.DataFrame([[169000]]))
+data = pd.DataFrame([['아시아나항공', 'HKG(홍콩)', scaled_passengers]], columns = ['airline', 'arrival', 'passengers'])
 input_data = getEncoded(data, labelencoder, onehotencoder)
 print(round(model.predict_proba(input_data)[0, 1] * 100, 2))

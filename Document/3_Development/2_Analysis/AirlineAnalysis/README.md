@@ -143,3 +143,7 @@ input.drop(['Unnamed: 0'], axis = 1, inplace = True)
    df = df.drop(columns=['flightNo', 'type'])
   ```
 
+
+
+https://blog.naver.com/PostView.nhn?isHttpsRedirect=true&blogId=wideeyed&logNo=221578773214
+

@@ -158,10 +158,34 @@ def airline_list(request, arrival_id):
 
 @api_view(['GET'])
 def airline_report(request, arrival_id, airline_id):
-    # airline = get_object_or_404(Airline, pk=airline_id)
-    # arrival = get_object_or_404(Arrival, pk=arrival_id)
-    # statistics_result = StatisticsResult.objects.filter(airline=airline.name, arrival=arrival.name).first()
-    # airline, arrival 넣으면 통계 데이터를 가져오는 함수를 만들어야 하는데 아직 csv 파일 완성이 안되어서 이 부분만 시간이 좀 더 걸릴 것 같음
+    airline = get_object_or_404(Airline, pk=airline_id)
+    arrival = get_object_or_404(Arrival, pk=arrival_id)
+    statistics_result = StatisticsResult.objects.filter(airline=airline.name, arrival=arrival.name).first()
+    data = {
+        'data': {
+            'airline_id': airline.id,
+            'airline_name': airline.name,
+            'airline_profile_url': airline.profile_url,
+            'airline_address': airline.address,
+            'airline_phone_number': airline.phone_number,
+            'airline_site_url': airline.site_url,
+            'airline_corona_url': airline.corona_url,
+            'airline_is_skyteam': airline.is_skyteam,
+            'airline_is_star': airline.is_star,
+            'airline_is_oneworld': airline.is_oneworld,
+            'arrival_id': arrival.id,
+            'arrival_name': arrival.name,
+            'arrival_image_url': arrival.image_url,
+            'total': statistics_result.total,
+            'under_10': statistics_result.under_10,
+            'under_30': statistics_result.under_30,
+            'over_30': statistics_result.over_30,
+            'delay_rate': statistics_result.delay_rate,
+            'delay_time': statistics_result.delay_time,
+        }   
+    }
+
+
     pass
 
 

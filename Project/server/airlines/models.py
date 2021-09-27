@@ -76,3 +76,4 @@ class StatisticsResult(models.Model):
     delay_rate = models.FloatField()
     # 평균 지연시간
     delay_time = models.IntegerField()
+

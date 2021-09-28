@@ -57,3 +57,24 @@ html,body {
   min-width: 1190px;
 }
 </style>
+
+<style lang="scss">
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: #ffffff;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 3.5px;
+  background-color: #B9A6C9;
+
+  &:hover {
+    background-color: #D4C6E2;
+  }
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+</style>

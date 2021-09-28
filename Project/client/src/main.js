@@ -4,6 +4,7 @@ import App from './App.vue'
 import store from './common/store.js'
 import router from './common/vue-router.js'
 import Vuesax from 'vuesax'
+import 'vuesax/dist/vuesax.css'
 import 'material-icons/iconfont/material-icons.css'
 
 Vue.use(VueRouter)

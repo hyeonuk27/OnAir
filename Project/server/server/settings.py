@@ -147,5 +147,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'server' / 'static',
 ]
 
+STATIC_ROOT = BASE_DIR / 'my_static'
+
 # custome user model
 AUTH_USER_MODEL = 'accounts.User'

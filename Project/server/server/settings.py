@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['j5a203.p.ssafy.io', 'localhost', '127.0.0.1', '0.0.0.0:8000']
 
@@ -144,8 +144,9 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'server' / 'static',
 ]
+
+STATIC_ROOT = BASE_DIR / 'my_static'
 
 # custome user model
 AUTH_USER_MODEL = 'accounts.User'

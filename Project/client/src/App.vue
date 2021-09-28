@@ -25,7 +25,6 @@ html,body {
   padding: 0;
   height: 100%;
 }
-
 #app {
   /* font-family: Avenir, Helvetica, Arial, sans-serif; */
   font-family: 'KoPubDotumMedium';

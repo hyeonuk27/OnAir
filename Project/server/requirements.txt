@@ -45,7 +45,10 @@ sklearn==0.0
 sqlparse==0.4.2
 statsmodels==0.12.2
 threadpoolctl==2.2.0
+<<<<<<< HEAD
 tqdm==4.62.3
 tweepy==4.0.0
+=======
+>>>>>>> 0e5351d3e0369aa5449ab73f723732a081779297
 uritemplate==3.0.1
 urllib3==1.26.7

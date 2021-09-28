@@ -3,8 +3,12 @@ from django.http import HttpResponse
 
 from .models import Airline, Arrival, Review, Log, StatisticsResult
 from accounts.models import User
+<<<<<<< HEAD
 from .models import Review
 from .serializers import AirlineDetailSerializer, AirlineReportSerializer, ReviewListSerializer, ReviewSerializer, LogListSerializer, ArrivalListSerializer, LogSerializer
+=======
+from .serializers import AirlineDetailSerializer, AirlineReportSerializer, ReviewListSerializer, LogListSerializer, ArrivalListSerializer, LogSerializer
+>>>>>>> 0e5351d3e0369aa5449ab73f723732a081779297
 
 from django.core.paginator import Paginator
 
@@ -30,11 +34,15 @@ from decouple import config
 
 import requests
 import json
+<<<<<<< HEAD
 import jwt
+=======
+>>>>>>> 0e5351d3e0369aa5449ab73f723732a081779297
 
 from datetime import datetime
 
 
+<<<<<<< HEAD
 # 키워드 분석
 # from konlpy.tag import Okt 
 # from collections import Counter
@@ -42,6 +50,8 @@ from datetime import datetime
 
 JWT_SECRET_KEY = config('JWT_SECRET_KEY')
 
+=======
+>>>>>>> 0e5351d3e0369aa5449ab73f723732a081779297
 # id 생성
 def make_random_id():
     return ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(13))
@@ -252,6 +262,7 @@ def airline_report(request, arrival_id, airline_id):
     }
 
     return HttpResponse(json.dumps(response_data), content_type = 'application/json; charset=utf8')
+<<<<<<< HEAD
 
 
 # 로그인 불필요
@@ -334,12 +345,24 @@ def review_score(request, airline_id):
 #         for word, tag in i:
 #             if (tag in['Noun'] or tag in['Adjective']) and word not in stopwords:
 #                 noun_adj_list.append(word)
+=======
+>>>>>>> 0e5351d3e0369aa5449ab73f723732a081779297
 
 #     #빈도수로 정렬하고 단어와 빈도수를 딕셔너리로 전달
 #     count = Counter(noun_adj_list)
 #     words = (dict(count.most_common()))
 #     # keyword = list(words)[:6]
 
+<<<<<<< HEAD
 #     # 딕셔너리를 제이슨으로 변환하여 전달
 #     obj = json.dumps(words)
 #     return(obj)
+=======
+# 로그인 불필요
+@api_view(['GET'])
+def airline_details(request, airline_id):
+    airline = get_object_or_404(Airline, pk=airline_id)
+    serializer = AirlineDetailSerializer(airline)
+    data = serializer.data
+    return Response(data)
+>>>>>>> 0e5351d3e0369aa5449ab73f723732a081779297

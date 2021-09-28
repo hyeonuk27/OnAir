@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class='main' :style="{backgroundImage: 'linear-gradient( rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08) ), url('+ bg_img +')'}">
     <!-- <img class="main-img" src="@/assets/main.jpg" alt=""> -->
     <div class="main-container">
@@ -14,10 +15,16 @@
         <Search/>
       </div>
     </div>
+=======
+  <div class='main'>
+    <img class="main-img" src="@/assets/main.jpg" alt="">
+    Main
+>>>>>>> 0e5351d3e0369aa5449ab73f723732a081779297
   </div>
 </template>
 
 <script>
+<<<<<<< HEAD
 import Search from "@/components/main/Search"
 
 export default {
@@ -35,10 +42,15 @@ export default {
       arrival: '✈TAO',
     }
   }
+=======
+export default {
+
+>>>>>>> 0e5351d3e0369aa5449ab73f723732a081779297
 }
 </script>
 
 <style>
+<<<<<<< HEAD
   .arrival-info {
     color: white;
     font-size: 130px;
@@ -59,5 +71,14 @@ export default {
 
   .search-box {
     border: 1px solid black;
+=======
+  .main {
+  }
+
+  .main-img {
+    height: 500px;
+    object-fit: cover;
+    width: 100%;
+>>>>>>> 0e5351d3e0369aa5449ab73f723732a081779297
   }
 </style>

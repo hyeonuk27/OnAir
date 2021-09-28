@@ -7,4 +7,5 @@ urlpatterns = [
     path('logs/', views.user_log_list),
     path('states/', views.arrival_list),
     path('airlines/<arrival_id>/', views.airline_list),
+    path('reviews/keword/<airline_id>/', views.review_keyword),
 ]

@@ -58,7 +58,7 @@ for airline in airlines:
     # print(delaytotal.head())
     merge_right = pd.merge(total_flight, delaytotal, on="arrival", how='right')
 
-    # 총 결항횟수
+    # 총 결항횟수 -> 결측치 나옴. 이거 어떡하냐
     c_filter = airlinedata[airlinedata['state'] != '취소'].index
     cancel = airlinedata.drop(c_filter).reset_index(drop=True)
     print(cancel.head())

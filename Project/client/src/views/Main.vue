@@ -19,6 +19,8 @@
 
 <script>
 import Search from "@/components/main/Search"
+import axios from "axios"
+import API from "@/common/drf.js"
 
 export default {
   name: 'Main',
@@ -31,9 +33,23 @@ export default {
       arrival_list: [],
       departure_list: ['인천(ICN)'],
       bg_img: require('@/assets/main.jpg'),
-      departure: 'ICN✈',
-      arrival: '✈TAO',
+      departure: 'On✈',
+      arrival: '✈Air',
     }
+  },
+  methods: {
+    getArrivals: function() {
+      axios({
+        url: API.URL + API.ROUTES.getArrivals,
+        method: "get",
+      })
+        .then(() => {
+
+        })
+    }
+  },
+  created() {
+
   }
 }
 </script>

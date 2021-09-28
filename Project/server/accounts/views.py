@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import get_user_model
 from .serializers import UserSerializer
 
+from decouple import config
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -10,8 +11,6 @@ import string
 import random
 import requests
 import jwt
-from drf_yasg import openapi
-from decouple import config
 
 JWT_SECRET_KEY = config('JWT_SECRET_KEY')
 
@@ -57,3 +56,14 @@ def login(request):
         'access_token': encoded_jwt,
     }
     return Response(data, status=status.HTTP_201_CREATED)
+
+
+@api_view(['PUT'])
+def update(request):
+    jwt_token = request.headers["Authorization"]
+    google_id = jwt.decode(jwt_token, JWT_SECRET_KEY, algorithm='HS256')
+    user = get_object_or_404(User, google_id=google_id)
+    serializer = UserSerializer(user, data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)

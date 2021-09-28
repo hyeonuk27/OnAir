@@ -33,6 +33,13 @@ import json
 from datetime import datetime
 
 
+# 키워드 분석
+from konlpy.tag import Okt 
+from collections import Counter
+from nltk.corpus import stopwords
+
+
+
 # id 생성
 def make_random_id():
     return ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(13))
@@ -55,6 +62,25 @@ def get_encoded(data,labelencoder_dict,onehotencoder_dict):
             encoded_x = np.concatenate((encoded_x, feature), axis=1)
 
     encoded_x = np.concatenate((encoded_x, data.iloc[:, -1].to_numpy().reshape(-1, 1)), axis=1)
+
+    return encoded_x
+
+
+# 머신러닝 원핫인코딩 인코더 - 목적지, 항공사, 날씨로만 예측용
+def get_encoded_weather(data,labelencoder_dict,onehotencoder_dict):
+    # except passengers
+    data_exc = data
+    encoded_x = None
+    for i in range(0,data_exc.shape[1]):
+        label_encoder =  labelencoder_dict[i]
+        feature = label_encoder.transform(data_exc.iloc[:,i])
+        feature = feature.reshape(data_exc.shape[0], 1)
+        onehot_encoder = onehotencoder_dict[i]
+        feature = onehot_encoder.transform(feature)
+        if encoded_x is None:
+            encoded_x = feature
+        else:
+            encoded_x = np.concatenate((encoded_x, feature), axis=1)
 
     return encoded_x
 
@@ -84,8 +110,6 @@ def user_review_list(request, user_id):
             'arrival_id': openapi.Schema(type=openapi.TYPE_STRING, description='The desc'),
         }))
 @api_view(['GET', 'POST'])
-@authentication_classes([JSONWebTokenAuthentication])
-@permission_classes([IsAuthenticated])
 def user_log_list(request):
     if request.method == 'GET':
         logs = Log.objects.filter(user_id=request.user.id).order_by('-reg_dt')[:10]
@@ -154,16 +178,78 @@ def airline_list(request, arrival_id):
         )
     
     # Python의 dictionary를 Json형태로 반환하기 위함
-    return HttpResponse(json.dumps(response_data), content_type = 'application/javascript; charset=utf8')
+    return HttpResponse(json.dumps(response_data), content_type = 'application/json; charset=utf8')
 
 @api_view(['GET'])
 def airline_report(request, arrival_id, airline_id):
-    # airline = get_object_or_404(Airline, pk=airline_id)
-    # arrival = get_object_or_404(Arrival, pk=arrival_id)
-    # statistics_result = StatisticsResult.objects.filter(airline=airline.name, arrival=arrival.name).first()
-    # airline, arrival 넣으면 통계 데이터를 가져오는 함수를 만들어야 하는데 아직 csv 파일 완성이 안되어서 이 부분만 시간이 좀 더 걸릴 것 같음
-    pass
+    airline = get_object_or_404(Airline, pk=airline_id)
+    arrival = get_object_or_404(Arrival, pk=arrival_id)
+    statistics_result = StatisticsResult.objects.filter(airline=airline.name, arrival=arrival.name).first()
+    
+    labelencoder = joblib.load('predict_models/ml_delay/labelencoder_dict.pkl')
+    onehotencoder = joblib.load('predict_models/ml_delay/onehotencoder_dict.pkl')
+    scaler = joblib.load('predict_models/ml_delay/passengers_min_max_scaler.pkl')
+    
+    # 오늘 날씨, 이번달 이용객수에 따른 예측값은 항공사 리스트로부터 router.push의 파라미터로 받는다.
+    # 날씨에 따른 지연률 예측값 리스트
+    weather_model = joblib.load('predict_models/ml_delay/delay_rate_weather_predict.pkl')
+    weather_list = ['Clear', 'Clouds', 'Mist', 'Haze', 'Rain', 'Fog', 'Snow', 'Dust', 'Drizzle', 'Thunderstorm', 'Typhoon', 'Smoke']
+    predicted_by_weather = []
+    for weather in weather_list:
+        df = pd.DataFrame([[airline.name, arrival.name, weather]], columns = ['airline', 'arrival', 'weather'])
+        input_data = get_encoded_weather(df, labelencoder, onehotencoder)
+        predicted_by_weather.append(round(weather_model.predict_proba(input_data)[0, 1] * 100, 2))
+    
+    # 월별 이용객수에 따른 향후 3개월 지연률 예측값 리스트
+    passengers_model = joblib.load('predict_models/ml_delay/delay_rate_passengers_predict.pkl')
+    month = datetime.today().month
+    month_list = [
+        '%d월' % month, 
+        '%d월' % (month + 1) if (month + 1) < 13 else (month + 1 - 12), 
+        '%d월' % (month + 2) if (month + 2) < 13 else (month + 2 - 12)
+    ]
+    # 이번달부터 3개월 이용객수 예측 파일 로드
+    predicted_data = pd.read_csv('predict_models/ets_passengers/predict_data/%s.csv' % airline.name)
+    predicted_by_passengers = []
+    # 1개월마다 지연률 예측값 구하기
+    for i in range(3):
+        scaled_passengers = scaler.transform(pd.DataFrame([[predicted_data['passengers'].values[i]]]))
+        df = pd.DataFrame([[airline.name, arrival.name, scaled_passengers]], columns = ['airline', 'arrival', 'passengers'])
+        input_data = get_encoded(df, labelencoder, onehotencoder)
+        predicted_by_passengers.append(round(passengers_model.predict_proba(input_data)[0, 1] * 100, 2))
+    
+    # 통계
+    df = pd.read_csv('statistics/statistics_data.csv')
 
+    response_data = {
+        'data': {
+            'airline_id': airline.id,
+            'airline_name': airline.name,
+            'airline_profile_url': airline.profile_url,
+            'airline_address': airline.address,
+            'airline_phone_number': airline.phone_number,
+            'airline_site_url': airline.site_url,
+            'airline_corona_url': airline.corona_url,
+            'airline_is_skyteam': airline.is_skyteam,
+            'airline_is_star': airline.is_star,
+            'airline_is_oneworld': airline.is_oneworld,
+            'arrival_id': arrival.id,
+            'arrival_name': arrival.name,
+            'arrival_image_url': arrival.image_url,
+            'total': statistics_result.total,
+            'under_10': statistics_result.under_10,
+            'under_30': statistics_result.under_30,
+            'over_30': statistics_result.over_30,
+            'delay_rate': statistics_result.delay_rate,
+            'delay_time': statistics_result.delay_time,
+            'weather_list': weather_list,
+            'predicted_by_weather': predicted_by_weather,
+            'month_list': month_list,
+            'predicted_by_passengers': predicted_by_passengers,
+        }   
+    }
+
+    return HttpResponse(json.dumps(response_data), content_type = 'application/json; charset=utf8')
 
 
 # 로그인 불필요
@@ -173,3 +259,45 @@ def airline_details(request, airline_id):
     serializer = AirlineDetailSerializer(airline)
     data = serializer.data
     return Response(data)
+
+# 로그인 불필요
+@api_view(['GET'])
+def review_keyword(request, airline_id):
+    pass
+
+
+
+@api_view(['GET'])
+def review_keyword(request, airline_id):
+    file = open('./static/airlines/npl/stopwords.txt', 'r')
+    stopwords = file.read()
+    stopwords = stopwords.split('\n')
+    
+    airline = get_object_or_404(Airline, pk=airline_id)
+    reviews = airline.reviews.all()
+
+    airline_review = []
+    for review in reviews:
+        airline_review.extend(review.content.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]",""))
+        airline_review.extend(review.title.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]",""))
+
+
+    reviews = Okt()
+    
+    # 말뭉치 (형태소랑 품사 짝)
+    morphs = reviews.pos(airline_review[0])
+    
+    noun_adj_list = []
+    for i in morphs:
+        for word, tag in i:
+            if (tag in['Noun'] or tag in['Adjective']) and word not in stopwords:
+                noun_adj_list.append(word)
+
+    #빈도수로 정렬하고 단어와 빈도수를 딕셔너리로 전달
+    count = Counter(noun_adj_list)
+    words = (dict(count.most_common()))
+    # keyword = list(words)[:6]
+
+    # 딕셔너리를 제이슨으로 변환하여 전달
+    obj = json.dumps(words)
+    return(obj)

@@ -5,7 +5,30 @@ import pandas as pd
 # 첫번째 컬럼을 index로 사용
 df = pd.read_csv('./statistics_data.csv', index_col=0)
 
+'''
+class StatisticsResult(models.Model):
+    id = models.CharField(max_length=13, primary_key=True)
+    # 목적지
+    arrival = models.CharField(max_length=50)
+    # 항공사
+    airline = models.CharField(max_length=20)
+    # 목적지에 대한 총운항횟수
+    total = models.IntegerField()
+    # 10분내 출발확률
+    under_10 = models.FloatField()
+    # 10분 초과 30분 이하 출발확률
+    under_30 = models.FloatField()
+    # 30분 초과 출발확률
+    over_30 = models.FloatField()
+    # 지연률
+    delay_rate = models.FloatField()
+    # 평균 지연시간
+    delay_time = models.IntegerField()
+    # 결항률
+    cancel_rate = models.FloatField()
 
+'''
+airlines = ['아시아나항공', '대한항공', '진에어', '티웨이항공', '에어서울', '중국동방항공', '중국남방항공', '제주항공', '독일항공', '프랑스항공', '유나이티드항공', '델타항공', '네덜란드항공', '에미레이트항공', '카타르항공', '아메리칸항공']
 # 항공사 것만 조회
 # airline_filter = df[df['airline'] != '{airline.name}'].index
 airline_filter = df[df['airline'] != '대한항공'].index

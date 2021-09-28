@@ -149,7 +149,3 @@ STATICFILES_DIRS = [
 
 # custome user model
 AUTH_USER_MODEL = 'accounts.User'
-
-JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
-}

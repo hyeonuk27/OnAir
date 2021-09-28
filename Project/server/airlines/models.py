@@ -29,7 +29,6 @@ class Review(models.Model):
     id = models.CharField(max_length=13, primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
     airline = models.ForeignKey(Airline, on_delete=models.CASCADE, related_name='reviews')
-    arrival = models.ForeignKey(Arrival, on_delete=models.CASCADE, related_name='reviews')
     title = models.TextField()
     content = models.TextField()
     flight_at = models.DateField()

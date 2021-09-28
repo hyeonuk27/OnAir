@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 import joblib
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder, MinMaxScaler
 
 labelencoder_dict = {}
 onehotencoder_dict = {}
@@ -23,14 +23,22 @@ for i in range(0, df_X.shape[1]):
     else:
         X = np.concatenate((X, feature), axis=1)
 
-X = np.concatenate((X, df['passengers'].to_numpy().reshape(-1, 1)), axis=1)
+min_max_scaler = MinMaxScaler()
+X_passengers = df['passengers'].to_frame()
+min_max_scaler.fit(X_passengers)
+X_scaled = min_max_scaler.transform(X_passengers)
+X_scaled = pd.DataFrame(X_scaled, columns=X_passengers.columns)
+X = np.concatenate((X, X_scaled), axis=1)
 Y = df[df.columns[4]].to_numpy()
 np.set_printoptions(precision=6, suppress=True)
 
 train_input, test_input, train_target, test_target = train_test_split(X, Y, random_state=42)
 lr = LogisticRegression()
 lr.fit(train_input, train_target)
+print(lr.score(train_input, train_target))
+print(lr.score(test_input, test_target))
 
 joblib.dump(lr, './delay_rate_predict.pkl')
 joblib.dump(labelencoder_dict, './labelencoder_dict.pkl')
 joblib.dump(onehotencoder_dict, './onehotencoder_dict.pkl')
+joblib.dump(min_max_scaler, './passengers_min_max_scaler.pkl')

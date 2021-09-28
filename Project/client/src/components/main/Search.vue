@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="search">
+
   </div>
 </template>
 
@@ -10,5 +11,8 @@ export default {
 </script>
 
 <style>
-
+  .search {
+    width: 200px;
+    height: 100px;
+  }
 </style>

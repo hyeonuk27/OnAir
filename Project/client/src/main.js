@@ -3,8 +3,11 @@ import VueRouter from 'vue-router'
 import App from './App.vue'
 import store from './common/store.js'
 import router from './common/vue-router.js'
+import Vuesax from 'vuesax'
+import 'material-icons/iconfont/material-icons.css'
 
 Vue.use(VueRouter)
+Vue.use(Vuesax)
 Vue.config.productionTip = false
 
 new Vue({

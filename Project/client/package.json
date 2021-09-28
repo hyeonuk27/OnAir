@@ -11,6 +11,8 @@
     "axios": "^0.21.4",
     "core-js": "^3.6.5",
     "material-icons": "^1.5.1",
+    "node-sass": "^6.0.1",
+    "sass-loader": "^10.2.0",
     "vue": "^2.6.11",
     "vue-router": "^3.5.2",
     "vuesax": "^3.12.2",

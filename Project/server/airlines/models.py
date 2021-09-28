@@ -14,6 +14,9 @@ class Airline(models.Model):
     is_skyteam = models.BooleanField(null=True, blank=True)
     is_star = models.BooleanField(null=True, blank=True)
     is_oneworld = models.BooleanField(null=True, blank=True)
+    total_flight = models.IntegerField()
+    total_delayed = models.IntegerField()
+    total_canceled = models.IntegerField()
 
 
 class Arrival(models.Model):
@@ -26,7 +29,6 @@ class Review(models.Model):
     id = models.CharField(max_length=13, primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
     airline = models.ForeignKey(Airline, on_delete=models.CASCADE, related_name='reviews')
-    arrival = models.ForeignKey(Arrival, on_delete=models.CASCADE, related_name='reviews')
     title = models.TextField()
     content = models.TextField()
     flight_at = models.DateField()
@@ -60,6 +62,10 @@ class Statistics(models.Model):
 
 class StatisticsResult(models.Model):
     id = models.CharField(max_length=13, primary_key=True)
+    # 목적지
+    arrival = models.CharField(max_length=50)
+    # 항공사
+    airline = models.CharField(max_length=20)
     # 목적지에 대한 총운항횟수
     total = models.IntegerField()
     # 10분내 출발확률
@@ -72,3 +78,8 @@ class StatisticsResult(models.Model):
     delay_rate = models.FloatField()
     # 평균 지연시간
     delay_time = models.IntegerField()
+    # 결항률
+    cancel_rate = models.FloatField()
+    
+
+

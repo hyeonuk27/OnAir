@@ -25,3 +25,10 @@ class LogSerializer(serializers.ModelSerializer):
         model = Log
         fields = ('id', 'user', 'airline', 'arrival', 'reg_dt')
         read_only_fields = ('id', 'user', 'airline', 'arrival', 'reg_dt')
+
+
+class AirlineDetailSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Airline
+        exclude = ('id',)

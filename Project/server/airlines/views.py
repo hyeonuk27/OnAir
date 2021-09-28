@@ -80,3 +80,14 @@ def arrival_list(request):
     serializer = ArrivalListSerializer(arrivals, many=True)
     data = serializer.data
     return Response(data)
+
+
+# 통계 자료 조회
+@api_view(['GET'])
+def airline_detail(request, arrival_id, airline_id):
+    airline = get_object_or_404(Airline, pk=airline_id)
+    arrival = get_object_or_404(Arrival, pk=arrival_id)
+    serializer = Airline
+
+
+# 항공사 정보 조회

@@ -3,7 +3,8 @@ from django.http import HttpResponse
 
 from .models import Airline, Arrival, Review, Log, StatisticsResult
 from accounts.models import User
-from .serializers import AirlineDetailSerializer, AirlineReportSerializer, ReviewListSerializer, LogListSerializer, ArrivalListSerializer, LogSerializer
+from .models import Review
+from .serializers import AirlineDetailSerializer, AirlineReportSerializer, ReviewListSerializer, ReviewSerializer, LogListSerializer, ArrivalListSerializer, LogSerializer
 
 from django.core.paginator import Paginator
 
@@ -260,11 +261,39 @@ def airline_details(request, airline_id):
     data = serializer.data
     return Response(data)
 
-# 로그인 불필요
-@api_view(['GET'])
-def review_keyword(request, airline_id):
-    pass
 
+@api_view(['POST'])
+def review_create(request):
+    serializer = ReviewSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+      serializer.save()
+      return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+
+@api_view(['GET'])
+def review_list(request, airline_id):
+    reviews = get_list_or_404(Review, pk=airline_id)
+    serializer = ReviewListSerializer(reviews, many=True)
+    return Response(serializer.data)
+    
+
+@api_view(['DELETE', 'POST'])
+def review_detail(request, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    if request.user == review.user:
+        if request.method == 'DELETE':
+            review.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        elif request.method == 'PUT':
+            serializer = ReviewSerializer(Review, data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                return Response(serializer.data)
+
+
+api_view(['GET'])
+def review_score(request, airline_id):
+    pass
 
 
 @api_view(['GET'])
@@ -281,10 +310,8 @@ def review_keyword(request, airline_id):
         airline_review.extend(review.content.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]",""))
         airline_review.extend(review.title.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]",""))
 
-
-    reviews = Okt()
-    
     # 말뭉치 (형태소랑 품사 짝)
+    reviews = Okt()
     morphs = reviews.pos(airline_review[0])
     
     noun_adj_list = []

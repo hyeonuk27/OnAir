@@ -30,16 +30,17 @@ from decouple import config
 
 import requests
 import json
+import jwt
 
 from datetime import datetime
 
 
 # 키워드 분석
-from konlpy.tag import Okt 
-from collections import Counter
-from nltk.corpus import stopwords
+# from konlpy.tag import Okt 
+# from collections import Counter
+# from nltk.corpus import stopwords
 
-
+JWT_SECRET_KEY = config('JWT_SECRET_KEY')
 
 # id 생성
 def make_random_id():
@@ -260,38 +261,52 @@ def airline_details(request, airline_id):
     serializer = AirlineDetailSerializer(airline)
     data = serializer.data
     return Response(data)
-
-
-@api_view(['POST'])
-def review_create(request):
-    serializer = ReviewSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-      serializer.save()
-      return Response(serializer.data, status=status.HTTP_201_CREATED)
     
 
-@api_view(['GET'])
+@api_view(['POST', 'GET'])
 def review_list(request, airline_id):
-    reviews = get_list_or_404(Review, pk=airline_id)
-    serializer = ReviewListSerializer(reviews, many=True)
-    return Response(serializer.data)
+    if request.method == 'POST':
+        jwt_token = request.headers["Authorization"]
+        user_id = jwt.decode(jwt_token, JWT_SECRET_KEY, algorithm='HS256')
+        user = get_object_or_404(User, id=user_id['id'])
+        while True:
+            review_id = make_random_id()
+            if(Review.objects.filter(id=review_id).exists()):
+                continue
+            else:
+                break
+        airline = get_object_or_404(Airline, id=airline_id)
+        test = Review(id=review_id)
+        serializer = ReviewSerializer(test, data=request.data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(airline=airline, user=user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+    elif request.method == 'GET':
+        reviews = get_list_or_404(Review, airline=airline_id)
+        serializer = ReviewListSerializer(reviews, many=True)
+        return Response(serializer.data)
     
 
-@api_view(['DELETE', 'POST'])
-def review_detail(request, review_pk):
-    review = get_object_or_404(Review, pk=review_pk)
-    if request.user == review.user:
+@api_view(['DELETE', 'PUT'])
+def review_detail(request, review_id):
+    print('test')
+    review = get_object_or_404(Review, id=review_id)
+    jwt_token = request.headers["Authorization"]
+    user_id = jwt.decode(jwt_token, JWT_SECRET_KEY, algorithm='HS256')
+    user = get_object_or_404(User, id=user_id['id'])
+    
+    if user == review.user:
         if request.method == 'DELETE':
             review.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         elif request.method == 'PUT':
-            serializer = ReviewSerializer(Review, data=request.data)
+            serializer = ReviewSerializer(review, data=request.data, partial=True)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
                 return Response(serializer.data)
 
 
-api_view(['GET'])
+@api_view(['GET'])
 def review_score(request, airline_id):
     pass
 

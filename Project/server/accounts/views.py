@@ -50,7 +50,8 @@ def login(request):
         )
         new_user.save()
         serializer = UserSerializer(new_user)
-        encoded_jwt = jwt.encode({'id': new_user.google_id}, JWT_SECRET_KEY, algorithm='HS256')
+        encoded_jwt = jwt.encode({'id': new_user.id}, JWT_SECRET_KEY, algorithm='HS256')
+        print(encoded_jwt)
     data = {
         'info': serializer.data,
         'access_token': encoded_jwt,
@@ -61,8 +62,8 @@ def login(request):
 @api_view(['PUT'])
 def update(request):
     jwt_token = request.headers["Authorization"]
-    google_id = jwt.decode(jwt_token, JWT_SECRET_KEY, algorithm='HS256')
-    user = get_object_or_404(User, google_id=google_id)
+    user_id = jwt.decode(jwt_token, JWT_SECRET_KEY, algorithm='HS256')
+    user = get_object_or_404(User, id=user_id)
     serializer = UserSerializer(user, data=request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save()

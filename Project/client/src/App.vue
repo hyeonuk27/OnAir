@@ -1,22 +1,30 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <NavBar id="navbar"/>
+    <RouterView id="router" :key="$route.fullPath"/>
+    <Footer id="footer"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import NavBar from "@/components/page/NavBar"
+import Footer from "@/components/page/Footer"
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    NavBar,
+    Footer
   }
 }
 </script>
 
 <style>
+html,body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
 #app {
   /* font-family: Avenir, Helvetica, Arial, sans-serif; */
   font-family: 'KoPubDotumMedium';
@@ -26,6 +34,25 @@ export default {
   box-sizing: border-box;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+#navbar {
+  float: left;
+  min-width: 1190px;
+  position: absolute;
+  width: 100%;
+}
+
+#router {
+  flex: 1;
+  min-width: 1190px;
+}
+
+#footer {
+  min-width: 1190px;
 }
 </style>

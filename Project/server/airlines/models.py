@@ -80,9 +80,3 @@ class StatisticsResult(models.Model):
     delay_time = models.IntegerField()
     # 결항률
     cancel_rate = models.FloatField()
-    
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 0e5351d3e0369aa5449ab73f723732a081779297

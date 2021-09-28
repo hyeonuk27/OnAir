@@ -82,4 +82,3 @@ class StatisticsResult(models.Model):
     cancel_rate = models.FloatField()
     
 
-

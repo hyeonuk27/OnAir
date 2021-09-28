@@ -180,6 +180,7 @@ def airline_report(request, arrival_id, airline_id):
     airline = get_object_or_404(Airline, pk=airline_id)
     arrival = get_object_or_404(Arrival, pk=arrival_id)
     statistics_result = StatisticsResult.objects.filter(airline=airline.name, arrival=arrival.name).first()
+    
     labelencoder = joblib.load('predict_models/ml_delay/labelencoder_dict.pkl')
     onehotencoder = joblib.load('predict_models/ml_delay/onehotencoder_dict.pkl')
     scaler = joblib.load('predict_models/ml_delay/passengers_min_max_scaler.pkl')
@@ -212,6 +213,9 @@ def airline_report(request, arrival_id, airline_id):
         input_data = get_encoded(df, labelencoder, onehotencoder)
         predicted_by_passengers.append(round(passengers_model.predict_proba(input_data)[0, 1] * 100, 2))
     
+    # 통계
+    df = pd.read_csv('statistics/statistics_data.csv')
+
     response_data = {
         'data': {
             'airline_id': airline.id,

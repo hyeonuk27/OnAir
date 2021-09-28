@@ -9,4 +9,4 @@ def make_random_id():
 df = read_csv('./arrival_data.csv')
 id = [ make_random_id() for _ in range(120) ]
 df.insert(1, 'id', id)
-df.to_csv('./arrival_cities.csv')
+df.to_csv('../arrival_cities.csv')

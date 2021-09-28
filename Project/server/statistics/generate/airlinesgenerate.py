@@ -192,4 +192,4 @@ df['is_skyteam'] = is_skyteam
 df['is_star'] = is_star
 df['is_oneworld'] = is_oneworld
 
-df.to_csv('./airlines.csv')
+df.to_csv('../airlines.csv')

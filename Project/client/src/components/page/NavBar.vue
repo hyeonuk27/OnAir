@@ -1,6 +1,17 @@
 <template>
-  <div>
-    NavBar
+  <div class="d-flex justify-content-between">
+    <nav class="navbar">
+      <!-- 로고 -->
+      <button @click="moveToMain">
+        <img
+          src="@/assets/log.png"
+          style="height: 2.1rem"
+          alt="logo-image"
+        />
+      </button>
+
+      <!-- 로그인 -->
+      <button @click="moveToLogin">로그인</button>
   </div>
 </template>
 
@@ -9,6 +20,16 @@
 export default {
   name: 'NavBar',
   methods: {
+    moveToMain() {
+      if (this.$route.path !== "/") {
+        this.$router.push({ name: "Main" })
+      }
+    },
+    moveToLogin() {
+      if (this.$route.path !== "login") {
+        this.$router.push({ name: "Login" })
+      }
+    },
     signOut() {
       const auth2 = gapi.auth2.getAuthInstance()
       auth2.signOut().then(function () {
@@ -16,7 +37,7 @@ export default {
       })
       auth2.disconnect()
     }
-  }
+  }    
 }
 </script>
 

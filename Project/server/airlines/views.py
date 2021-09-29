@@ -313,12 +313,13 @@ def review_score(request, airline_id):
 
 @api_view(['GET'])
 def review_keyword(request, airline_id):
+    from konlpy.tag import Okt
     # file = open('./static/airlines/npl/stopwords.txt', 'r')
     file = open('https://j5a203.p.ssafy.io/static/airlines/npl/stopwords.txt', 'r')
     stopwords = file.read()
     stopwords = stopwords.split('\n')
     
-    airline = get_object_or_404(Airline, pk=airline_id)
+    airline = get_object_or_404(Airline, id=airline_id)
     reviews = airline.reviews.all()
 
     airline_review = []
@@ -326,8 +327,6 @@ def review_keyword(request, airline_id):
         airline_review.extend(review.content.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]",""))
         airline_review.extend(review.title.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]",""))
 
-    from konlpy.tag import Okt
-    
     # 말뭉치 (형태소랑 품사 짝)
     reviews = Okt()
     morphs = reviews.pos(airline_review[0])

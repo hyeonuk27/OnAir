@@ -340,7 +340,7 @@ def review_keyword(request, airline_id):
     # komoran ver.
     komoran = Komoran(DEFAULT_MODEL['FULL'])
     target_tags = ['NNG', 'VA']
-    noun_adj_list = komoran.get_morphes_by_tags(reviews, tag_list=target_tags)
+    noun_adj_list = komoran.get_morphes_by_tags(airline_review, tag_list=target_tags)
 
     #빈도수로 정렬하고 단어와 빈도수를 딕셔너리로 전달
     count = Counter(noun_adj_list)

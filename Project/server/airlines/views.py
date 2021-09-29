@@ -36,9 +36,9 @@ from datetime import datetime
 
 
 # 키워드 분석
-# from konlpy.tag import Okt 
-# from collections import Counter
-# from nltk.corpus import stopwords
+from konlpy.tag import Okt 
+from collections import Counter
+from nltk.corpus import stopwords
 
 JWT_SECRET_KEY = config('JWT_SECRET_KEY')
 

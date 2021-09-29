@@ -18,13 +18,18 @@
         />
       </div>
       <div class="airline-list">
-
+        <Airline
+        v-for="(airline, idx) in airline_list"
+        :key="idx"
+        :airline="airline"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Airline from "@/components/main/Airline"
 import Search from "@/components/main/Search"
 import axios from "axios"
 import API from "@/common/drf.js"
@@ -32,7 +37,8 @@ import API from "@/common/drf.js"
 export default {
   name: 'Main',
   components: {
-    Search
+    Search,
+    Airline,
   },
   data() {
     return {
@@ -118,7 +124,7 @@ export default {
 
 <style>
   .airline-list {
-    border: 1px solid black;
+    
   }
 
   .arrival-info {

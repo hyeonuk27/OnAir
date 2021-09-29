@@ -36,9 +36,9 @@ from datetime import datetime
 
 
 # 키워드 분석
-from konlpy.tag import Okt 
-from collections import Counter
-from nltk.corpus import stopwords
+# from konlpy.tag import Okt 
+# from collections import Counter
+# from nltk.corpus import stopwords
 
 JWT_SECRET_KEY = config('JWT_SECRET_KEY')
 
@@ -111,6 +111,7 @@ def user_review_list(request, user_id):
             'airline_id': openapi.Schema(type=openapi.TYPE_STRING, description='The desc'),
             'arrival_id': openapi.Schema(type=openapi.TYPE_STRING, description='The desc'),
         }))
+
 @api_view(['GET', 'POST'])
 def user_log_list(request):
     if request.method == 'GET':

@@ -1,6 +1,14 @@
 <template>
   <div>
-    <LoginButton />
+    <div class="login-container">
+      <div>
+        <img src="@/assets/login.jpg" style="width: 500px;" alt="login-image">
+      </div>
+      <div class="d-flex justify-content-center m-2">
+        <LoginButton />
+      </div>
+
+    </div>
   </div>
 </template>
 
@@ -20,5 +28,7 @@ export default {
 </script>
 
 <style>
-
+  .login-container {
+    margin-top: 20vh;
+  }
 </style>

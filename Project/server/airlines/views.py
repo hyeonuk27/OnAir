@@ -6,6 +6,7 @@ from .models import Airline, Arrival, Review, Log, StatisticsResult
 from accounts.models import User
 from .models import Review
 from .serializers import AirlineDetailSerializer, AirlineReportSerializer, ReviewListSerializer, ReviewSerializer, LogListSerializer, ArrivalListSerializer, LogSerializer
+from accounts.utils import check_login
 
 from django.core.paginator import Paginator
 
@@ -275,8 +276,8 @@ def review_list(request, airline_id):
             else:
                 break
         airline = get_object_or_404(Airline, id=airline_id)
-        test = Review(id=review_id)
-        serializer = ReviewSerializer(test, data=request.data, partial=True)
+        review = Review(id=review_id)
+        serializer = ReviewSerializer(review, data=request.data, partial=True)
         if serializer.is_valid(raise_exception=True):
             serializer.save(airline=airline, user=user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -287,14 +288,11 @@ def review_list(request, airline_id):
     
 
 @api_view(['DELETE', 'PUT'])
+@check_login
 def review_detail(request, review_id):
     print('test')
     review = get_object_or_404(Review, id=review_id)
-    jwt_token = request.headers["Authorization"]
-    user_id = jwt.decode(jwt_token, JWT_SECRET_KEY, algorithm='HS256')
-    user = get_object_or_404(User, id=user_id['id'])
-    
-    if user == review.user:
+    if request.user == review.user:
         if request.method == 'DELETE':
             review.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)

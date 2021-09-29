@@ -241,7 +241,7 @@ def airline_report(request, arrival_id, airline_id):
             'total': statistics_result.total,
             'under_30': statistics_result.under_30,
             'under_60': statistics_result.under_60,
-            'over_60': statistics_result.over_30,
+            'over_60': statistics_result.over_60,
             'delay_rate': statistics_result.delay_rate,
             'delay_time': statistics_result.delay_time,
             'weather_list': weather_list,

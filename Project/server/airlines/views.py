@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, get_list_or_404
+from django.db.models import Avg
 from django.http import HttpResponse
 
 from .models import Airline, Arrival, Review, Log, StatisticsResult
@@ -306,7 +307,20 @@ def review_detail(request, review_id):
 
 @api_view(['GET'])
 def review_score(request, airline_id):
-    pass
+    score = Review.objects.filter(airline=airline_id).aggregate(Avg('score'))
+    seat_score = Review.objects.filter(airline=airline_id, seat_score__isnull=False).aggregate(Avg('seat_score'))
+    service_score = Review.objects.filter(airline=airline_id, service_score__isnull=False).aggregate(Avg('service_score'))
+    checkin_score = Review.objects.filter(airline=airline_id, checkin_score__isnull=False).aggregate(Avg('checkin_score'))
+    food_score = Review.objects.filter(airline=airline_id, food_score__isnull=False).aggregate(Avg('food_score'))
+    
+    review_score = {
+        'score': score['score__avg'],
+        'seat_score': seat_score['seat_score__avg'],
+        'service_score': service_score['service_score__avg'],
+        'checkin_score': checkin_score['checkin_score__avg'],
+        'food_score': food_score['food_score__avg'],
+    }
+    return Response(review_score)
 
 
 @api_view(['GET'])

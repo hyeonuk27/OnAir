@@ -35,6 +35,7 @@ import jwt
 from datetime import datetime
 from collections import Counter
 from nltk.corpus import stopwords
+from PyKomoran import *
 
 
 JWT_SECRET_KEY = config('JWT_SECRET_KEY')
@@ -328,15 +329,20 @@ def review_keyword(request, airline_id):
         airline_review += review.content.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
         airline_review += review.title.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
 
+    # konlpy ver.
     # 말뭉치 (형태소랑 품사 짝)
-    from konlpy.tag import Okt
-    reviews = Okt()
-    morphs = reviews.pos(airline_review)
+    # reviews = Okt()
+    # morphs = reviews.pos(airline_review)
     
-    noun_adj_list = []
-    for word, tag in morphs:
-        if (tag in['Noun'] or tag in['Adjective']) and word not in stopwords:
-            noun_adj_list.append(word)
+    # noun_adj_list = []
+    # for word, tag in morphs:
+    #     if (tag in['Noun'] or tag in['Adjective']) and word not in stopwords:
+    #         noun_adj_list.append(word)
+
+    # komoran ver.
+    komoran = Komoran('STABLE')
+    target_tags = ['NNG', 'VA']
+    noun_adj_list = komoran.get_morphes_by_tags(reviews, tag_list=target_tags)
 
     #빈도수로 정렬하고 단어와 빈도수를 딕셔너리로 전달
     count = Counter(noun_adj_list)

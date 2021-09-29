@@ -326,8 +326,9 @@ def review_keyword(request, airline_id):
         airline_review.extend(review.content.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]",""))
         airline_review.extend(review.title.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]",""))
 
+    import Okt
     # 말뭉치 (형태소랑 품사 짝)
-    reviews = konlpy.tag.Okt()
+    reviews = Okt()
     morphs = reviews.pos(airline_review[0])
     
     noun_adj_list = []

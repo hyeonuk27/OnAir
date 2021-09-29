@@ -19,7 +19,7 @@
       </div>
       <div class="airline-list">
         <div>
-          <Airline
+          <AirlineElement
           v-for="(airline, idx) in airline_list"
           :key="idx"
           :airline="airline"
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import Airline from "@/components/main/Airline"
+import AirlineElement from "@/components/main/AirlineElement"
 import Search from "@/components/main/Search"
 import axios from "axios"
 import API from "@/common/drf.js"
@@ -40,7 +40,7 @@ export default {
   name: 'Main',
   components: {
     Search,
-    Airline,
+    AirlineElement,
   },
   data() {
     return {
@@ -128,7 +128,7 @@ export default {
   .airline-list {
     display: flex;
     justify-content: center;
-    margin-bottom: 150px;
+    padding-bottom: 150px;
   }
 
   .arrival-info {

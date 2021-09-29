@@ -30,16 +30,17 @@ from decouple import config
 
 import requests
 import json
+import jwt
 
 from datetime import datetime
 
 
 # 키워드 분석
-from konlpy.tag import Okt 
-from collections import Counter
-from nltk.corpus import stopwords
+# from konlpy.tag import Okt 
+# from collections import Counter
+# from nltk.corpus import stopwords
 
-
+JWT_SECRET_KEY = config('JWT_SECRET_KEY')
 
 # id 생성
 def make_random_id():
@@ -159,6 +160,8 @@ def airline_list(request, arrival_id):
     for airline in airlines:
         # 목적지, 항공사에 해당하는 통계 결과 가져오기
         statistics_result = StatisticsResult.objects.filter(airline=airline.name, arrival=arrival.name).first()
+        if statistics_result == None:
+            continue
         # 목적지, 항공사에 해당하는 이번달 이용객수 예측값 가져오기
         df = pd.read_csv('predict_models/ets_passengers/predict_data/%s.csv' % airline.name)
         predicted_data = df[df['date'].str.startswith('%s' % datetime.today().strftime("%Y-%m"))]['passengers'][0]
@@ -238,9 +241,9 @@ def airline_report(request, arrival_id, airline_id):
             'arrival_name': arrival.name,
             'arrival_image_url': arrival.image_url,
             'total': statistics_result.total,
-            'under_10': statistics_result.under_10,
             'under_30': statistics_result.under_30,
-            'over_30': statistics_result.over_30,
+            'under_60': statistics_result.under_60,
+            'over_60': statistics_result.over_30,
             'delay_rate': statistics_result.delay_rate,
             'delay_time': statistics_result.delay_time,
             'weather_list': weather_list,
@@ -260,71 +263,85 @@ def airline_details(request, airline_id):
     serializer = AirlineDetailSerializer(airline)
     data = serializer.data
     return Response(data)
-
-
-@api_view(['POST'])
-def review_create(request):
-    serializer = ReviewSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-      serializer.save()
-      return Response(serializer.data, status=status.HTTP_201_CREATED)
     
 
-@api_view(['GET'])
+@api_view(['POST', 'GET'])
 def review_list(request, airline_id):
-    reviews = get_list_or_404(Review, pk=airline_id)
-    serializer = ReviewListSerializer(reviews, many=True)
-    return Response(serializer.data)
+    if request.method == 'POST':
+        jwt_token = request.headers["Authorization"]
+        user_id = jwt.decode(jwt_token, JWT_SECRET_KEY, algorithm='HS256')
+        user = get_object_or_404(User, id=user_id['id'])
+        while True:
+            review_id = make_random_id()
+            if(Review.objects.filter(id=review_id).exists()):
+                continue
+            else:
+                break
+        airline = get_object_or_404(Airline, id=airline_id)
+        test = Review(id=review_id)
+        serializer = ReviewSerializer(test, data=request.data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(airline=airline, user=user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+    elif request.method == 'GET':
+        reviews = get_list_or_404(Review, airline=airline_id)
+        serializer = ReviewListSerializer(reviews, many=True)
+        return Response(serializer.data)
     
 
-@api_view(['DELETE', 'POST'])
-def review_detail(request, review_pk):
-    review = get_object_or_404(Review, pk=review_pk)
-    if request.user == review.user:
+@api_view(['DELETE', 'PUT'])
+def review_detail(request, review_id):
+    print('test')
+    review = get_object_or_404(Review, id=review_id)
+    jwt_token = request.headers["Authorization"]
+    user_id = jwt.decode(jwt_token, JWT_SECRET_KEY, algorithm='HS256')
+    user = get_object_or_404(User, id=user_id['id'])
+    
+    if user == review.user:
         if request.method == 'DELETE':
             review.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         elif request.method == 'PUT':
-            serializer = ReviewSerializer(Review, data=request.data)
+            serializer = ReviewSerializer(review, data=request.data, partial=True)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
                 return Response(serializer.data)
 
 
-api_view(['GET'])
+@api_view(['GET'])
 def review_score(request, airline_id):
     pass
 
 
-# @api_view(['GET'])
-# def review_keyword(request, airline_id):
-#     file = open('./static/airlines/npl/stopwords.txt', 'r')
-#     stopwords = file.read()
-#     stopwords = stopwords.split('\n')
+@api_view(['GET'])
+def review_keyword(request, airline_id):
+    file = open('./static/airlines/npl/stopwords.txt', 'r')
+    stopwords = file.read()
+    stopwords = stopwords.split('\n')
     
-#     airline = get_object_or_404(Airline, pk=airline_id)
-#     reviews = airline.reviews.all()
+    airline = get_object_or_404(Airline, pk=airline_id)
+    reviews = airline.reviews.all()
 
-#     airline_review = []
-#     for review in reviews:
-#         airline_review.extend(review.content.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]",""))
-#         airline_review.extend(review.title.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]",""))
+    airline_review = []
+    for review in reviews:
+        airline_review.extend(review.content.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]",""))
+        airline_review.extend(review.title.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]",""))
 
-#     # 말뭉치 (형태소랑 품사 짝)
-#     reviews = Okt()
-#     morphs = reviews.pos(airline_review[0])
+    # 말뭉치 (형태소랑 품사 짝)
+    reviews = Okt()
+    morphs = reviews.pos(airline_review[0])
     
-#     noun_adj_list = []
-#     for i in morphs:
-#         for word, tag in i:
-#             if (tag in['Noun'] or tag in['Adjective']) and word not in stopwords:
-#                 noun_adj_list.append(word)
+    noun_adj_list = []
+    for i in morphs:
+        for word, tag in i:
+            if (tag in['Noun'] or tag in['Adjective']) and word not in stopwords:
+                noun_adj_list.append(word)
 
-#     #빈도수로 정렬하고 단어와 빈도수를 딕셔너리로 전달
-#     count = Counter(noun_adj_list)
-#     words = (dict(count.most_common()))
-#     # keyword = list(words)[:6]
+    #빈도수로 정렬하고 단어와 빈도수를 딕셔너리로 전달
+    count = Counter(noun_adj_list)
+    words = (dict(count.most_common()))
+    # keyword = list(words)[:6]
 
-#     # 딕셔너리를 제이슨으로 변환하여 전달
-#     obj = json.dumps(words)
-#     return(obj)
+    # 딕셔너리를 제이슨으로 변환하여 전달
+    obj = json.dumps(words)
+    return(obj)

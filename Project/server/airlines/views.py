@@ -316,9 +316,12 @@ def review_score(request, airline_id):
 @api_view(['GET'])
 def review_keyword(request, airline_id):
     # file = open('./static/airlines/npl/stopwords.txt', 'r')
-    file = open('https://j5a203.p.ssafy.io/static/airlines/npl/stopwords.txt', 'r')
-    stopwords = file.read()
-    stopwords = stopwords.split('\n')
+    # file = open('https://j5a203.p.ssafy.io/static/airlines/npl/stopwords.txt', 'r')
+    # stopwords = file.read()
+    # stopwords = stopwords.split('\n')
+
+    stopwords ='아이구 아이쿠 아이고'
+    stopwords = stopwords.split(' ')
     
     airline = get_object_or_404(Airline, pk=airline_id)
     reviews = airline.reviews.all()

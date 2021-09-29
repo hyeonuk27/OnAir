@@ -160,6 +160,8 @@ def airline_list(request, arrival_id):
     for airline in airlines:
         # 목적지, 항공사에 해당하는 통계 결과 가져오기
         statistics_result = StatisticsResult.objects.filter(airline=airline.name, arrival=arrival.name).first()
+        if statistics_result == None:
+            continue
         # 목적지, 항공사에 해당하는 이번달 이용객수 예측값 가져오기
         df = pd.read_csv('predict_models/ets_passengers/predict_data/%s.csv' % airline.name)
         predicted_data = df[df['date'].str.startswith('%s' % datetime.today().strftime("%Y-%m"))]['passengers'][0]
@@ -239,9 +241,9 @@ def airline_report(request, arrival_id, airline_id):
             'arrival_name': arrival.name,
             'arrival_image_url': arrival.image_url,
             'total': statistics_result.total,
-            'under_10': statistics_result.under_10,
             'under_30': statistics_result.under_30,
-            'over_30': statistics_result.over_30,
+            'under_60': statistics_result.under_60,
+            'over_60': statistics_result.over_30,
             'delay_rate': statistics_result.delay_rate,
             'delay_time': statistics_result.delay_time,
             'weather_list': weather_list,

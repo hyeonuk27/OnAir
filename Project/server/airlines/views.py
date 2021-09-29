@@ -34,7 +34,6 @@ import jwt
 
 from datetime import datetime
 from collections import Counter
-from PyKomoran import Komoran, DEFAULT_MODEL
 
 JWT_SECRET_KEY = config('JWT_SECRET_KEY')
 
@@ -338,6 +337,7 @@ def review_keyword(request, airline_id):
     #         noun_adj_list.append(word)
 
     # komoran ver.
+    from PyKomoran import Komoran, DEFAULT_MODEL
     komoran = Komoran(DEFAULT_MODEL['FULL'])
     target_tags = ['NNG', 'VA']
     noun_adj_list = komoran.get_morphes_by_tags(airline_review, tag_list=target_tags)

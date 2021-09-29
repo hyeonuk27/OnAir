@@ -34,7 +34,6 @@ import jwt
 
 from datetime import datetime
 from collections import Counter
-from nltk.corpus import stopwords
 from PyKomoran import *
 
 
@@ -316,10 +315,10 @@ def review_score(request, airline_id):
 def review_keyword(request, airline_id):
     
     # file = open('./static/airlines/npl/stopwords.txt', 'r')
-    file = open('https://j5a203.p.ssafy.io/static/airlines/npl/stopwords.txt', 'r')
-    stopwords = file.read()
-    stopwords = stopwords.split('\n')
-    
+    # file = open('https://j5a203.p.ssafy.io/static/airlines/npl/stopwords.txt', 'r')
+    # stopwords = file.read()
+    # stopwords = stopwords.split('\n')
+    # stopwords = ['메롱', '안녕']   
     # airline = get_object_or_404(Airline, id=airline_id)
     # reviews = airline.reviews.all()
     reviews = get_list_or_404(Review, airline=airline_id)

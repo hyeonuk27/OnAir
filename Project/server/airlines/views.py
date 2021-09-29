@@ -344,6 +344,6 @@ def review_keyword(request, airline_id):
     # keyword = list(words)[:6]
 
     # 딕셔너리를 제이슨으로 변환하여 전달
-    obj = json.dumps(words)
-    return HttpResponse(json.dumps(obj), content_type = 'application/json; charset=utf8')
+    # obj = json.dumps(words)
+    return HttpResponse(json.dumps(words), content_type = 'application/json; charset=utf8')
     # return Response(obj)

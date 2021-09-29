@@ -1,0 +1,3 @@
+,arrival,total,delayed_time,delayrate,cancelrate,rateu30,rateu60,rateo60,airline,id
+0,CDG(파리),1484,102.0,9.5,0.13,90.36,0.4,9.1,프랑스항공,Q1gpmTQGZiIwt
+1,PVG(푸동),1,0.0,0.0,0.0,100.0,0.0,0.0,프랑스항공,TjfoWSnjo1AMt

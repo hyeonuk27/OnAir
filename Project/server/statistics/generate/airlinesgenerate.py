@@ -9,9 +9,6 @@ def make_random_id():
 df = read_csv('./statistics_data.csv')
 df = df['airline'].drop_duplicates().reset_index(drop=True)
 df = pd.DataFrame(df, columns=['airline'])
-
-# error
-# df.rename(columns = {'airline': 'name'}, inplace=True)
 df = df.rename(columns = {'airline': 'name'})
 
 """
@@ -181,7 +178,6 @@ is_oneworld = [
     1
 ]
 
-# print(len(address))
 df['id'] = id
 df['profile_url'] = profile_url
 df['address'] = address

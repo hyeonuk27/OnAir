@@ -44,4 +44,4 @@ class AirlineReportSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StatisticsResult
-        fields = ('arrival', 'total', 'under_10', 'under_30', 'over_30', 'delay_rate', 'delay_time')
+        fields = ('arrival', 'total', 'under_30', 'under_60', 'over_60', 'delay_rate', 'delay_time')

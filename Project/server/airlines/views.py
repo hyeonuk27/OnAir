@@ -339,7 +339,7 @@ def review_keyword(request, airline_id):
 
     # komoran ver.
     from PyKomoran import Komoran, DEFAULT_MODEL
-    komoran = Komoran(DEFAULT_MODEL['FULL'])
+    komoran = Komoran(DEFAULT_MODEL['LIGHT'])
     target_tags = ['NNG', 'VA']
     noun_adj_list = komoran.get_morphes_by_tags(airline_review, tag_list=target_tags)
 

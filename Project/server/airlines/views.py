@@ -345,4 +345,4 @@ def review_keyword(request, airline_id):
 
     # 딕셔너리를 제이슨으로 변환하여 전달
     obj = json.dumps(words)
-    return(obj)
+    return Response(obj)

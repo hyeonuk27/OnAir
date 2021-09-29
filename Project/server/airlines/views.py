@@ -323,7 +323,7 @@ def review_keyword(request, airline_id):
     stopwords ='아이구 아이쿠 아이고'
     stopwords = stopwords.split(' ')
     
-    airline = get_object_or_404(Airline, pk=airline_id)
+    # airline = get_object_or_404(Airline, pk=airline_id)
     # reviews = airline.reviews.all()
 
     # airline_review = []

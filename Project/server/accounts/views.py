@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import get_user_model
 from .serializers import UserSerializer
+from .utils import check_login
 
 from decouple import config
 from rest_framework import status
@@ -51,7 +52,6 @@ def login(request):
         new_user.save()
         serializer = UserSerializer(new_user)
         encoded_jwt = jwt.encode({'id': new_user.id}, JWT_SECRET_KEY, algorithm='HS256')
-        print(encoded_jwt)
     data = {
         'info': serializer.data,
         'access_token': encoded_jwt,
@@ -60,11 +60,9 @@ def login(request):
 
 
 @api_view(['PUT'])
+@check_login
 def update(request):
-    jwt_token = request.headers["Authorization"]
-    user_id = jwt.decode(jwt_token, JWT_SECRET_KEY, algorithm='HS256')
-    user = get_object_or_404(User, id=user_id)
-    serializer = UserSerializer(user, data=request.data)
+    serializer = UserSerializer(request.user, data=request.data, partial=True)
     if serializer.is_valid(raise_exception=True):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)

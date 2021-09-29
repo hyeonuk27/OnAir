@@ -328,19 +328,20 @@ def review_keyword(request, airline_id):
 
     # konlpy ver.
     # 말뭉치 (형태소랑 품사 짝)
-    # reviews = Okt()
-    # morphs = reviews.pos(airline_review)
+    from konlpy.tag import Okt
+    reviews = Okt()
+    morphs = reviews.pos(airline_review)
     
-    # noun_adj_list = []
-    # for word, tag in morphs:
-    #     if (tag in['Noun'] or tag in['Adjective']) and word not in stopwords:
-    #         noun_adj_list.append(word)
+    noun_adj_list = []
+    for word, tag in morphs:
+        if (tag in['Noun'] or tag in['Adjective']) and word:
+            noun_adj_list.append(word)
 
-    # komoran ver.
-    from PyKomoran import Komoran, DEFAULT_MODEL
-    komoran = Komoran(DEFAULT_MODEL['FULL'])
-    target_tags = ['NNG', 'VA']
-    noun_adj_list = komoran.get_morphes_by_tags(airline_review, tag_list=target_tags)
+    # # komoran ver.
+    # from PyKomoran import Komoran, DEFAULT_MODEL
+    # komoran = Komoran(DEFAULT_MODEL['FULL'])
+    # target_tags = ['NNG', 'VA']
+    # noun_adj_list = komoran.get_morphes_by_tags(airline_review, tag_list=target_tags)
 
     #빈도수로 정렬하고 단어와 빈도수를 딕셔너리로 전달
     count = Counter(noun_adj_list)

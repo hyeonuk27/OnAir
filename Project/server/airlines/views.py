@@ -257,12 +257,12 @@ def airline_report(request, arrival_id, airline_id):
 
 
 # 로그인 불필요
-@api_view(['GET'])
-def airline_details(request, airline_id):
-    airline = get_object_or_404(Airline, pk=airline_id)
-    serializer = AirlineDetailSerializer(airline)
-    data = serializer.data
-    return Response(data)
+# @api_view(['GET'])
+# def airline_details(request, airline_id):
+#     airline = get_object_or_404(Airline, pk=airline_id)
+#     serializer = AirlineDetailSerializer(airline)
+#     data = serializer.data
+#     return Response(data)
     
 
 @api_view(['POST', 'GET'])
@@ -354,6 +354,6 @@ def review_keyword(request, airline_id):
     # # 딕셔너리를 제이슨으로 변환하여 전달
     # return HttpResponse(json.dumps(words), content_type = 'application/json; charset=utf8')
     # # return Response(obj)
-    serializer = AirlineDetailSerializer(airline)
-    data = serializer.data
-    return Response(data)
+    reviews = get_list_or_404(Review, airline=airline_id)
+    serializer = ReviewListSerializer(reviews, many=True)
+    return Response(serializer.data)

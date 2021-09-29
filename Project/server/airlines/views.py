@@ -332,18 +332,22 @@ def review_keyword(request, airline_id):
     reviews = Okt()
     morphs = reviews.pos(airline_review[0])
     
+    # noun_adj_list = []
+    # for i in morphs:
+    #     for word, tag in i:
+    #         if (tag in['Noun'] or tag in['Adjective']) and word not in stopwords:
+    #             noun_adj_list.append(word)
+
     noun_adj_list = []
-    for i in morphs:
-        for word, tag in i:
-            if (tag in['Noun'] or tag in['Adjective']) and word not in stopwords:
-                noun_adj_list.append(word)
+    for word, tag in morphs:
+        if (tag in['Noun'] or tag in['Adjective']) and word not in stopwords:
+            noun_adj_list.append(word)
 
     #빈도수로 정렬하고 단어와 빈도수를 딕셔너리로 전달
     count = Counter(noun_adj_list)
-    words = (dict(count.most_common()))
+    words = dict(count.most_common())
     # keyword = list(words)[:6]
 
     # 딕셔너리를 제이슨으로 변환하여 전달
-    # obj = json.dumps(words)
     return HttpResponse(json.dumps(words), content_type = 'application/json; charset=utf8')
     # return Response(obj)

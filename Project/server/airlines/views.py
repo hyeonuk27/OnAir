@@ -36,9 +36,9 @@ from datetime import datetime
 
 
 # 키워드 분석
-# from konlpy.tag import Okt 
-# from collections import Counter
-# from nltk.corpus import stopwords
+from konlpy.tag import Okt 
+from collections import Counter
+from nltk.corpus import stopwords
 
 JWT_SECRET_KEY = config('JWT_SECRET_KEY')
 
@@ -313,35 +313,35 @@ def review_score(request, airline_id):
     pass
 
 
-# @api_view(['GET'])
-# def review_keyword(request, airline_id):
-#     file = open('./static/airlines/npl/stopwords.txt', 'r')
-#     stopwords = file.read()
-#     stopwords = stopwords.split('\n')
+@api_view(['GET'])
+def review_keyword(request, airline_id):
+    file = open('./static/airlines/npl/stopwords.txt', 'r')
+    stopwords = file.read()
+    stopwords = stopwords.split('\n')
     
-#     airline = get_object_or_404(Airline, pk=airline_id)
-#     reviews = airline.reviews.all()
+    airline = get_object_or_404(Airline, pk=airline_id)
+    reviews = airline.reviews.all()
 
-#     airline_review = []
-#     for review in reviews:
-#         airline_review.extend(review.content.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]",""))
-#         airline_review.extend(review.title.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]",""))
+    airline_review = []
+    for review in reviews:
+        airline_review.extend(review.content.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]",""))
+        airline_review.extend(review.title.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]",""))
 
-#     # 말뭉치 (형태소랑 품사 짝)
-#     reviews = Okt()
-#     morphs = reviews.pos(airline_review[0])
+    # 말뭉치 (형태소랑 품사 짝)
+    reviews = Okt()
+    morphs = reviews.pos(airline_review[0])
     
-#     noun_adj_list = []
-#     for i in morphs:
-#         for word, tag in i:
-#             if (tag in['Noun'] or tag in['Adjective']) and word not in stopwords:
-#                 noun_adj_list.append(word)
+    noun_adj_list = []
+    for i in morphs:
+        for word, tag in i:
+            if (tag in['Noun'] or tag in['Adjective']) and word not in stopwords:
+                noun_adj_list.append(word)
 
-#     #빈도수로 정렬하고 단어와 빈도수를 딕셔너리로 전달
-#     count = Counter(noun_adj_list)
-#     words = (dict(count.most_common()))
-#     # keyword = list(words)[:6]
+    #빈도수로 정렬하고 단어와 빈도수를 딕셔너리로 전달
+    count = Counter(noun_adj_list)
+    words = (dict(count.most_common()))
+    # keyword = list(words)[:6]
 
-#     # 딕셔너리를 제이슨으로 변환하여 전달
-#     obj = json.dumps(words)
-#     return(obj)
+    # 딕셔너리를 제이슨으로 변환하여 전달
+    obj = json.dumps(words)
+    return(obj)

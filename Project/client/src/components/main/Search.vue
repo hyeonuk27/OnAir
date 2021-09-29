@@ -46,10 +46,14 @@ export default {
 
 <style>
   .search {
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
     display: flex;
     justify-content: space-between;
     width: 700px;
     height: 100px;
+    padding: 0 25px;
   }
 
   .search::-webkit-scrollbar{

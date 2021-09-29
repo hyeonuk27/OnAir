@@ -75,7 +75,8 @@ export default {
     getAirlines: function (arrival_id, departure_code, arrival_code) {
       this.setDeparture(departure_code)
       this.setArrival(arrival_code)
-      console.log(this.departure)
+      this.bg_img = `https://j5a203.p.ssafy.io/static/airlines/images/city_bg/${arrival_code.toLowerCase()}.jpeg`
+      console.log(this.bg_img)
       axios({
         url: API.URL + API.ROUTES.get_airlines + arrival_id + '/',
         method: "get",
@@ -141,6 +142,7 @@ export default {
   .search-box {
     display: flex;
     justify-content: center;
-    margin-top: 50px;
+    margin-top: 20px;
+    margin-bottom: 30px;
   }
 </style>

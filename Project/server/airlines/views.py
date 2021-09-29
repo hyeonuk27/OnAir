@@ -324,8 +324,8 @@ def review_keyword(request, airline_id):
 
     airline_review = ""
     for review in reviews:
-        airline_review += review.content.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
-        airline_review += review.title.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
+        airline_review += review.content.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
+        airline_review += review.title.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
 
     # konlpy ver.
     # 말뭉치 (형태소랑 품사 짝)

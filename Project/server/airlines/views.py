@@ -160,6 +160,8 @@ def airline_list(request, arrival_id):
     for airline in airlines:
         # 목적지, 항공사에 해당하는 통계 결과 가져오기
         statistics_result = StatisticsResult.objects.filter(airline=airline.name, arrival=arrival.name).first()
+        if statistics_result == None:
+            continue
         # 목적지, 항공사에 해당하는 이번달 이용객수 예측값 가져오기
         df = pd.read_csv('predict_models/ets_passengers/predict_data/%s.csv' % airline.name)
         predicted_data = df[df['date'].str.startswith('%s' % datetime.today().strftime("%Y-%m"))]['passengers'][0]

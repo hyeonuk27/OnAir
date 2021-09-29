@@ -18,11 +18,13 @@
         />
       </div>
       <div class="airline-list">
-        <Airline
-        v-for="(airline, idx) in airline_list"
-        :key="idx"
-        :airline="airline"
-        />
+        <div>
+          <Airline
+          v-for="(airline, idx) in airline_list"
+          :key="idx"
+          :airline="airline"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -79,10 +81,10 @@ export default {
         })
     },
     getAirlines: function (arrival_id, departure_code, arrival_code) {
+      this.airline_list = []
       this.setDeparture(departure_code)
       this.setArrival(arrival_code)
       this.bg_img = `https://j5a203.p.ssafy.io/static/airlines/images/city_bg/${arrival_code.toLowerCase()}.jpeg`
-      console.log(this.bg_img)
       axios({
         url: API.URL + API.ROUTES.get_airlines + arrival_id + '/',
         method: "get",
@@ -124,13 +126,16 @@ export default {
 
 <style>
   .airline-list {
-    
+    display: flex;
+    justify-content: center;
+    margin-bottom: 150px;
   }
 
   .arrival-info {
     color: white;
     font-size: 130px;
     font-weight: 700;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);
     margin-top: 50px;
     display: flex;
     justify-content: center;
@@ -142,13 +147,14 @@ export default {
   }
 
   .main-container {
-    height: 1190px;
+    height: auto;
+    min-height: 1000px;
   }
 
   .search-box {
     display: flex;
     justify-content: center;
     margin-top: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 80px;
   }
 </style>

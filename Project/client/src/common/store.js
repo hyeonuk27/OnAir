@@ -19,13 +19,10 @@ export default new Vuex.Store({
     
   },
   actions: {
-    
   },
   modules: {
   },
   plugins: [
-    createPersistedState({
-      paths: ["auth", "profiles"],
-    }),
+    createPersistedState(),
   ],
 })

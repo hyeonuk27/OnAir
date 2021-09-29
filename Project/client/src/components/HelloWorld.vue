@@ -35,6 +35,7 @@
 </template>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 <script>
 import axios from 'axios'
 
@@ -65,7 +66,12 @@ export default {
         console.log('로그아웃')
       })
       auth2.disconnect()
-    }
+    },
+    onLoad() {
+      gapi.load('auth2', function() {
+        gapi.auth2.init()
+      })
+    },
   },
   mounted() {
     window.gapi.signin2.render('my-signin2', {
@@ -73,7 +79,7 @@ export default {
       width: 240,
       height: 50,
       longtitle: true,
-      theme: 'dark',
+      theme: 'light',
       onsuccess: this.onSuccess,
       onfailure: this.onFailure,
     });

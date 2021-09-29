@@ -315,13 +315,17 @@ def review_score(request, airline_id):
 
 @api_view(['GET'])
 def review_keyword(request, airline_id):
+    reviews = get_list_or_404(Review, airline=airline_id)
+    serializer = ReviewListSerializer(reviews, many=True)
+    return Response(serializer.data)
+    
     # file = open('./static/airlines/npl/stopwords.txt', 'r')
     # file = open('https://j5a203.p.ssafy.io/static/airlines/npl/stopwords.txt', 'r')
     # stopwords = file.read()
     # stopwords = stopwords.split('\n')
 
-    stopwords ='아이구 아이쿠 아이고'
-    stopwords = stopwords.split(' ')
+    # stopwords ='아이구 아이쿠 아이고'
+    # stopwords = stopwords.split(' ')
     
     # airline = get_object_or_404(Airline, pk=airline_id)
     # reviews = airline.reviews.all()
@@ -354,6 +358,4 @@ def review_keyword(request, airline_id):
     # # 딕셔너리를 제이슨으로 변환하여 전달
     # return HttpResponse(json.dumps(words), content_type = 'application/json; charset=utf8')
     # # return Response(obj)
-    reviews = get_list_or_404(Review, airline=airline_id)
-    serializer = ReviewListSerializer(reviews, many=True)
-    return Response(serializer.data)
+

@@ -17,6 +17,14 @@
       placeholder="내용을 입력하세요."
       required
     >
+    <input 
+      type="date"
+      id="start"
+      name="trip-start" 
+      value="0000-00-00"
+      v-model="flightAt"
+      required
+    >
 
     <!-- 평점 -->
     <input 
@@ -68,10 +76,14 @@
 </template>
 
 <script>
+import axios from "axios"
+import API from "@/common/drf.js"
+
 export default {
   name: "ReviewCreate",
   data() {
     return {
+      airlineId: "",
       title: "",
       content: "",
       flightAt = "",
@@ -83,11 +95,49 @@ export default {
       checkinScore = 0,
       foodScore = 0,
     }
+  },
+  method: {
+    setToken: function () {
+      const token = localStorage.getItem('jwt')
+      const config = {
+        Authorization: `${token}`
+      }
+      return config
+    },
+    createReview: function () {
+      const headers = this.setToken()
+
+      const data = {
+        airlineId: this. airlineId,
+        title: this.title,
+        content: this.content,
+        flight_at: this.flightAt,
+        seat: this.seat,
+        score: this.score,
+        seat_score: this.seatScore,
+        serviceScore: this.serviceScore,
+        checkinScore: this.checkinScore,
+        foodScore: this.foodScore
+      }
+      axios({
+        url: API.URL + API.ROUTES.review_list + this.airlineId + '/',
+        method: 'post',
+        data,
+        headers,
+      })
+      .then(() => {
+        this.$router.push({ name: 'reviewList' })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+  },
+  created() {
+    this.arrivalId = this.$route.params.arrival_id
   }
-  method:
 }
 </script>
 
 <style>
-
 </style>

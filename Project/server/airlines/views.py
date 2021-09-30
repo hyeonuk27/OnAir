@@ -222,7 +222,37 @@ def airline_report(request, arrival_id, airline_id):
         predicted_by_passengers.append(round(passengers_model.predict_proba(input_data)[0, 1] * 100, 2))
     
     # 통계
+
+    # 항공사 필터
     df = pd.read_csv('statistics/statistics_data.csv')
+    airline_filter = df[df['airline'] != f'{airline.name}'].index
+    airlinedata = df.drop(airline_filter)
+
+    # 지연 필터
+    d_filter = airlinedata[airlinedata['state'] != '지연'].index
+    reason_group = airlinedata.drop(d_filter).reset_index(drop=True)
+
+    # 목적지 필터
+    arrival_filter = reason_group[reason_group['arrival'] != f'{arrival.name}'].index
+    reason_group = reason_group.drop(arrival_filter).reset_index(drop=True)
+    reason_group = reason_group.drop(columns=['date', 'arrival', 'passengers', 'state'])
+
+    # 지연사유 개수
+    reason_count = reason_group.groupby('reason').count().reset_index()
+    reason_count = reason_count.drop(columns=['delayed_time'])
+    reason_count.rename(columns = {'airline' : 'total'}, inplace = True)
+
+    # 지연사유별 평균지연시간
+    reason_avg = reason_group.groupby(by=['reason'], as_index=False).mean().reset_index()
+    reason_avg.rename(columns = {'airline' : 'avg_time'}, inplace = True)
+    reason_avg['delayed_time'] = round(reason_avg['delayed_time'], 2)
+
+    # 지연사유별 개수와 평균지연시간
+    merge_chart = pd.merge(reason_count, reason_avg, on="reason", how='left')
+    
+    reason_list = merge_chart['reason'].values.tolist()
+    reason_cnt_list = merge_chart['total'].values.tolist()
+    avg_delayed_time_list = merge_chart['delayed_time'].values.tolist()
 
     response_data = {
         'data': {
@@ -245,6 +275,9 @@ def airline_report(request, arrival_id, airline_id):
             'over_60': statistics_result.over_30,
             'delay_rate': statistics_result.delay_rate,
             'delay_time': statistics_result.delay_time,
+            'airline_arrival_delay_reason_list': reason_list,
+            'airline_arrival_delay_reason_count_list': reason_cnt_list,
+            'airline_arrival_avg_delayed_time_by_reason_list': avg_delayed_time_list,
             'weather_list': weather_list,
             'predicted_by_weather': predicted_by_weather,
             'month_list': month_list,

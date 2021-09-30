@@ -68,11 +68,11 @@ class StatisticsResult(models.Model):
     airline = models.CharField(max_length=20)
     # 목적지에 대한 총운항횟수
     total = models.IntegerField()
-    # 10분내 출발확률
+    # 30분내 출발확률
     under_30 = models.FloatField()
-    # 10분 초과 30분 이하 출발확률
+    # 30분 초과 60분 이하 출발확률
     under_60 = models.FloatField()
-    # 30분 초과 출발확률
+    # 60분 초과 출발확률
     over_60 = models.FloatField()
     # 지연률
     delay_rate = models.FloatField()

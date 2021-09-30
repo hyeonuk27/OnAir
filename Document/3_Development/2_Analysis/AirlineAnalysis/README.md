@@ -43,7 +43,84 @@
 
 ## Pandas 문법 정리
 
+#### 기본 설정
 
+- import
+
+  ```python
+  import pandas [as pd]
+  ```
+
+  
+
+- csv 파일 불러오기 + 데이터 프레임에 할당
+
+  ```python
+  from pandas.io.parsers import read_csv
+  
+  df = read_csv('./filename.csv')
+  ```
+
+  
+
+- csv 파일 내보내기
+
+  ```python
+  df.to_csv('./airlines.csv')
+  ```
+
+
+
+#### 행/열 추가, 수정, 삭제, 추출
+
+#### - 추가
+
+- 행 추가
+- 열 추가
+
+#### - 수정
+
+- 행 수정
+- 열 수정
+
+#### - 삭제
+
+- 행 삭제
+
+- 열 삭제
+
+  ```
+  df.drop(colums=['column', 'column'], inplace=True)
+  df = df.drop(colums=['column', 'column'])
+  ```
+
+  
+
+#### - 중복
+
+- 행 중복확인 및 삭제
+- 열 중복확인 및 삭제
+
+#### - 추출
+
+- 특정 행 추출
+- 특정 열 추출
+- 특정 조건 추출
+
+
+
+#### - Unnamed Column
+
+```
+input = pd.read_csv('data.csv', index_col = 0)
+input.drop(['Unnamed: 0'], axis = 1, inplace = True)
+```
+
+
+
+#### 
+
+#### 
 
 - ```
   to_datetime()
@@ -65,4 +142,8 @@
 - ```
    df = df.drop(columns=['flightNo', 'type'])
   ```
+
+
+
+https://blog.naver.com/PostView.nhn?isHttpsRedirect=true&blogId=wideeyed&logNo=221578773214
 

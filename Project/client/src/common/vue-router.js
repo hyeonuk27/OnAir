@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Main from '@/views/Main.vue'
 import Login from '@/views/Login.vue'
+import Airline from '@/views/Airline.vue'
 import HelloWorld from '@/components/HelloWorld.vue'
 
 Vue.use(VueRouter)
@@ -23,6 +24,11 @@ const routes = [
     name: 'Login',
     component: Login
   },
+  {
+    path: '/airline',
+    name: 'Airline',
+    component: Airline
+  }
 ]
 
 const router = new VueRouter({

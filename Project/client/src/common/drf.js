@@ -6,6 +6,7 @@ export default {
   ROUTES: {
     // 예시) login: '/accounts/login/',
     // 사용법) import API from '@/common/drf.js' 후, API.SERVER_URL + API.ROUTES.login
+    login: '/auth/login/',
     get_arrivals: '/arrivals/',
     get_airlines: '/airlines/',
     review_list: '/reviews/airline/',

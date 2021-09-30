@@ -1,13 +1,14 @@
 <template>
   <div>
-    분석차트가 들어갑니다.
+    분석차트
   </div>
 </template>
 
 <script>
 export default {
-
-}
+  name: 'AnalysisCharts',
+  
+  }
 </script>
 
 <style>

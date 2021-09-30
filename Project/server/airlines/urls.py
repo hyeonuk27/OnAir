@@ -7,6 +7,7 @@ urlpatterns = [
     path('logs/', views.user_log_list),
     path('arrivals/', views.arrival_list),
     path('airlines/<arrival_id>/', views.airline_list),
+    path('airlines/<airline_id>', views.airline_details),
     path('airlines/<arrival_id>/<airline_id>/', views.airline_report),
     path('reviews/airline/<airline_id>/', views.review_list),
     path('reviews/<review_id>/', views.review_detail),

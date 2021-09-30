@@ -1,8 +1,9 @@
 <template>
-  <div>
-    여기에 탭이 들어갑니다. 탭 안에 분석결과와 차트가 들어갑니다.
+  <div class="main-container">
     <div>
-      <TotalDelayInfo />
+      <TotalDelayInfo
+      :report="report"
+      />
       <AnalysisChart />
     </div>
   </div>
@@ -14,12 +15,20 @@ import TotalDelayInfo from "@/components/airline/statistics/TotalDelayInfo"
 
 export default {
   name: 'DetailTab',
-  components:     
+  props: {
+    report: Array,
+  },
+  components: {
     AnalysisChart,
     TotalDelayInfo,
+  },
+
 }
 </script>
 
 <style>
-
+  .main-container {
+    height: auto;
+    min-height: 1000px;
+  }
 </style>

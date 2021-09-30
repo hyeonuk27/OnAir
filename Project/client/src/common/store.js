@@ -10,10 +10,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    
+    token: localStorage.getItem('token'),
   },
   getters: {
-    
+    isLogin: function (state) {
+      return state.token ? true : false
+    }
   },
   mutations: {
     

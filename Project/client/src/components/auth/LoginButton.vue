@@ -12,7 +12,7 @@ import API from '@/common/drf.js'
 export default {
   name: 'LoginButton',
   methods: {
-    onSuccess(googleUser) {
+    onSuccess: function(googleUser) {
       const accessToken = googleUser.getAuthResponse().id_token
       axios({
         url: API.URL + API.ROUTES.login,
@@ -24,9 +24,10 @@ export default {
       .then((res) => {
         localStorage.setItem('token', res.data.access_token)
         this.$router.push({ name: "Main" })
+        window.location.reload()
       })
     },
-    onFailure(error) {
+    onFailure: function(error) {
       console.log(error);
     },
   },

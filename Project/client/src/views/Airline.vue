@@ -1,18 +1,68 @@
 <template>
   <div>
-    <ReviewCreate/>
+    {{ arrival_id }}
+    {{ airline_id }}
+    <AirlineInfo />
+    <DetailTab />
   </div>
 </template>
 
 
 <script>
-import ReviewCreate from "@/components/airline/reviews/ReviewCreate"
+import AirlineInfo from "@/components/airline/statistics/AirlineInfo"
+import DetailTab from '../components/airline/statistics/DetailTab'
+
+import axios from "axios"
+import API from "@/common/drf.js"
 
 export default {
-  name: Ariline,
+  name: 'AirlineDetail',
   components: {
-    ReviewCreate,
+    AirlineInfo,
+    DetailTab,
   },
+  data () {
+    return {
+      arrival_id: '',
+      airline_id: '',
+      report: [],
+    }
+  },
+  methods: {
+    getAirlineStatistics: function () {
+      axios({
+        url: API.URL + API.ROUTES.get_airlines + this.arrival_id + '/' + this.airline_id + '/',
+        method: "get",
+      })
+        .then((res) => {
+          const report = res.data.data
+          console.log(report)
+          this.report_detail = report
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+    getAirlineInfo: function() {
+      axios({
+        url: API.URL + API.ROUTES.get_airlines + this.airline_id + '/',
+        method: "get",
+      })
+        .then((res) => {
+          const airlineInfo = res.data
+          console.log(airlineInfo)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+  },
+  created() {
+    this.arrival_id = this.$route.params.arrival_id
+    this.airline_id = this.$route.params.airline_id
+    this.getAirlineInfo()
+    this.getAirlineStatistics()
+  }
 }
 </script>
 

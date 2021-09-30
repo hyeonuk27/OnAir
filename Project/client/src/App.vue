@@ -27,9 +27,9 @@ html,body {
 }
 
 #app {
-  /* font-family: Avenir, Helvetica, Arial, sans-serif; */
-  font-family: 'KoPubDotumMedium';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/KoPubDotumMedium.woff') format('woff');;
+  font-family: 'Noto Sans KR', sans-serif;
+  /* font-family: 'KoPubDotumMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/KoPubDotumMedium.woff') format('woff');; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;

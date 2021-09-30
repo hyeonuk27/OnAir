@@ -1,10 +1,12 @@
 from django.shortcuts import get_object_or_404, get_list_or_404
+from django.db.models import Avg
 from django.http import HttpResponse
 
 from .models import Airline, Arrival, Review, Log, StatisticsResult
 from accounts.models import User
 from .models import Review
 from .serializers import AirlineDetailSerializer, AirlineReportSerializer, ReviewListSerializer, ReviewSerializer, LogListSerializer, ArrivalListSerializer, LogSerializer
+from accounts.utils import check_login
 
 from django.core.paginator import Paginator
 
@@ -32,13 +34,10 @@ import requests
 import json
 import jwt
 
+import time
+# import datetime as dt
 from datetime import datetime
-
-
-# 키워드 분석
-from konlpy.tag import Okt 
 from collections import Counter
-from nltk.corpus import stopwords
 
 JWT_SECRET_KEY = config('JWT_SECRET_KEY')
 
@@ -111,6 +110,7 @@ def user_review_list(request, user_id):
             'airline_id': openapi.Schema(type=openapi.TYPE_STRING, description='The desc'),
             'arrival_id': openapi.Schema(type=openapi.TYPE_STRING, description='The desc'),
         }))
+
 @api_view(['GET', 'POST'])
 def user_log_list(request):
     if request.method == 'GET':
@@ -140,6 +140,7 @@ def arrival_list(request):
     serializer = ArrivalListSerializer(arrivals, many=True)
     data = serializer.data
     return Response(data)
+
 
 
 # 검색 시 항공사 리스트
@@ -223,7 +224,50 @@ def airline_report(request, arrival_id, airline_id):
         predicted_by_passengers.append(round(passengers_model.predict_proba(input_data)[0, 1] * 100, 2))
     
     # 통계
-    df = pd.read_csv('statistics/statistics_data.csv')
+
+    # 항공사 필터
+    airlinedata = pd.read_csv('statistics/preprocessing/statistics_data.csv')
+    airline_filter = airlinedata[airlinedata['airline'] != f'{airline.name}'].index
+    airlinedata = airlinedata.drop(airline_filter)
+
+    # 지연 필터
+    d_filter = airlinedata[airlinedata['state'] != '지연'].index
+    reason_group = airlinedata.drop(d_filter).reset_index(drop=True)
+
+    # 목적지 필터
+    arrival_filter = reason_group[reason_group['arrival'] != f'{arrival.name}'].index
+    reason_group = reason_group.drop(arrival_filter).reset_index(drop=True)
+    reason_group = reason_group.drop(columns=['date', 'arrival', 'passengers', 'state'])
+
+    # 지연사유 개수
+    reason_count = reason_group.groupby('reason').count().reset_index()
+    reason_count = reason_count.drop(columns=['delayed_time'])
+    reason_count.rename(columns = {'airline' : 'total'}, inplace = True)
+
+    # 지연사유별 평균지연시간
+    reason_avg = reason_group.groupby(by=['reason'], as_index=False).mean().reset_index()
+    reason_avg.rename(columns = {'airline' : 'avg_time'}, inplace = True)
+    reason_avg['delayed_time'] = round(reason_avg['delayed_time'], 2)
+
+    # 지연사유별 개수와 평균지연시간
+    merge_chart = pd.merge(reason_count, reason_avg, on="reason", how='left')
+    
+    reason_list = merge_chart['reason'].values.tolist()
+    reason_cnt_list = merge_chart['total'].values.tolist()
+    avg_delayed_time_list = merge_chart['delayed_time'].values.tolist()
+
+    # 월별 이용객 시계열
+    monthly = pd.read_csv(f'predict_models/ets_passengers/{airline.name}.csv')
+    dates_list = monthly['date'].values.tolist()
+    # print(dates_list)
+    dates_list = list(map(lambda x: int((time.mktime(datetime.strptime(x, "%Y-%m-%d").timetuple()) + 32400) * 1000), dates_list))
+    passengers_cnt = monthly['passengers'].values.tolist()
+
+    # int((time.mktime(datetime.datetime.strptime(a, "%Y-%m-%d").timetuple()) + 32400) * 1000)
+
+    monthly_data = list()
+    for i in range(len(dates_list)):
+        monthly_data.append([dates_list[i], passengers_cnt[i]])
 
     response_data = {
         'data': {
@@ -243,13 +287,17 @@ def airline_report(request, arrival_id, airline_id):
             'total': statistics_result.total,
             'under_30': statistics_result.under_30,
             'under_60': statistics_result.under_60,
-            'over_60': statistics_result.over_30,
+            'over_60': statistics_result.over_60,
             'delay_rate': statistics_result.delay_rate,
             'delay_time': statistics_result.delay_time,
+            'airline_arrival_delay_reason_list': reason_list,
+            'airline_arrival_delay_reason_count_list': reason_cnt_list,
+            'airline_arrival_avg_delayed_time_by_reason_list': avg_delayed_time_list,
             'weather_list': weather_list,
             'predicted_by_weather': predicted_by_weather,
             'month_list': month_list,
             'predicted_by_passengers': predicted_by_passengers,
+            'passengers_by_month': monthly_data,
         }   
     }
 
@@ -278,8 +326,8 @@ def review_list(request, airline_id):
             else:
                 break
         airline = get_object_or_404(Airline, id=airline_id)
-        test = Review(id=review_id)
-        serializer = ReviewSerializer(test, data=request.data, partial=True)
+        review = Review(id=review_id)
+        serializer = ReviewSerializer(review, data=request.data, partial=True)
         if serializer.is_valid(raise_exception=True):
             serializer.save(airline=airline, user=user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -290,14 +338,11 @@ def review_list(request, airline_id):
     
 
 @api_view(['DELETE', 'PUT'])
+@check_login
 def review_detail(request, review_id):
     print('test')
     review = get_object_or_404(Review, id=review_id)
-    jwt_token = request.headers["Authorization"]
-    user_id = jwt.decode(jwt_token, JWT_SECRET_KEY, algorithm='HS256')
-    user = get_object_or_404(User, id=user_id['id'])
-    
-    if user == review.user:
+    if request.user == review.user:
         if request.method == 'DELETE':
             review.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
@@ -310,38 +355,63 @@ def review_detail(request, review_id):
 
 @api_view(['GET'])
 def review_score(request, airline_id):
-    pass
+    score = Review.objects.filter(airline=airline_id).aggregate(Avg('score'))
+    seat_score = Review.objects.filter(airline=airline_id, seat_score__isnull=False).aggregate(Avg('seat_score'))
+    service_score = Review.objects.filter(airline=airline_id, service_score__isnull=False).aggregate(Avg('service_score'))
+    checkin_score = Review.objects.filter(airline=airline_id, checkin_score__isnull=False).aggregate(Avg('checkin_score'))
+    food_score = Review.objects.filter(airline=airline_id, food_score__isnull=False).aggregate(Avg('food_score'))
+    
+    review_score = {
+        'score': score['score__avg'],
+        'seat_score': seat_score['seat_score__avg'],
+        'service_score': service_score['service_score__avg'],
+        'checkin_score': checkin_score['checkin_score__avg'],
+        'food_score': food_score['food_score__avg'],
+    }
+    return Response(review_score)
 
 
 @api_view(['GET'])
 def review_keyword(request, airline_id):
-    file = open('./static/airlines/npl/stopwords.txt', 'r')
-    stopwords = file.read()
-    stopwords = stopwords.split('\n')
     
-    airline = get_object_or_404(Airline, pk=airline_id)
-    reviews = airline.reviews.all()
+    # file = open('./static/airlines/npl/stopwords.txt', 'r')
+    # file = open('https://j5a203.p.ssafy.io/static/airlines/npl/stopwords.txt', 'r')
+    # stopwords = file.read()
+    # stopwords = stopwords.split('\n')
+    # stopwords = ['메롱', '안녕']   
+    # airline = get_object_or_404(Airline, id=airline_id)
+    # reviews = airline.reviews.all()
+    reviews = get_list_or_404(Review, airline=airline_id)
 
-    airline_review = []
+    airline_review = ""
     for review in reviews:
-        airline_review.extend(review.content.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]",""))
-        airline_review.extend(review.title.str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]",""))
+        airline_review += review.content.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
+        airline_review += review.title.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
 
-    # 말뭉치 (형태소랑 품사 짝)
-    reviews = Okt()
-    morphs = reviews.pos(airline_review[0])
+    # # konlpy ver.
+    # # 말뭉치 (형태소랑 품사 짝)
+    # from konlpy.tag import Okt
+    # reviews = Okt()
+    # morphs = reviews.pos(airline_review)
     
-    noun_adj_list = []
-    for i in morphs:
-        for word, tag in i:
-            if (tag in['Noun'] or tag in['Adjective']) and word not in stopwords:
-                noun_adj_list.append(word)
+    # noun_adj_list = []
+    # for word, tag in morphs:
+    #     if (tag in['Noun'] or tag in['Adjective']) and word:
+    #         noun_adj_list.append(word)
+
+    # komoran ver.
+    from PyKomoran import Komoran, DEFAULT_MODEL
+    komoran = Komoran(DEFAULT_MODEL['LIGHT'])
+    target_tags = ['NNG', 'VA']
+    noun_adj_list = komoran.get_morphes_by_tags(airline_review, tag_list=target_tags)
 
     #빈도수로 정렬하고 단어와 빈도수를 딕셔너리로 전달
     count = Counter(noun_adj_list)
-    words = (dict(count.most_common()))
+    words = dict(count.most_common())
     # keyword = list(words)[:6]
 
     # 딕셔너리를 제이슨으로 변환하여 전달
-    obj = json.dumps(words)
-    return(obj)
+    return HttpResponse(json.dumps(words))
+    # return HttpResponse(json.dumps(words), content_type = 'application/json; charset=utf8')
+    # return Response(obj)
+

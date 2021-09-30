@@ -3,11 +3,7 @@
     {{ arrival_id }}
     {{ airline_id }}
     <AirlineInfo />
-    <DetailTab
-    :arrival_id="arrival_id"
-    :airline_id="airline_id"
-    :report="report"
-    />
+    <DetailTab />
   </div>
 </template>
 
@@ -64,6 +60,7 @@ export default {
     this.arrival_id = this.$route.params.arrival_id
     this.airline_id = this.$route.params.airline_id
     this.getAirlineInfo()
+    this.getAirlineStatistics()
   }
 }
 </script>

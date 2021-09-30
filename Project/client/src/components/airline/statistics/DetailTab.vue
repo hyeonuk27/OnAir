@@ -1,9 +1,7 @@
 <template>
   <div class="main-container">
     <div>
-      <TotalDelayInfo
-      :report="report"
-      />
+      <TotalDelayInfo />
       <AnalysisChart />
     </div>
   </div>
@@ -16,7 +14,7 @@ import TotalDelayInfo from "@/components/airline/statistics/TotalDelayInfo"
 export default {
   name: 'DetailTab',
   props: {
-    report: Array,
+    // report: Array,
   },
   components: {
     AnalysisChart,

@@ -28,12 +28,12 @@
 </template>
 
 <script>
-console.log(this.report)
+// console.log(this.report)
 
 export default {
   name: 'TotalDelayInfo',
   props: {
-    report: Array,
+    // report: Array,
   },
   data () {
       return {

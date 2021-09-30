@@ -10,6 +10,8 @@
   "dependencies": {
     "axios": "^0.21.4",
     "core-js": "^3.6.5",
+    "highcharts": "^9.2.2",
+    "highcharts-vue": "^1.4.0",
     "material-icons": "^1.5.1",
     "node-sass": "^6.0.1",
     "sass-loader": "^10.2.0",

@@ -142,6 +142,7 @@ def arrival_list(request):
     return Response(data)
 
 
+
 # 검색 시 항공사 리스트
 @api_view(['GET'])
 def airline_list(request, arrival_id):

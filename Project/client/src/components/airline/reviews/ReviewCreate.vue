@@ -73,6 +73,11 @@
         value="seat">
       </option>
     </select>
+    <button
+      @click="createReview"
+    >
+      작성
+    </button>
   </div>
 
 </template>
@@ -88,9 +93,9 @@ export default {
       airlineId: "",
       title: "",
       content: "",
-      flightAt = "",
+      flightAt: "",
       seat: "",
-      seatList: [퍼스트, 비즈니스, 이코노미],
+      seatList: ['퍼스트', '비즈니스', '이코노미'],
       score: 0,
       seatScore: 0,
       serviceScore: 0,

@@ -9,7 +9,6 @@ export default {
     login: '/auth/login/',
     get_arrivals: '/arrivals/',
     get_airlines: '/airlines/',
-    get_airline_info: '/airlines/<airlineId>/',
-    get_airline_statistics: 'airlines/<arrivalid>/<airlineId>/',
+    review_list: '/reviews/airline/',
   }
 }

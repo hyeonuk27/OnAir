@@ -7,10 +7,9 @@
 <script>
 export default {
   name: 'AirlineInfo',
-  props: 'airline_id',
+  // props: ['airline_id'],
   data() {
     return {
-      airline: '',
     }
   },
   methods: {

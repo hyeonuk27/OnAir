@@ -1,12 +1,12 @@
 <template>
   <div>
-    {{arrival_id}}
-    {{airline_id}}
+    {{ arrival_id }}
+    {{ airline_id }}
     <AirlineInfo />
     <DetailTab />
-
   </div>
 </template>
+
 
 <script>
 import AirlineInfo from "@/components/airline/statistics/AirlineInfo"
@@ -25,37 +25,43 @@ export default {
     return {
       arrival_id: '',
       airline_id: '',
+      report: [],
     }
   },
   methods: {
-    getAirlineInfo: function() {
+    getAirlineStatistics: function () {
       axios({
-        url: API.URL + API.ROUTES.get_airline_info,
+        url: API.URL + API.ROUTES.get_airlines + this.arrival_id + '/' + this.airline_id + '/',
         method: "get",
       })
         .then((res) => {
-          return res
+          const report = res.data.data
+          console.log(report)
+          this.report_detail = report
         })
         .catch((err) => {
           console.log(err)
         })
     },
-    getAirlineStatistics: function() {
+    getAirlineInfo: function () {
       axios({
-        url: API.URL + API.ROUTES.get_airline_statistics,
+        url: API.URL + API.ROUTES.get_airlines + this.airline_id + '/',
         method: "get",
       })
         .then((res) => {
-          return res
+          const airlineInfo = res.data
+          console.log(airlineInfo)
         })
         .catch((err) => {
           console.log(err)
         })
-    }
+    },
   },
   created() {
     this.arrival_id = this.$route.params.arrival_id
     this.airline_id = this.$route.params.airline_id
+    this.getAirlineInfo()
+    this.getAirlineStatistics()
   }
 }
 </script>

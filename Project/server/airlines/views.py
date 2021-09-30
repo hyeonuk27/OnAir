@@ -309,8 +309,7 @@ def airline_report(request, arrival_id, airline_id):
 def airline_details(request, airline_id):
     airline = get_object_or_404(Airline, pk=airline_id)
     serializer = AirlineDetailSerializer(airline)
-    data = serializer.data
-    return Response(data)
+    return Response(serializer.data)
     
 
 @api_view(['POST', 'GET'])

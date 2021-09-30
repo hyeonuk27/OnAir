@@ -23,6 +23,7 @@
           v-for="(airline, idx) in airline_list"
           :key="idx"
           :airline="airline"
+          :arrival_id="arrival_id"
           />
         </div>
       </div>
@@ -50,6 +51,7 @@ export default {
       bg_img: require('@/assets/main.jpg'),
       departure: 'On✈',
       arrival: '✈Air',
+      arrival_id: '',
       is_searched: false,
     }
   },
@@ -82,6 +84,7 @@ export default {
     },
     getAirlines: function (arrival_id, departure_code, arrival_code) {
       this.airline_list = []
+      this.arrival_id = arrival_id
       this.setDeparture(departure_code)
       this.setArrival(arrival_code)
       this.bg_img = `https://j5a203.p.ssafy.io/static/airlines/images/city_bg/${arrival_code.toLowerCase()}.jpeg`

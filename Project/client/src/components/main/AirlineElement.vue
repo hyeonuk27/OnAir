@@ -1,5 +1,5 @@
 <template>
-  <div class="airline-element">
+  <div class="airline-element" @click="goAirline">
     <div class="airline-element-info">
       <img 
       class="airline-element-logo"
@@ -19,14 +19,22 @@
 <script>
 export default {
   name: 'AirlineElement',
-  props: ['airline'],
+  props: ['airline', 'arrival_id'],
   data() {
     return {
 
     }
   },
   methods: {
-
+    goAirline: function () {
+      this.$router.push({
+        name: "Airline",
+        params: {
+          airline_id: this.airline.id,
+          arrival_id: this.arrival_id
+        },
+      })
+    }
   }
 }
 </script>

@@ -119,31 +119,31 @@ for airline in airlines:
     # nan->0
     res = res.fillna(0)
 
-    print(res.head())
-    res.to_csv(f'./res_{airline}.csv')
-    # pd.concat([final, res])
+    # print(res.head())
+    # res.to_csv(f'./res_{airline}.csv')
+
+    ##### 목적지 따로 지정해야 함 ->
+    # 지연사유별 개수
+    reason_group = airlinedata.drop(d_filter).reset_index(drop=True)
+    arrival_filter = reason_group[reason_group['arrival'] != 'LAX(로스앤젤레스)'].index
+    reason_group = reason_group.drop(arrival_filter).reset_index(drop=True)
+    reason_group = reason_group.drop(columns=['date', 'arrival', 'passengers', 'state'])
+    reason_count = reason_group.groupby('reason').count().reset_index()
+    reason_count = reason_count.drop(columns=['delayed_time'])
+    reason_count.rename(columns = {'airline' : 'total'}, inplace = True)
+
+    # 지연사유별 평균지연시간
+    reason_avg = reason_group.groupby(by=['reason'], as_index=False).mean().reset_index()
+    reason_avg.rename(columns = {'airline' : 'avg_time'}, inplace = True)
+    reason_avg['delayed_time'] = round(reason_avg['delayed_time'], 2)
+    # reason_avg = reason_avg.sort_values(by=['avg_time'], ascending=False)
+
+    merge_chart = pd.merge(reason_count, reason_avg, on="reason", how='left')
+    merge_chart = merge_chart.drop(columns=['index'])
+
+    merge_chart.to_csv('./delaychart.csv')
 
 
-
-# final.to_csv('./final.csv')
-
-
-##### 목적지 따로 지정해야 함 ->
-# 지연사유별 개수
-reason_group = airlinedata.drop(d_filter).reset_index(drop=True)
-# arrival_filter = df[df['arrival'] != '{arrival_name}'].index
-arrival_filter = reason_group[reason_group['arrival'] != 'LAX(로스앤젤레스)'].index
-reason_group = reason_group.drop(arrival_filter).reset_index(drop=True)
-reason_group = reason_group.drop(columns=['date', 'arrival', 'passengers', 'state'])
-reason_count = reason_group.groupby('reason').count()
-
-# 지연사유별 평균지연시간
-reason_avg = reason_group.groupby(by=['reason'], as_index=False).mean()
-reason_count.rename(columns = {'airline' : 'total'}, inplace = True)
-reason_count = reason_count.sort_values(by=['total'], ascending=False)
-
-# print(reason_count.head())
-# print(reason_avg.head())
 
 
 

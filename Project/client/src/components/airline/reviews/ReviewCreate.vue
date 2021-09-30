@@ -17,6 +17,8 @@
       placeholder="내용을 입력하세요."
       required
     >
+
+    <!-- 여행 출발 일자 -->
     <input 
       type="date"
       id="start"
@@ -87,20 +89,20 @@ export default {
       title: "",
       content: "",
       flightAt = "",
-      seat = "",
-      seatList = [퍼스트, 비즈니스, 이코노미],
-      score = 0,
-      seatScore = 0,
-      serviceScore = 0,
-      checkinScore = 0,
-      foodScore = 0,
+      seat: "",
+      seatList: [퍼스트, 비즈니스, 이코노미],
+      score: 0,
+      seatScore: 0,
+      serviceScore: 0,
+      checkinScore: 0,
+      foodScore: 0,
     }
   },
   method: {
     setToken: function () {
-      const token = localStorage.getItem('jwt')
+      const token = localStorage.getItem('token')
       const config = {
-        Authorization: `${token}`
+        Authorization: token
       }
       return config
     },
@@ -115,9 +117,9 @@ export default {
         seat: this.seat,
         score: this.score,
         seat_score: this.seatScore,
-        serviceScore: this.serviceScore,
-        checkinScore: this.checkinScore,
-        foodScore: this.foodScore
+        service_score: this.serviceScore,
+        checkin_score: this.checkinScore,
+        food_score: this.foodScore
       }
       axios({
         url: API.URL + API.ROUTES.review_list + this.airlineId + '/',
@@ -126,7 +128,8 @@ export default {
         headers,
       })
       .then(() => {
-        this.$router.push({ name: 'reviewList' })
+        // 추후 수정 필요
+        this.$router.push({ name: 'ReviewList' })
       })
       .catch((err) => {
         console.log(err)

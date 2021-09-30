@@ -8,10 +8,26 @@
       <span class="airline-element-name">{{airline.name}}</span>
     </div>
     <div class="airline-element-statistics">
-      <span style="position: absolute; left: 50px; top: -10px">총 운항횟수 {{airline.total}}회</span>
-      <span style="position: absolute; left: 300px; top: -10px">지연률 {{airline.delay_rate}}%</span>
-      <span style="position: absolute; left: 427px; top: -10px">평균 지연시간 {{airline.delay_time}}분</span>
-      <span style="position: absolute; left: 600px; top: -10px">오늘 예상 지연률 {{airline.predicted_delay_rate}}%</span>
+      <p style="position: absolute; font-size: 15px; left: 50px; top: -17px; width: 200px;"> 
+        총 운항횟수 
+        <span style="background-color: #3D2F6B; border-radius: 70%; color: white; display: inline-block; font-weight: 400; padding: 8px 0px 7px 0px; width: 40px; height: 40px; text-align: center; top: -10px;">
+          {{airline.total}}</span> 회
+      </p>
+      <p style="position: absolute; font-size: 15px; left: 280px; top: -17px; width: 200px;">
+        지연률 
+        <span style="background-color: #B9A6C9; border-radius: 70%; color: white; display: inline-block; font-weight: 400; padding: 8px 0px 7px 0px; width: 40px; height: 40px; text-align: center; top: -10px;">
+          {{airline.delay_rate}}</span> %
+      </p>
+      <p style="position: absolute; font-size: 15px; left: 417px; top: -17px; width: 200px;">
+        평균 지연시간 
+        <span style="background-color: #B9A6C9; border-radius: 70%; color: white; display: inline-block; font-weight: 400; padding: 8px 0px 7px 0px; width: 40px; height: 40px; text-align: center; top: -10px;">
+          {{airline.delay_time}}</span> 분
+      </p>
+      <p style="position: absolute; font-size: 15px; left: 600px; top: -17px; width: 200px;">
+        오늘 예상 지연률 
+        <span style="background-color: #656F8C; border-radius: 70%; color: white; display: inline-block; font-weight: 400; padding: 8px 0px 7px 0px; width: 40px; height: 40px; text-align: center; top: -10px;">
+          {{airline.predicted_delay_rate}}</span> %
+      </p>
     </div>
   </div>
 </template>

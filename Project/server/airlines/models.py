@@ -8,6 +8,7 @@ class Airline(models.Model):
     name = models.CharField(max_length=20)
     profile_url = models.TextField()
     address = models.TextField()
+    detail = models.TextField()
     phone_number = models.TextField()
     site_url = models.TextField()
     corona_url = models.TextField()

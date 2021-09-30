@@ -34,6 +34,8 @@ import requests
 import json
 import jwt
 
+import time
+# import datetime as dt
 from datetime import datetime
 from collections import Counter
 
@@ -224,9 +226,9 @@ def airline_report(request, arrival_id, airline_id):
     # 통계
 
     # 항공사 필터
-    df = pd.read_csv('statistics/statistics_data.csv')
-    airline_filter = df[df['airline'] != f'{airline.name}'].index
-    airlinedata = df.drop(airline_filter)
+    airlinedata = pd.read_csv('statistics/preprocessing/statistics_data.csv')
+    airline_filter = airlinedata[airlinedata['airline'] != f'{airline.name}'].index
+    airlinedata = airlinedata.drop(airline_filter)
 
     # 지연 필터
     d_filter = airlinedata[airlinedata['state'] != '지연'].index
@@ -253,6 +255,19 @@ def airline_report(request, arrival_id, airline_id):
     reason_list = merge_chart['reason'].values.tolist()
     reason_cnt_list = merge_chart['total'].values.tolist()
     avg_delayed_time_list = merge_chart['delayed_time'].values.tolist()
+
+    # 월별 이용객 시계열
+    monthly = pd.read_csv(f'predict_models/ets_passengers/{airline.name}.csv')
+    dates_list = monthly['date'].values.tolist()
+    # print(dates_list)
+    dates_list = list(map(lambda x: int((time.mktime(datetime.strptime(x, "%Y-%m-%d").timetuple()) + 32400) * 1000), dates_list))
+    passengers_cnt = monthly['passengers'].values.tolist()
+
+    # int((time.mktime(datetime.datetime.strptime(a, "%Y-%m-%d").timetuple()) + 32400) * 1000)
+
+    monthly_data = list()
+    for i in range(len(dates_list)):
+        monthly_data.append([dates_list[i], passengers_cnt[i]])
 
     response_data = {
         'data': {
@@ -282,6 +297,7 @@ def airline_report(request, arrival_id, airline_id):
             'predicted_by_weather': predicted_by_weather,
             'month_list': month_list,
             'predicted_by_passengers': predicted_by_passengers,
+            'passengers_by_month': monthly_data,
         }   
     }
 

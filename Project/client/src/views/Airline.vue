@@ -53,13 +53,12 @@ export default {
     },
     getAirlineInfo: function () {
       axios({
-        url: API.URL + API.ROUTES.get_airline_info + this.airline_id + '/',
+        url: API.URL + API.ROUTES.get_airlines + this.airline_id + '/',
         method: "get",
       })
         .then((res) => {
           const airlineInfo = res.data
           console.log(airlineInfo)
-          this.airline_info = airlineInfo
         })
         .catch((err) => {
           console.log(err)

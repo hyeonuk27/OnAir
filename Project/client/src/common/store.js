@@ -12,6 +12,8 @@ export default new Vuex.Store({
   state: {
     token: localStorage.getItem('token'),
     userId: localStorage.getItem('userId'),
+    name: localStorage.getItem('name'),
+    profileUrl: localStorage.getItem('profileUrl'),
   },
   getters: {
     isLogin: function (state) {

@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Main from '@/views/Main.vue'
 import Login from '@/views/Login.vue'
 import Airline from '@/views/Airline.vue'
-import HelloWorld from '@/components/HelloWorld.vue'
+import Profile from '@/views/Profile.vue'
 
 Vue.use(VueRouter)
 
@@ -12,12 +12,6 @@ const routes = [
     path: '/',
     name: 'Main',
     component: Main
-  },
-  //테스트중...
-  {
-    path: '/test',
-    name: 'HelloWorld',
-    component: HelloWorld
   },
   {
     path: '/login',
@@ -28,7 +22,12 @@ const routes = [
     path: '/airline',
     name: 'Airline',
     component: Airline
-  }
+  },
+  {
+    path: '/mypage',
+    name: 'Profile',
+    component: Profile
+  },
 ]
 
 const router = new VueRouter({

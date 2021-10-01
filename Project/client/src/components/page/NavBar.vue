@@ -49,7 +49,7 @@ export default {
     },
     moveToMypage: function() {
       if (this.$route.path !== "login") {
-        this.$router.push({ name: "Login" })
+        this.$router.push({ name: "Profile" })
       }
     },
     logOut: function() {

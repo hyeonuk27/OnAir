@@ -34,7 +34,7 @@ const routes = [
     path: '/airline/create',
     name: 'ReviewCreate',
     component: ReviewCreate
-  }
+  },
 ]
 
 const router = new VueRouter({

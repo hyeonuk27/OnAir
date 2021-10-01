@@ -2,8 +2,12 @@
   <div>
     {{ arrival_id }}
     {{ airline_id }}
-    <AirlineInfo />
-    <DetailTab />
+    <AirlineInfo 
+    :airline_info="airline_info"
+    />
+    <DetailTab 
+    :report="report"
+    />
     <ReviewTab/>
   </div>
 </template>
@@ -26,9 +30,10 @@ export default {
   },
   data () {
     return {
-      arrival_id: '',
-      airline_id: '',
-      report: [],
+      arrival_id: String,
+      airline_id: String,
+      report: Array,
+      airline_info: Object,
     }
   },
   methods: {
@@ -48,12 +53,13 @@ export default {
     },
     getAirlineInfo: function () {
       axios({
-        url: API.URL + API.ROUTES.get_airlines + this.airline_id + '/',
+        url: API.URL + API.ROUTES.get_airline_info + this.airline_id + '/',
         method: "get",
       })
         .then((res) => {
           const airlineInfo = res.data
           console.log(airlineInfo)
+          this.airline_info = airlineInfo
         })
         .catch((err) => {
           console.log(err)

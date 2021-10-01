@@ -38,7 +38,6 @@ import time
 # import datetime as dt
 from datetime import datetime
 from collections import Counter
-from eunjeon import Mecab
 
 JWT_SECRET_KEY = config('JWT_SECRET_KEY')
 

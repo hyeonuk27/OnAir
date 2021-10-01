@@ -23,7 +23,7 @@ export default {
       })
       .then((res) => {
         localStorage.setItem('token', res.data.access_token)
-        localStorage.setItem('user_id', res.data.info.id)
+        localStorage.setItem('userId', res.data.info.id)
         this.$router.push({ name: "Main" })
         window.location.reload()
       })

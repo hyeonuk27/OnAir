@@ -1,5 +1,5 @@
 <template>
-  <div class='main' :style="{backgroundImage: 'linear-gradient( rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08) ), url('+ bg_img +')'}">
+  <div class='main' :style="{backgroundImage: 'linear-gradient( rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08) ), url('+ bgImg +')'}">
     <!-- <img class="main-img" src="@/assets/main.jpg" alt=""> -->
     <div class="main-container">
       <div class="arrival-info">
@@ -12,18 +12,18 @@
       </div>
       <div class="search-box">
         <Search
-        :arrival_list="arrival_list"
-        :departure_list="departure_list"
+        :arrivalList="arrivalList"
+        :departureList="departureList"
         @search="getAirlines"
         />
       </div>
       <div class="airline-list">
         <div>
           <AirlineElement
-          v-for="(airline, idx) in airline_list"
+          v-for="(airline, idx) in airlineList"
           :key="idx"
           :airline="airline"
-          :arrival_id="arrival_id"
+          :arrivalId="arrivalId"
           />
         </div>
       </div>
@@ -45,20 +45,20 @@ export default {
   },
   data() {
     return {
-      airline_list: [],
-      arrival_list: [],
-      departure_list: [{text: 'ICN(인천)', value: 1}],
-      bg_img: require('@/assets/main.jpg'),
+      airlineList: [],
+      arrivalList: [],
+      departureList: [{text: 'ICN(인천)', value: 1}],
+      bgImg: require('@/assets/main.jpg'),
       departure: 'On✈',
       arrival: '✈Air',
-      arrival_id: '',
-      is_searched: false,
+      arrivalId: '',
+      isSearched: false,
     }
   },
   methods: {
     getArrivals: function() {
       axios({
-        url: API.URL + API.ROUTES.get_arrivals,
+        url: API.URL + API.ROUTES.getArrivals,
         method: "get",
       })
         .then((res) => {
@@ -73,7 +73,7 @@ export default {
             return 0
           })
           for (let i = 0; i < arrivals.length; i++) {
-            this.arrival_list.push(
+            this.arrivalList.push(
               {id: arrivals[i].id, text: arrivals[i].name, value: i+1}
             )
           }
@@ -82,14 +82,14 @@ export default {
           console.log(err)
         })
     },
-    getAirlines: function (arrival_id, departure_code, arrival_code) {
-      this.airline_list = []
-      this.arrival_id = arrival_id
-      this.setDeparture(departure_code)
-      this.setArrival(arrival_code)
-      this.bg_img = `https://j5a203.p.ssafy.io/static/airlines/images/city_bg/${arrival_code.toLowerCase()}.jpeg`
+    getAirlines: function (arrivalId, departureCode, arrivalCode) {
+      this.airlineList = []
+      this.arrivalId = arrivalId
+      this.setDeparture(departureCode)
+      this.setArrival(arrivalCode)
+      this.bgImg = `https://j5a203.p.ssafy.io/static/airlines/images/city_bg/${arrivalCode.toLowerCase()}.jpeg`
       axios({
-        url: API.URL + API.ROUTES.get_airlines + arrival_id + '/',
+        url: API.URL + API.ROUTES.getAirlines + arrivalId + '/',
         method: "get",
       })
         .then((res) => {
@@ -105,10 +105,10 @@ export default {
           })
           for (const airline of airlines) {
             if (airline.total != 0) {
-              this.airline_list.push(airline)
+              this.airlineList.push(airline)
             }
           }
-          this.is_searched = true
+          this.isSearched = true
         })
         .catch((err) => {
           console.log(err)

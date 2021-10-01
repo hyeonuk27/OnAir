@@ -35,7 +35,7 @@
 <script>
 export default {
   name: 'AirlineElement',
-  props: ['airline', 'arrival_id'],
+  props: ['airline', 'arrivalId'],
   data() {
     return {
 
@@ -46,8 +46,8 @@ export default {
       this.$router.push({
         name: "Airline",
         params: {
-          airline_id: this.airline.id,
-          arrival_id: this.arrival_id
+          airlineId: this.airline.id,
+          arrivalId: this.arrivalId
         },
       })
     }

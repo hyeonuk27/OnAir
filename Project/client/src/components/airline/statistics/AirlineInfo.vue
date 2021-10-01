@@ -1,13 +1,25 @@
 <template>
   <div>
-    여기에 항공사 정보가 들어갑니다.
+    <img 
+    :src="airline_info.profile_url" 
+    alt="airline-logo">
+    <img
+    src="skyteam"
+    >
+    <div>
+      <p>{{ airline_info.details }}</p>
+      <p>{{ airline_info.address }}</p> |
+      <p>{{ airline_info.phone_number }}</p> |
+      <p>{{ airline_info.site_url }}</p> |
+      <p>{{ airline_info.corona_url }}</p>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'AirlineInfo',
-  // props: ['airline_id'],
+  props: ['airline_info'],
   data() {
     return {
     }

@@ -23,7 +23,7 @@
       type="date"
       id="start"
       name="trip-start" 
-      value="0000-00-00"
+      value="0000.00.00."
       v-model="flightAt"
       required
     >
@@ -61,18 +61,16 @@
       v-model="foodScore"
     >    
     <!-- 좌석 종류 선택 -->
-    <select
-      name="flightAt"
-      id="flightAt"
-      v-model="flightAt"
-    >
-      <option value="noValue" selected>좌석 선택</option>
-      <option 
-        v-for="seat in seatList"
-        :key="seat"
-        value="seat">
+
+    <select id="seat" name="seat" v-model="selectedSeat">
+      <option
+        v-for="(seat, idx) in seatList"
+        :key="idx"
+        >
+      {{seat}}
       </option>
     </select>
+
     <button
       @click="createReview"
     >
@@ -94,7 +92,7 @@ export default {
       title: "",
       content: "",
       flightAt: "",
-      seat: "",
+      selectedSeat: "",
       seatList: ['퍼스트', '비즈니스', '이코노미'],
       score: 0,
       seatScore: 0,
@@ -103,7 +101,7 @@ export default {
       foodScore: 0,
     }
   },
-  method: {
+  methods: {
     setToken: function () {
       const token = localStorage.getItem('token')
       const config = {
@@ -127,13 +125,14 @@ export default {
         food_score: this.foodScore
       }
       axios({
-        url: API.URL + API.ROUTES.review_list + this.airlineId + '/',
+        url: API.URL + API.ROUTES.review_list + this.airlineId,
         method: 'post',
         data,
         headers,
       })
       .then(() => {
         // 추후 수정 필요
+        console.log('111')
         this.$router.push({ name: 'ReviewList' })
       })
       .catch((err) => {

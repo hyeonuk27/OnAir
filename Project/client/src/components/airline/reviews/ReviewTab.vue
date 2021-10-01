@@ -3,36 +3,36 @@
     <ReviewKeyword/>
     <ArrivalDelayInfo/>
     <ReviewWordcloud/>
-    <ReviewSentimentAnalysis/>
+    <ReviewSentiment/>
     <ReviewScore/>
     <ReviewScoreChart/>
-    <ReviewList/>
     <ReviewCreateButton/>
+    <ReviewList/>
   </div>
 </template>
 
 <script>
 
-import ReviewKeyword from "@/components/airline/reviews/ReviewKeyword.vue"
-import ArrivalDelayInfo from "@/components/airline/reviews/ArrivalDelayInfo.vue"
-import ReviewWordcloud from "@/components/airline/reviews/ReviewWordcloud.vue"
-import ReviewSentimentAnalysis from "@/components/airline/reviews/ReviewSentimentAnalysis"
+import ReviewKeyword from "@/components/airline/reviews/ReviewKeyword"
+import ArrivalDelayInfo from "@/components/airline/reviews/ArrivalDelayInfo"
+import ReviewWordcloud from "@/components/airline/reviews/ReviewWordcloud"
+import ReviewSentiment from "@/components/airline/reviews/ReviewSentiment"
 import ReviewScore from "@/components/airline/reviews/ReviewScore"
 import ReviewScoreChart from "@/components/airline/reviews/ReviewScoreChart"
-import ReviewList from "@/components/airline/reviews/ReviewList.vue"
-import ReviewCreateButton from "@/components/airline/reviews/ReviewCreateButton.vue"
+import ReviewCreateButton from "@/components/airline/reviews/ReviewCreateButton"
+import ReviewList from "@/components/airline/reviews/ReviewList"
 
 export default {
-  name: ReviewTab,
+  name: "ReviewTab",
   components: {
     ReviewKeyword,
     ArrivalDelayInfo,
     ReviewWordcloud,
-    ReviewSentimentAnalysis,
+    ReviewSentiment,
     ReviewScore,
     ReviewScoreChart,
-    ReviewList,
     ReviewCreateButton,
+    ReviewList,
   },
 }
 </script>

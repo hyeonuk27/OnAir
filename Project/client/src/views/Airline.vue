@@ -2,7 +2,7 @@
   <div class="airline">
     <div class="airline-container">
       <AirlineInfo 
-      :airline_info="airline_info"
+      :airlineInfo="airlineInfo"
       />
       <!-- <DetailTab  -->
       <!-- /> -->
@@ -29,21 +29,21 @@ export default {
   },
   data () {
     return {
-      arrival_id: '',
-      airline_id: '',
-      airline_info: {},
+      arrivalId: '',
+      airlineId: '',
+      airlineInfo: {},
     }
   },
   methods: {
     getAirlineStatistics: function () {
       axios({
-        url: API.URL + API.ROUTES.get_airlines + this.arrival_id + '/' + this.airline_id + '/',
+        url: API.URL + API.ROUTES.get_airlines + this.arrivalId + '/' + this.airlineId + '/',
         method: "get",
       })
         .then((res) => {
           const report = res.data.data
           console.log(report)
-          this.report_detail = report
+          // this.report_detail = report
         })
         .catch((err) => {
           console.log(err)
@@ -51,12 +51,12 @@ export default {
     },
     getAirlineInfo: function () {
       axios({
-        url: API.URL + API.ROUTES.get_airline_info + this.airline_id + '/',
+        url: API.URL + API.ROUTES.get_airlineInfo + this.airlineId + '/',
         method: "get",
       })
         .then((res) => {
           const airlineInfo = res.data
-          this.airline_info = airlineInfo
+          this.airlineInfo = airlineInfo
           console.log(airlineInfo)
         })
         .catch((err) => {
@@ -65,8 +65,8 @@ export default {
     },
   },
   created() {
-    this.arrival_id = this.$route.params.arrival_id
-    this.airline_id = this.$route.params.airline_id
+    this.arrivalId = this.$route.params.arrivalId
+    this.airlineId = this.$route.params.airlineId
     this.getAirlineInfo()
     // this.getAirlineStatistics()
   }

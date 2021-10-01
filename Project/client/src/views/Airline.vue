@@ -32,8 +32,8 @@ export default {
     return {
       arrival_id: String,
       airline_id: String,
-      report: Array,
       airline_info: Object,
+      
     }
   },
   methods: {

@@ -60,11 +60,9 @@ def login(request):
     return Response(data, status=status.HTTP_201_CREATED)
 
 
-@check_login
 @api_view(['PUT'])
+@check_login
 def update(request):
-    print('check')
-    print(request.user)
     serializer = UserSerializer(request.user, data=request.data, partial=True)
     if serializer.is_valid(raise_exception=True):
         serializer.save()

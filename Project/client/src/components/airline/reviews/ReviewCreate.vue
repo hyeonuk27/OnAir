@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-5">
     <h1>리뷰 작성</h1>
 
     <!-- 리뷰 -->

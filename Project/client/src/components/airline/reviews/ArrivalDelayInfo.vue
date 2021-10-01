@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: ArrivalDelayInfo,
+  name: "ArrivalDelayInfo",
 
 }
 </script>

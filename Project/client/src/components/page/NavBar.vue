@@ -1,76 +1,92 @@
 <template>
   <div>
-    <nav class="nav justify-content-between">
+    <nav v-if="this.$route.name === 'Main'" class="nav justify-content-end">
+      <div v-if="isLogin" class="nav-menu d-flex mt-5 mx-5">
+        <div class="nav-element" @click="moveToMypage">마이페이지</div>
+        <div class="nav-element" @click="logOut">로그아웃</div>
+      </div>
+      <div v-else class="login mt-5 mx-5" @click="moveToLogin">로그인</div>   
+    </nav>
+    <nav v-else class="nav justify-content-between">
       <!-- 로고 -->
-        <img
-          src="@/assets/onair_logo.png"
-          style="height: 3.2rem"
-          alt="logo-image"
-          @click="moveToMain"
-          class="mt-5 mx-5"
+      <img src="@/assets/onair_logo.png"
+        alt="logo-image"
+        id="logo-image"
+        class="mt-5 mx-5"
+        @click="moveToMain"
         />
       <!-- 로그인 -->
-        <div
-          v-if="token"
-          class="mt-5 mx-5"
-          @click="signOut">
-          로그아웃
-        </div>
-        <div
-          v-else
-          class="mt-5 mx-5"
-          @click="moveToLogin">
-          로그인
-        </div>        
-
+      <div v-if="isLogin" class="nav-menu d-flex mt-5 mx-5">
+        <div class="nav-element" @click="moveToMypage">마이페이지</div>
+        <div class="nav-element" @click="logOut">로그아웃</div>
+      </div>
+      <div v-else class="login mt-5 mx-5" @click="moveToLogin">로그인</div>        
     </nav>
   </div>
 </template>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'NavBar',
   data() {
     return {
-      token: localStorage.getItem('token')
+      token: localStorage.getItem('token'),
     }
   },  
   methods: {
-    moveToMain() {
+    moveToMain: function() {
       if (this.$route.path !== "/") {
         this.$router.push({ name: "Main" })
       }
     },
-    moveToLogin() {
+    moveToLogin: function() {
       if (this.$route.path !== "login") {
         this.$router.push({ name: "Login" })
       }
     },
-    signOut() {
-      const auth2 = gapi.auth2.getAuthInstance()
-      console.log(auth2)
-      auth2.signOut().then(function () {
-        localStorage.removeItem('token')
-        console.log('로그아웃')
-      })
-      auth2.disconnect()
+    moveToMypage: function() {
+      if (this.$route.name !== "Profile") {
+        this.$router.push({ name: "Profile" , params: {userId: localStorage.getItem('userId')},})
+      }
     },
-    onLoad() {
-      gapi.load('auth2', function() {
-        gapi.auth2.init()
-      })
+    logOut: function() {
+      const auth2 = gapi.auth2.getAuthInstance()
+      if (confirm("로그아웃 하시겠습니까?")) {
+        auth2.signOut().then(function () {
+          localStorage.clear()
+          window.location.reload()
+        })
+        auth2.disconnect()
+      }
     },
   },
   mounted() {
     gapi.load('auth2', function() {
       gapi.auth2.init()
     })
-  } 
+  },
+  computed: {
+    ...mapGetters([
+      'isLogin'
+    ])
+  },
 }
 </script>
 
 <style>
-
+#logo-image {
+  height: 3.2rem;
+}
+.nav-element:not(:last-child) {
+  margin-right: 15px;
+}
+.navbar {
+  height: 250px;
+}
+.login .logout {
+  cursor: pointer;
+}
 </style>

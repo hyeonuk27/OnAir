@@ -166,7 +166,7 @@ def airline_list(request, arrival_id):
             continue
         # 목적지, 항공사에 해당하는 이번달 이용객수 예측값 가져오기
         df = pd.read_csv('predict_models/ets_passengers/predict_data/%s.csv' % airline.name)
-        predicted_data = df[df['date'].str.startswith('%s' % datetime.today().strftime("%Y-%m"))]['passengers'][0]
+        predicted_data = df[df['date'].str.startswith('%s' % datetime.today().strftime("%Y-%m"))]['passengers']
         scaled_passengers = scaler.transform(pd.DataFrame([[predicted_data]]))
         # 머신러닝 모델 가져와서 오늘 날씨, 이번달 이용객수의 지연률 예측
         data = pd.DataFrame([[airline.name, arrival.name, weather, scaled_passengers]], columns = ['airline', 'arrival', 'weather', 'passengers'])
@@ -274,17 +274,17 @@ def airline_report(request, arrival_id, airline_id):
         'data': {
             'airline_id': airline.id,
             'airline_name': airline.name,
-            'airline_profile_url': airline.profile_url,
-            'airline_address': airline.address,
-            'airline_phone_number': airline.phone_number,
-            'airline_site_url': airline.site_url,
-            'airline_corona_url': airline.corona_url,
-            'airline_is_skyteam': airline.is_skyteam,
-            'airline_is_star': airline.is_star,
-            'airline_is_oneworld': airline.is_oneworld,
+            # 'airline_profile_url': airline.profile_url,
+            # 'airline_address': airline.address,
+            # 'airline_phone_number': airline.phone_number,
+            # 'airline_site_url': airline.site_url,
+            # 'airline_corona_url': airline.corona_url,
+            # 'airline_is_skyteam': airline.is_skyteam,
+            # 'airline_is_star': airline.is_star,
+            # 'airline_is_oneworld': airline.is_oneworld,
             'arrival_id': arrival.id,
             'arrival_name': arrival.name,
-            'arrival_image_url': arrival.image_url,
+            # 'arrival_image_url': arrival.image_url,
             'total': statistics_result.total,
             'under_30': statistics_result.under_30,
             'under_60': statistics_result.under_60,
@@ -310,8 +310,7 @@ def airline_report(request, arrival_id, airline_id):
 def airline_details(request, airline_id):
     airline = get_object_or_404(Airline, pk=airline_id)
     serializer = AirlineDetailSerializer(airline)
-    data = serializer.data
-    return Response(data)
+    return Response(serializer.data)
     
 
 @api_view(['POST', 'GET'])
@@ -338,8 +337,8 @@ def review_list(request, airline_id):
         return Response(serializer.data)
     
 
-@api_view(['DELETE', 'PUT'])
 @check_login
+@api_view(['DELETE', 'PUT'])
 def review_detail(request, review_id):
     print('test')
     review = get_object_or_404(Review, id=review_id)

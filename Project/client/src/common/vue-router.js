@@ -3,7 +3,9 @@ import VueRouter from 'vue-router'
 import Main from '@/views/Main.vue'
 import Login from '@/views/Login.vue'
 import Airline from '@/views/Airline.vue'
-import HelloWorld from '@/components/HelloWorld.vue'
+import Profile from '@/views/Profile.vue'
+import ReviewCreate from '@/components/airline/reviews/ReviewCreate.vue'
+
 
 Vue.use(VueRouter)
 
@@ -13,21 +15,25 @@ const routes = [
     name: 'Main',
     component: Main
   },
-  //테스트중...
-  {
-    path: '/test',
-    name: 'HelloWorld',
-    component: HelloWorld
-  },
   {
     path: '/login',
     name: 'Login',
     component: Login
   },
   {
-    path: '/airline',
+    path: '/airline/:arrivalId/:airlineId',
     name: 'Airline',
     component: Airline
+  },
+  {
+    path: '/profile/:userId',
+    name: 'Profile',
+    component: Profile
+  },
+  {
+    path: '/airline/create',
+    name: 'ReviewCreate',
+    component: ReviewCreate
   }
 ]
 

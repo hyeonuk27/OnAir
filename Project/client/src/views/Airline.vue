@@ -1,16 +1,21 @@
 <template>
-  <div>
-    {{arrival_id}}
-    {{airline_id}}
-    <AirlineInfo />
-    <DetailTab />
-
+  <div class="airline">
+    <div class="airline-container">
+      <AirlineInfo 
+      :airlineInfo="airlineInfo"
+      />
+      <!-- <DetailTab  -->
+      <!-- /> -->
+      <!-- <ReviewTab/> -->
+    </div>
   </div>
 </template>
 
+
 <script>
 import AirlineInfo from "@/components/airline/statistics/AirlineInfo"
-import DetailTab from '../components/airline/statistics/DetailTab'
+// import DetailTab from '../components/airline/statistics/DetailTab'
+// import ReviewTab from "@/components/airline/reviews/ReviewTab"
 
 import axios from "axios"
 import API from "@/common/drf.js"
@@ -19,47 +24,64 @@ export default {
   name: 'AirlineDetail',
   components: {
     AirlineInfo,
-    DetailTab,
+    // DetailTab,
+    // ReviewTab,
   },
   data () {
     return {
-      arrival_id: '',
-      airline_id: '',
+      arrivalId: '',
+      airlineId: '',
+      airlineInfo: {},
     }
   },
   methods: {
-    getAirlineInfo: function() {
+    getAirlineStatistics: function () {
       axios({
-        url: API.URL + API.ROUTES.get_airline_info,
+        url: API.URL + API.ROUTES.get_airlines + this.arrivalId + '/' + this.airlineId + '/',
         method: "get",
       })
         .then((res) => {
-          return res
+          const report = res.data.data
+          console.log(report)
+          // this.report_detail = report
         })
         .catch((err) => {
           console.log(err)
         })
     },
-    getAirlineStatistics: function() {
+    getAirlineInfo: function () {
       axios({
-        url: API.URL + API.ROUTES.get_airline_statistics,
+        url: API.URL + API.ROUTES.get_airlineInfo + this.airlineId + '/',
         method: "get",
       })
         .then((res) => {
-          return res
+          const airlineInfo = res.data
+          this.airlineInfo = airlineInfo
+          console.log(airlineInfo)
         })
         .catch((err) => {
           console.log(err)
         })
-    }
+    },
   },
   created() {
-    this.arrival_id = this.$route.params.arrival_id
-    this.airline_id = this.$route.params.airline_id
+    this.arrivalId = this.$route.params.arrivalId
+    this.airlineId = this.$route.params.airlineId
+    this.getAirlineInfo()
+    // this.getAirlineStatistics()
   }
 }
 </script>
 
 <style>
+  .airline {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+  }
 
+  .airline-container {
+    width: 1190px;
+    min-width: 1190px;
+  }
 </style>

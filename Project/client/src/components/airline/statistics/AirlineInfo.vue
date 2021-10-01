@@ -26,13 +26,13 @@
         >
       </div>
       <div class="line-intro text-start">
-        <span>{{ airlineInfo.detail }}</span>
+        <span id="detailText" >{{ airlineInfo.detail }}</span>
       </div>
       <div class="line-info text-start">
-        <span class="address"><i class="fas fa-building"></i>{{ airlineInfo.address }}</span> |
-        <span class="num"><i class="fas fa-phone"></i>{{ airlineInfo.phone_number }}</span> |
-        <a :href="airlineInfo.site_url" class="website"><i class="fas fa-globe"></i>홈페이지</a> |
-        <a :href="airlineInfo.corona_url" class="covid19"><i class="fas fa-info-circle"></i>코로나 19 업데이트 </a>
+        <span id="detailText" class="address"><i class="fas fa-building address"></i>{{ airlineInfo.address }}</span> |
+        <span id="detailText" class="num"><i class="fas fa-phone num"></i>{{ airlineInfo.phone_number }}</span> |
+        <a :href="airlineInfo.site_url" id="detailText" class="website"><i class="fas fa-globe website"></i>홈페이지<i class="fas fa-external-link-alt website"></i></a> |
+        <a :href="airlineInfo.corona_url" id="detailText" class="covid19"><i class="fas fa-info-circle covid19"></i>코로나 19 업데이트<i class="fas fa-external-link-alt covid19"></i></a>
       </div>
     </div>
   </div>
@@ -54,13 +54,13 @@ export default {
 
 <style>
   .airline-info {
-    display: flex;
-    justify-content: center;
+    width: 700px;
+    margin: 0 auto;
   }
 
   .airline-info-wrapper {
     display: grid;
-    grid-template-columns: 200px 50px 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 30px 40px;
     grid-auto-rows: min-content;
   }
@@ -68,7 +68,7 @@ export default {
   .profile-logo {
     grid-column: 1;
     grid-row: 1;
-    width: 200px;
+    width: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -77,7 +77,7 @@ export default {
   .team-logo {
     grid-column: 2;
     grid-row: 1;
-    width: 50px;
+    width: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -86,7 +86,7 @@ export default {
   .line-intro {
     grid-column: 3;
     grid-row: 1;
-    width: 750px;
+    width: 400px;
   }
 
   .line-info {
@@ -94,5 +94,27 @@ export default {
     grid-row: 2;
     margin: 10px;
   }
+  
+  .address {
+    padding: 5px;
+  }
 
+  .num {
+    padding: 5px;
+  }
+
+  .website {
+    padding: 5px;
+    text-decoration: none;
+  }
+
+  .covid19 {
+    padding: 5px;
+    text-decoration: none;
+  }
+
+  #detailText {
+    font-size: x-small;
+    line-height: 100%;
+  }
 </style>

@@ -7,11 +7,11 @@
     src="skyteam"
     >
     <div>
-      <p>{{ airline_info.details }}</p>
-      <p>{{ airline_info.address }}</p> |
-      <p>{{ airline_info.phone_number }}</p> |
-      <p>{{ airline_info.site_url }}</p> |
-      <p>{{ airline_info.corona_url }}</p>
+      <span>{{ airline_info.details }}</span>
+      <span>{{ airline_info.address }}</span> |
+      <span>{{ airline_info.phone_number }}</span> |
+      <a :href="airline_info.site_url">홈페이지</a> |
+      <a :href="airline_info.corona_url">코로나 19 업데이트 </a>
     </div>
   </div>
 </template>
@@ -22,6 +22,7 @@ export default {
   props: ['airline_info'],
   data() {
     return {
+      
     }
   },
   methods: {

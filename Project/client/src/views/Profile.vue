@@ -4,10 +4,10 @@
       <div class="profile-info">
         <img 
         class="profile-image"
-        src="@/assets/main.jpg" 
+        :src="profile_url" 
         alt="profile-image">
         <div class="profile-name">
-          온에어
+          {{name}}
         </div>
       </div>
       <div class="profile-tabs">
@@ -21,18 +21,38 @@
 </template>
 
 <script>
+import axios from "axios"
+import API from "@/common/drf.js"
+
 export default {
   name: 'Profile',
   data() {
     return {
       colorx:'#656F8C',
+      profile_id: '',
+      user_id: localStorage.getItem('user_id'),
+      name: '',
+      profile_url: '',
     }
   },
   methods: {
-
+    getProfile: function () {
+      axios({
+        url: API.URL + API.ROUTES.get_profile + this.profile_id + '/',
+        method: "get",
+      })
+        .then((res) => {
+          this.name = res.data.name
+          this.profile_url = res.data.profile_url
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   },
   created() {
-
+    this.profile_id = this.$route.params.user_id
+    this.getProfile()
   }
 }
 </script>
@@ -51,12 +71,12 @@ export default {
   .profile-image {
     border-radius: 70%;
     object-fit: cover;
-    height: 180px;
-    width: 180px;
+    height: 150px;
+    width: 150px;
   }
 
   .profile-info {
-    margin: 30px 0px;
+    margin: 60px 0px;
   }
 
   .profile-name {

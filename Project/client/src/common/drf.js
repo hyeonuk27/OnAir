@@ -11,5 +11,6 @@ export default {
     get_airlines: '/airlines/',
     get_airline_info: '/airlines/airline/info/',
     review_list: '/reviews/airline/',
+    get_profile: '/auth/profile/'
   }
 }

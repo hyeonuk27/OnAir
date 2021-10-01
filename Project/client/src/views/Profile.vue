@@ -11,9 +11,9 @@
         </div>
       </div>
       <div class="profile-tabs">
-        <vs-button class="profile-tab" :color="colorx" type="line">회원정보수정</vs-button>
-        <vs-button class="profile-tab" :color="colorx" type="line">내가 남긴 리뷰</vs-button>
-        <vs-button class="profile-tab" :color="colorx" type="line">검색 기록</vs-button>
+        <vs-button v-if="profileId == userId" class="profile-tab" :color="colorx" type="line">회원정보수정</vs-button>
+        <vs-button class="profile-tab" :color="colorx" type="line">남긴 리뷰</vs-button>
+        <vs-button v-if="profileId == userId" class="profile-tab" :color="colorx" type="line">검색 기록</vs-button>
         <vs-button class="profile-tab" :color="colorx" type="line">1:1문의</vs-button>
       </div>
     </div>
@@ -43,7 +43,7 @@ export default {
       })
         .then((res) => {
           this.name = res.data.name
-          this.profileUrl = res.data.profileUrl
+          this.profileUrl = res.data.profile_url
         })
         .catch((err) => {
           console.log(err)

@@ -1,7 +1,7 @@
 <template>
   <div class="profile">
     <div class="profile-container">
-      <div class="profile-info">
+      <div v-if="isRendered" class="profile-info">
         <img 
         class="profile-image"
         :src="profileUrl" 
@@ -10,11 +10,13 @@
           {{name}}
         </div>
       </div>
+      <div v-else style="height: 204px;">
+      </div>
       <div class="profile-tabs">
-        <vs-button v-if="profileId == userId" class="profile-tab" :color="colorx" type="line">회원정보수정</vs-button>
+        <vs-button v-if="profileId == userId" class="profile-tab" :color="colorx" type="line" @click.native="goProfileUpdate">닉네임 수정</vs-button>
         <vs-button class="profile-tab" :color="colorx" type="line">남긴 리뷰</vs-button>
         <vs-button v-if="profileId == userId" class="profile-tab" :color="colorx" type="line">검색 기록</vs-button>
-        <vs-button class="profile-tab" :color="colorx" type="line">1:1문의</vs-button>
+        <vs-button class="profile-tab" :color="colorx" type="line" onclick="window.open('https://www.notion.so/jiu-park/4a14719b6de04f31bcbd932e8d2032b5')">1:1문의</vs-button>
       </div>
     </div>
   </div>
@@ -33,6 +35,7 @@ export default {
       userId: localStorage.getItem('userId'),
       name: '',
       profileUrl: '',
+      isRendered: false,
     }
   },
   methods: {
@@ -44,10 +47,14 @@ export default {
         .then((res) => {
           this.name = res.data.name
           this.profileUrl = res.data.profile_url
+          this.isRendered = true
         })
         .catch((err) => {
           console.log(err)
         })
+    },
+    goProfileUpdate: function () {
+      this.$router.push({ name: "ProfileUpdate" , params: { userId: this.userId, name : this.name, profileUrl : this.profileUrl }})
     }
   },
   created() {

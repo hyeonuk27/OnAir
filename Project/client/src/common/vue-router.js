@@ -5,6 +5,7 @@ import Login from '@/views/Login.vue'
 import Airline from '@/views/Airline.vue'
 import Profile from '@/views/Profile.vue'
 import ReviewCreate from '@/components/airline/reviews/ReviewCreate.vue'
+import ProfileUpdate from '@/components/profile/ProfileUpdate.vue'
 
 
 Vue.use(VueRouter)
@@ -34,6 +35,11 @@ const routes = [
     path: '/airline/create',
     name: 'ReviewCreate',
     component: ReviewCreate
+  },
+  {
+    path: '/profile/:userId/update',
+    name: 'ProfileUpdate',
+    component: ProfileUpdate
   }
 ]
 

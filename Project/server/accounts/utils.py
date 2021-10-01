@@ -5,15 +5,18 @@ from django.contrib.auth import get_user_model
 
 import jwt
 
+from functools import wraps
+
 JWT_SECRET_KEY = config('JWT_SECRET_KEY')
 User = get_user_model()
 
 def check_login(func):
-    def wrapper(self, request, *args, **kwargs):
+    @wraps(func)
+    def wrapper(request, *args, **kwargs):
         try:
             access_token = request.headers["Authorization"]
             user_id = jwt.decode(access_token, JWT_SECRET_KEY, algorithm='HS256')
-            user = User.objects.get(id=user_id)
+            user = User.objects.get(google_id=user_id['id'])
             request.user = user
         
         except jwt.exceptions.DecodeError:
@@ -22,5 +25,5 @@ def check_login(func):
         except User.DoesNotExist:
             return JsonResponse({'message' : 'INVALID_USER'}, status=400)
         
-        return func(self, request, *args, **kwargs)
+        return func(request, *args, **kwargs)
     return wrapper 

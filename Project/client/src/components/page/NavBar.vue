@@ -5,7 +5,7 @@
         <div class="nav-element" @click="moveToMypage">마이페이지</div>
         <div class="nav-element" @click="logOut">로그아웃</div>
       </div>
-      <div v-else class="login" @click="moveToLogin">로그인</div>   
+      <div v-else class="login mt-5 mx-5" @click="moveToLogin">로그인</div>   
     </nav>
     <nav v-else class="nav justify-content-between">
       <!-- 로고 -->
@@ -20,7 +20,7 @@
         <div class="nav-element" @click="moveToMypage">마이페이지</div>
         <div class="nav-element" @click="logOut">로그아웃</div>
       </div>
-      <div v-else class="login" @click="moveToLogin">로그인</div>        
+      <div v-else class="login mt-5 mx-5" @click="moveToLogin">로그인</div>        
     </nav>
   </div>
 </template>

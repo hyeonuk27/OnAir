@@ -336,8 +336,8 @@ def review_list(request, airline_id):
         return Response(serializer.data)
     
 
-@api_view(['DELETE', 'PUT'])
 @check_login
+@api_view(['DELETE', 'PUT'])
 def review_detail(request, review_id):
     print('test')
     review = get_object_or_404(Review, id=review_id)

@@ -1,11 +1,11 @@
 <template>
   <div>
     <nav v-if="this.$route.name === 'Main'" class="nav justify-content-end">
-      <div v-if="isLogin">
-        <div @click="moveToMypage">마이페이지</div>
-        <div class="logout mt-5 mx-5" @click="logOut">로그아웃</div>
+      <div v-if="isLogin" class="nav-menu d-flex mt-5 mx-5">
+        <div class="nav-element" @click="moveToMypage">마이페이지</div>
+        <div class="nav-element" @click="logOut">로그아웃</div>
       </div>
-      <div v-else class="login mt-5 mx-5" @click="moveToLogin">로그인</div>   
+      <div v-else class="login" @click="moveToLogin">로그인</div>   
     </nav>
     <nav v-else class="nav justify-content-between">
       <!-- 로고 -->
@@ -16,11 +16,11 @@
         @click="moveToMain"
         />
       <!-- 로그인 -->
-      <div v-if="isLogin">
-        <div @click="moveToMypage">마이페이지</div>
-        <div class="logout mt-5 mx-5" @click="logOut">로그아웃</div>
+      <div v-if="isLogin" class="nav-menu d-flex mt-5 mx-5">
+        <div class="nav-element" @click="moveToMypage">마이페이지</div>
+        <div class="nav-element" @click="logOut">로그아웃</div>
       </div>
-      <div v-else class="login mt-5 mx-5" @click="moveToLogin">로그인</div>        
+      <div v-else class="login" @click="moveToLogin">로그인</div>        
     </nav>
   </div>
 </template>
@@ -48,8 +48,8 @@ export default {
       }
     },
     moveToMypage: function() {
-      if (this.$route.path !== "login") {
-        this.$router.push({ name: "Login" })
+      if (this.$route.path !== "mypage") {
+        this.$router.push({ name: "Profile" })
       }
     },
     logOut: function() {
@@ -79,6 +79,12 @@ export default {
 <style>
 #logo-image {
   height: 3.2rem;
+}
+.nav-element:not(:last-child) {
+  margin-right: 15px;
+}
+.navbar {
+  height: 250px;
 }
 .login .logout {
   cursor: pointer;

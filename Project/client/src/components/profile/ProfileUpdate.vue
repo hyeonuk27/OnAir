@@ -22,7 +22,7 @@
 <script>
 import axios from "axios"
 import API from "@/common/drf.js"
-import {mapState} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 
 export default {
   name: 'ProfileUpdate',
@@ -33,6 +33,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions(
+      ['setName']
+      ),
     profileUpdate: function () {
       axios({
         url: API.URL + API.ROUTES.updateProfile,
@@ -45,7 +48,12 @@ export default {
         }
       })
         .then((res) => {
-          console.log(res)
+          this.$vs.notify({
+            title:'수정 완료', text:`✈ On:Air > ${res.data.name}님 환영합니다.`, color:'#D4C6E2', position:'top-right'
+          })
+          localStorage.setItem('name', res.data.name)
+          this.setName(res.data.name)
+          this.$router.go(-1)
         })
         .catch((err) => {
           console.log(err)

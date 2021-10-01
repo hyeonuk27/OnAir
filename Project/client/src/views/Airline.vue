@@ -1,15 +1,12 @@
 <template>
   <div class="airline">
     <div class="airline-container">
-      {{ arrival_id }}
-      {{ airline_id }}
       <AirlineInfo 
-      :airline_info="airline_info"
+      :airlineInfo="airlineInfo"
       />
-      <DetailTab 
-      :report="report"
-      />
-      <ReviewTab/>
+      <!-- <DetailTab  -->
+      <!-- /> -->
+      <!-- <ReviewTab/> -->
     </div>
   </div>
 </template>
@@ -17,8 +14,8 @@
 
 <script>
 import AirlineInfo from "@/components/airline/statistics/AirlineInfo"
-import DetailTab from '../components/airline/statistics/DetailTab'
-import ReviewTab from "@/components/airline/reviews/ReviewTab"
+// import DetailTab from '../components/airline/statistics/DetailTab'
+// import ReviewTab from "@/components/airline/reviews/ReviewTab"
 
 import axios from "axios"
 import API from "@/common/drf.js"
@@ -27,27 +24,26 @@ export default {
   name: 'AirlineDetail',
   components: {
     AirlineInfo,
-    DetailTab,
-    ReviewTab,
+    // DetailTab,
+    // ReviewTab,
   },
   data () {
     return {
-      arrival_id: String,
-      airline_id: String,
-      airline_info: Object,
-      
+      arrivalId: '',
+      airlineId: '',
+      airlineInfo: {},
     }
   },
   methods: {
     getAirlineStatistics: function () {
       axios({
-        url: API.URL + API.ROUTES.get_airlines + this.arrival_id + '/' + this.airline_id + '/',
+        url: API.URL + API.ROUTES.get_airlines + this.arrivalId + '/' + this.airlineId + '/',
         method: "get",
       })
         .then((res) => {
           const report = res.data.data
           console.log(report)
-          this.report_detail = report
+          // this.report_detail = report
         })
         .catch((err) => {
           console.log(err)
@@ -55,11 +51,12 @@ export default {
     },
     getAirlineInfo: function () {
       axios({
-        url: API.URL + API.ROUTES.get_airlines + this.airline_id + '/',
+        url: API.URL + API.ROUTES.get_airlineInfo + this.airlineId + '/',
         method: "get",
       })
         .then((res) => {
           const airlineInfo = res.data
+          this.airlineInfo = airlineInfo
           console.log(airlineInfo)
         })
         .catch((err) => {
@@ -68,10 +65,10 @@ export default {
     },
   },
   created() {
-    this.arrival_id = this.$route.params.arrival_id
-    this.airline_id = this.$route.params.airline_id
+    this.arrivalId = this.$route.params.arrivalId
+    this.airlineId = this.$route.params.airlineId
     this.getAirlineInfo()
-    this.getAirlineStatistics()
+    // this.getAirlineStatistics()
   }
 }
 </script>

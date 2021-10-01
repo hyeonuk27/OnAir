@@ -21,12 +21,12 @@ const routes = [
     component: Login
   },
   {
-    path: '/airline',
+    path: '/airline/:arrivalId/:airlineId',
     name: 'Airline',
     component: Airline
   },
   {
-    path: '/mypage',
+    path: '/profile/:userId',
     name: 'Profile',
     component: Profile
   },

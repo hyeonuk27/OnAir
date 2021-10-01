@@ -48,8 +48,8 @@ export default {
       }
     },
     moveToMypage: function() {
-      if (this.$route.path !== "mypage") {
-        this.$router.push({ name: "Profile" })
+      if (this.$route.name !== "Profile") {
+        this.$router.push({ name: "Profile" , params: {userId: localStorage.getItem('userId')},})
       }
     },
     logOut: function() {

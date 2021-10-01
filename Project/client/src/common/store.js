@@ -11,6 +11,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     token: localStorage.getItem('token'),
+    user_id: localStorage.getItem('user_id'),
   },
   getters: {
     isLogin: function (state) {

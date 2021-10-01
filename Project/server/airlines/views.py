@@ -38,7 +38,6 @@ import time
 # import datetime as dt
 from datetime import datetime
 from collections import Counter
-from eunjeon import Mecab
 
 JWT_SECRET_KEY = config('JWT_SECRET_KEY')
 
@@ -405,6 +404,6 @@ def review_keyword(request, airline_id):
     words = dict(count.most_common())
 
     # 딕셔너리를 제이슨으로 변환하여 전달
-    return HttpResponse(json.dumps(words, ensure_ascii = False))
+    return HttpResponse(json.dumps(words, ensure_ascii = False), content_type = 'application/json; charset=utf8')
     # return HttpResponse(json.dumps(words), content_type = 'application/json; charset=utf8')
 

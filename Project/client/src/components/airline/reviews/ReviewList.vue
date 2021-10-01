@@ -3,6 +3,16 @@
     <!-- 리뷰 리스트 -->
     <ul>
       <li v-for="(review, idx) in reviewList" :key="idx">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            ...
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li @click="moveToReviewForm(review.id)">수정</li>
+            <li @click="deleteReview(review.id)">삭제</li>
+          </ul>
+        </div>
+        <div>유저: {{ review.user }}</div>
         <div>제목: {{ review.title }}</div>
         <div>내용: {{ review.content }}</div>
         <div>출발 일자: {{ review.flight_at }}</div>
@@ -30,9 +40,17 @@ export default {
   data() {
     return {
       reviewList: [],
+      reviewer: "",
     }
   },
   methods: {
+    setToken: function () {
+      const token = localStorage.getItem('token')
+      const config = {
+        Authorization: token
+      }
+      return config
+    },
     getReviewList: function () {
       axios({
         url: API.URL + API.ROUTES.review_list + this.airlineId + '/',
@@ -47,6 +65,25 @@ export default {
         console.log(err)
       })
     },
+    // 요청은 들어가나 요청한 사람 == 작성한 사람 일 때만 삭제가 되어서 문제..
+    deleteReview: function (reviewId) {
+      const headers = this.setToken()
+      axios({
+        url: API.URL + API.ROUTES.review_detail + reviewId,
+        method: 'delete',
+        headers
+      })
+      .then(() => {
+        console.log('삭제가 완료됐습니다')
+        this.getReviewList()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+    moveToReviewForm: function () {
+      this.$router.push({ name: "Form" })
+    }
   },
   created () {
     this.getReviewList()

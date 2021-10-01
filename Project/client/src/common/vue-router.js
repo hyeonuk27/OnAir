@@ -4,7 +4,7 @@ import Main from '@/views/Main.vue'
 import Login from '@/views/Login.vue'
 import Airline from '@/views/Airline.vue'
 import Profile from '@/views/Profile.vue'
-import ReviewCreate from '@/components/airline/reviews/ReviewCreate.vue'
+import Form from '@/views/Form.vue'
 
 
 Vue.use(VueRouter)
@@ -31,9 +31,9 @@ const routes = [
     component: Profile
   },
   {
-    path: '/airline/create',
-    name: 'ReviewCreate',
-    component: ReviewCreate
+    path: '/form',
+    name: 'Form',
+    component: Form
   },
 ]
 

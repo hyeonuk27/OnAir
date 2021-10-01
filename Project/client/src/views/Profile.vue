@@ -4,7 +4,7 @@
       <div class="profile-info">
         <img 
         class="profile-image"
-        :src="profile_url" 
+        :src="profileUrl" 
         alt="profile-image">
         <div class="profile-name">
           {{name}}
@@ -29,21 +29,21 @@ export default {
   data() {
     return {
       colorx:'#656F8C',
-      profile_id: '',
-      user_id: localStorage.getItem('user_id'),
+      profileId: '',
+      userId: localStorage.getItem('userId'),
       name: '',
-      profile_url: '',
+      profileUrl: '',
     }
   },
   methods: {
     getProfile: function () {
       axios({
-        url: API.URL + API.ROUTES.get_profile + this.profile_id + '/',
+        url: API.URL + API.ROUTES.getProfile + this.profileId + '/',
         method: "get",
       })
         .then((res) => {
           this.name = res.data.name
-          this.profile_url = res.data.profile_url
+          this.profileUrl = res.data.profileUrl
         })
         .catch((err) => {
           console.log(err)
@@ -51,7 +51,7 @@ export default {
     }
   },
   created() {
-    this.profile_id = this.$route.params.user_id
+    this.profileId = this.$route.params.userId
     this.getProfile()
   }
 }

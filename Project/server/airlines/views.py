@@ -405,6 +405,6 @@ def review_keyword(request, airline_id):
     words = dict(count.most_common())
 
     # 딕셔너리를 제이슨으로 변환하여 전달
-    return HttpResponse(json.dumps(words, ensure_ascii=False))
+    return json.dumps(words, ensure_ascii = False)
     # return HttpResponse(json.dumps(words), content_type = 'application/json; charset=utf8')
 

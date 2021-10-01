@@ -165,7 +165,7 @@ def airline_list(request, arrival_id):
             continue
         # 목적지, 항공사에 해당하는 이번달 이용객수 예측값 가져오기
         df = pd.read_csv('predict_models/ets_passengers/predict_data/%s.csv' % airline.name)
-        predicted_data = df[df['date'].str.startswith('%s' % datetime.today().strftime("%Y-%m"))]['passengers'][0]
+        predicted_data = df[df['date'].str.startswith('%s' % datetime.today().strftime("%Y-%m"))]['passengers']
         scaled_passengers = scaler.transform(pd.DataFrame([[predicted_data]]))
         # 머신러닝 모델 가져와서 오늘 날씨, 이번달 이용객수의 지연률 예측
         data = pd.DataFrame([[airline.name, arrival.name, weather, scaled_passengers]], columns = ['airline', 'arrival', 'weather', 'passengers'])

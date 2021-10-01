@@ -11,6 +11,7 @@
   </div>
 </template>
 
+
 <script>
 import AirlineInfo from "@/components/airline/statistics/AirlineInfo"
 import DetailTab from '@/components/airline/statistics/DetailTab'

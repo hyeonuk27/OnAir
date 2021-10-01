@@ -1,14 +1,16 @@
 <template>
-  <div>
-    {{ arrival_id }}
-    {{ airline_id }}
-    <AirlineInfo 
-    :airline_info="airline_info"
-    />
-    <DetailTab 
-    :report="report"
-    />
-    <ReviewTab/>
+  <div class="airline">
+    <div class="airline-container">
+      {{ arrival_id }}
+      {{ airline_id }}
+      <AirlineInfo 
+      :airline_info="airline_info"
+      />
+      <DetailTab 
+      :report="report"
+      />
+      <ReviewTab/>
+    </div>
   </div>
 </template>
 
@@ -76,5 +78,14 @@ export default {
 </script>
 
 <style>
+  .airline {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+  }
 
+  .airline-container {
+    width: 1190px;
+    min-width: 1190px;
+  }
 </style>

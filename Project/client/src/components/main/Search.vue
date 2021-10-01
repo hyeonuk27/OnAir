@@ -8,7 +8,7 @@
       v-model="departure"
       @change="search"
       >
-      <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in departure_list" />
+      <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in departureList" />
     </vs-select>
 
     <vs-select
@@ -19,7 +19,7 @@
       v-model="arrival"
       @change="search"
       >
-      <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in arrival_list" />
+      <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in arrivalList" />
     </vs-select>
   </div>
 </template>
@@ -27,7 +27,7 @@
 <script>
 export default {
   name: 'Search',
-  props: ['departure_list', 'arrival_list'],
+  props: ['departureList', 'arrivalList'],
   data() {
     return {
       departure: [],
@@ -37,7 +37,7 @@ export default {
   methods: {
     search: function() {
       if (typeof this.departure != 'object' && typeof this.arrival != 'object') {
-        this.$emit('search', this.arrival_list[this.arrival-1].id, this.departure_list[this.departure-1].text.substring(0, 3), this.arrival_list[this.arrival-1].text.substring(0, 3))
+        this.$emit('search', this.arrivalList[this.arrival-1].id, this.departureList[this.departure-1].text.substring(0, 3), this.arrivalList[this.arrival-1].text.substring(0, 3))
       }
     }
   }

@@ -49,7 +49,7 @@ export default {
     },
     moveToMypage: function() {
       if (this.$route.name !== "Profile") {
-        this.$router.push({ name: "Profile" , params: {user_id: localStorage.getItem('user_id')},})
+        this.$router.push({ name: "Profile" , params: {userId: localStorage.getItem('userId')},})
       }
     },
     logOut: function() {

@@ -14,7 +14,7 @@
 export default {
   name: 'AnalysisCharts',
   props: {
-    report: Array,
+    // report: Array,
   },
   data () {
 

@@ -9,7 +9,9 @@
       <DetailTab 
       :report="report"
       />
-      <ReviewTab/>
+      <ReviewTab
+      :airlineId="airline_id"
+      />
     </div>
   </div>
 </template>

@@ -3,36 +3,36 @@
     <div class="airline-info-wrapper">
       <div class="profile-logo">
         <img
-        :src="airline_info.profile_url"
+        :src="airlineInfo.profile_url"
         alt="airline-logo"
         class="img-fluid"
         >
       </div>
       <div class="team-logo">
         <img
-        v-if="airline_info.is_skyteam"
+        v-if="airlineInfo.is_skyteam"
         src="@/assets/team_logo/skyteam.png"
         class="img-fluid"
         >
         <img
-        v-if="airline_info.is_star"
+        v-if="airlineInfo.is_star"
         src="@/assets/team_logo/star.png"
         class="img-fluid"
         >
         <img
-        v-if="airline_info.is_oneworld"
+        v-if="airlineInfo.is_oneworld"
         src="@/assets/team_logo/oneworld.png"
         class="img-fluid"
         >
       </div>
       <div class="line-intro text-start">
-        <span>{{ airline_info.detail }}</span>
+        <span>{{ airlineInfo.detail }}</span>
       </div>
       <div class="line-info text-start">
-        <span class="address"><i class="fas fa-building"></i>{{ airline_info.address }}</span> |
-        <span class="num"><i class="fas fa-phone"></i>{{ airline_info.phone_number }}</span> |
-        <a :href="airline_info.site_url" class="website"><i class="fas fa-globe"></i>홈페이지</a> |
-        <a :href="airline_info.corona_url" class="covid19"><i class="fas fa-info-circle"></i>코로나 19 업데이트 </a>
+        <span class="address"><i class="fas fa-building"></i>{{ airlineInfo.address }}</span> |
+        <span class="num"><i class="fas fa-phone"></i>{{ airlineInfo.phone_number }}</span> |
+        <a :href="airlineInfo.site_url" class="website"><i class="fas fa-globe"></i>홈페이지</a> |
+        <a :href="airlineInfo.corona_url" class="covid19"><i class="fas fa-info-circle"></i>코로나 19 업데이트 </a>
       </div>
     </div>
   </div>
@@ -41,7 +41,7 @@
 <script>
 export default {
   name: 'AirlineInfo',
-  props: ['airline_info'],
+  props: ['airlineInfo'],
   data() {
     return {
       

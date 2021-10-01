@@ -38,7 +38,7 @@ class AirlineDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Airline
-        exclude = ('id',)
+        fields = '__all__'
 
 class AirlineReportSerializer(serializers.ModelSerializer):
 

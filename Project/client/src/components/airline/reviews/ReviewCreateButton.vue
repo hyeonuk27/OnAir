@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: ReviewCreateButton,
+  name: "ReviewCreateButton",
   method: {
     moveToReviewCreate() {
       this.$router.push({ name: "ReviewCreate" })

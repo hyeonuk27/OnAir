@@ -2,8 +2,13 @@
   <div>
     {{ arrival_id }}
     {{ airline_id }}
-    <AirlineInfo />
-    <DetailTab />
+    <AirlineInfo 
+    :airline_info="airline_info"
+    />
+    <DetailTab 
+    :report="report"
+    />
+    <ReviewTab/>
   </div>
 </template>
 
@@ -11,6 +16,7 @@
 <script>
 import AirlineInfo from "@/components/airline/statistics/AirlineInfo"
 import DetailTab from '../components/airline/statistics/DetailTab'
+import ReviewTab from "@/components/airline/reviews/ReviewTab"
 
 import axios from "axios"
 import API from "@/common/drf.js"
@@ -20,12 +26,14 @@ export default {
   components: {
     AirlineInfo,
     DetailTab,
+    ReviewTab,
   },
   data () {
     return {
-      arrival_id: '',
-      airline_id: '',
-      report: [],
+      arrival_id: String,
+      airline_id: String,
+      airline_info: Object,
+      
     }
   },
   methods: {

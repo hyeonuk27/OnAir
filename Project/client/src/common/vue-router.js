@@ -43,7 +43,7 @@ const routes = [
     component: ProfileUpdate
   },
   {
-    path: 'profile/:userId/reviews',
+    path: '/profile/:userId/reviews',
     name: 'MyReview',
     component: MyReview
   }

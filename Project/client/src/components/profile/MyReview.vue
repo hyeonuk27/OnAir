@@ -1,5 +1,19 @@
 <template>
-  <div>
+  <div class="my-review">
+    <div class="my-review-container">
+      <div>
+        <img class="my-review-img" :src="profileUrl" alt="">
+      </div>
+      <div>
+        <div class="my-review-list">
+          <MyReviewElement
+          v-for="(review, idx) in reviews"
+          :key="idx"
+          />
+        </div>
+        <vs-pagination class="my-review-pagination" :total="pageTotal" v-model="pageNum" @change="getMyReviews"></vs-pagination>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -7,33 +21,37 @@
 import axios from "axios"
 import API from "@/common/drf.js"
 import {mapState} from 'vuex'
+import MyReviewElement from '@/components/profile/MyReviewElement'
 
 export default {
   name: 'MyReview',
   data() {
     return {
-
+      name: '',
+      profileUrl: '',
+      pageNum: 1,
+      pageTotal: 2,
+      reviews: [],
     }
+  },
+  components: {
+    MyReviewElement
   },
   methods: {
     getMyReviews: function () {
       axios({
         url: API.URL + API.ROUTES.getMyReviews + this.userId + '/reviews/',
-        method: "put",
-        headers: {
-          Authorization: this.token
+        method: "get",
+        params: {
+          page: this.pageNum,
         },
-        data: {
-          name: this.newName
-        }
       })
         .then((res) => {
-          this.$vs.notify({
-            title:'수정 완료', text:`✈ On:Air > ${res.data.name}님 환영합니다.`, color:'#D4C6E2', position:'top-right'
-          })
-          localStorage.setItem('name', res.data.name)
-          this.setName(res.data.name)
-          this.$router.go(-1)
+          console.log(res.data)
+          this.pageTotal = res.data[res.data.length-1]['page_total']
+          this.name = res.data[res.data.length-1]['user_name']
+          this.profileUrl = res.data[res.data.length-1]['user_profile_url']
+          this.reviews = res.data.slice(0, 5)
         })
         .catch((err) => {
           console.log(err)
@@ -41,7 +59,7 @@ export default {
     },
   },
   created() {
-
+    this.getMyReviews()
   },
   computed: {
     ...mapState([
@@ -52,5 +70,30 @@ export default {
 </script>
 
 <style>
+  .my-review {
+    display: flex;
+    justify-content: center;
+    margin-top: 150px;
+  }
 
+  .my-review-container {
+    display: flex;
+    justify-content: center;
+    width: 1190px;
+  }
+
+  .my-review-img {
+    border-radius: 70%;
+    margin-right: 50px;
+    object-fit: cover;
+    width: 100px;
+  }
+
+  .my-review-pagination {
+    margin: 40px 100px 50px 0px;
+  }
+
+  .vs-pagination--mb {
+    justify-content: center;
+  }
 </style>

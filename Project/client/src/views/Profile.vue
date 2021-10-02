@@ -71,7 +71,7 @@ export default {
   .profile {
     display: flex;
     justify-content: center;
-    margin-top: 99.19px;
+    margin-top: 150px;
   }
 
   .profile-container {

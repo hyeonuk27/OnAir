@@ -97,6 +97,8 @@ def user_review_list(request, user_id):
     user_reviews = paginator.get_page(page)
     serializer = ReviewListSerializer(user_reviews, many=True)
     data = serializer.data
+    for d in data:
+        d['airline_name'] = get_object_or_404(Airline, id=d['airline']).name
     data.append({'user_name': user_profile.name, 'user_profile_url': user_profile.profile_url, 'page_total': paginator.num_pages})
     return Response(data)
 

@@ -10,7 +10,8 @@ export default {
     getArrivals: '/arrivals/',
     getAirlines: '/airlines/',
     getAirlineInfo: '/airlines/airline/info/',
-    review_list: '/reviews/airline/',
+    reviewList: '/reviews/airline/',
+    reviewDetail: '/reviews/',
     getProfile: '/auth/profile/',
     updateProfile: '/auth/',
     getMyReviews: '/profiles/'

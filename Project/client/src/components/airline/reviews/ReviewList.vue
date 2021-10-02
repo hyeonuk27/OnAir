@@ -41,6 +41,7 @@ export default {
     return {
       reviewList: [],
       reviewer: "",
+      reviewId: "",
     }
   },
   methods: {
@@ -53,12 +54,10 @@ export default {
     },
     getReviewList: function () {
       axios({
-        url: API.URL + API.ROUTES.review_list + this.airlineId + '/',
+        url: API.URL + API.ROUTES.reviewList + this.airlineId + '/',
         method: 'get',
       })
       .then((res) => {
-        console.log('저기')
-        console.log(res)
         this.reviewList = res.data
       })
       .catch((err) => {
@@ -69,20 +68,19 @@ export default {
     deleteReview: function (reviewId) {
       const headers = this.setToken()
       axios({
-        url: API.URL + API.ROUTES.review_detail + reviewId,
+        url: API.URL + API.ROUTES.reviewDetail + reviewId,
         method: 'delete',
         headers
       })
       .then(() => {
-        console.log('삭제가 완료됐습니다')
         this.getReviewList()
       })
       .catch((err) => {
         console.log(err)
       })
     },
-    moveToReviewForm: function () {
-      this.$router.push({ name: "Form" })
+    moveToReviewForm: function (reviewId) {
+      this.$router.push({ name: "Form" , params: {reviewId: reviewId}})
     }
   },
   created () {

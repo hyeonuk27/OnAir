@@ -1,27 +1,29 @@
 <template>
-  <div>
-    <nav v-if="this.$route.name === 'Main'" class="nav justify-content-end">
-      <div v-if="isLogin" class="nav-menu d-flex mt-5 mx-5">
-        <div class="nav-element" @click="moveToMypage">마이페이지</div>
-        <div class="nav-element" @click="logOut">로그아웃</div>
-      </div>
-      <div v-else class="login mt-5 mx-5" @click="moveToLogin">로그인</div>   
-    </nav>
-    <nav v-else class="nav justify-content-between">
-      <!-- 로고 -->
-      <img src="@/assets/onair_logo.png"
-        alt="logo-image"
-        id="logo-image"
-        class="mt-5 mx-5"
-        @click="moveToMain"
-        />
-      <!-- 로그인 -->
-      <div v-if="isLogin" class="nav-menu d-flex mt-5 mx-5">
-        <div class="nav-element" @click="moveToMypage">마이페이지</div>
-        <div class="nav-element" @click="logOut">로그아웃</div>
-      </div>
-      <div v-else class="login mt-5 mx-5" @click="moveToLogin">로그인</div>        
-    </nav>
+  <div style="display: flex; justify-content: center;">
+    <div style="width: 1190px;">
+      <nav v-if="this.$route.name === 'Main'" class="nav justify-content-end">
+        <div v-if="isLogin" class="nav-menu d-flex mt-5">
+          <div class="nav-element" @click="moveToMypage">마이페이지</div>
+          <div class="nav-element" @click="logOut">로그아웃</div>
+        </div>
+        <div v-else class="login mt-5" @click="moveToLogin">로그인</div>   
+      </nav>
+      <nav v-else class="nav justify-content-between nav-not-main">
+        <!-- 로고 -->
+        <img src="@/assets/onair_logo.png"
+          alt="logo-image"
+          id="logo-image"
+          class="mt-5"
+          @click="moveToMain"
+          />
+        <!-- 로그인 -->
+        <div v-if="isLogin" class="nav-menu d-flex mt-5">
+          <div class="nav-element" @click="moveToMypage">마이페이지</div>
+          <div class="nav-element" @click="logOut">로그아웃</div>
+        </div>
+        <div v-else class="login mt-5" @click="moveToLogin">로그인</div>        
+      </nav>
+    </div>
   </div>
 </template>
 
@@ -77,16 +79,24 @@ export default {
 </script>
 
 <style>
-#logo-image {
-  height: 3.2rem;
-}
-.nav-element:not(:last-child) {
-  margin-right: 15px;
-}
-.navbar {
-  height: 250px;
-}
-.login .logout {
-  cursor: pointer;
-}
+  #logo-image {
+    height: 3.2rem;
+  }
+
+  .nav-element:not(:last-child) {
+    margin-right: 15px;
+  }
+
+  .nav-not-main{
+    border-bottom: 10px solid #EFEDF2;
+    padding-bottom: 10px;
+  }
+
+  .navbar {
+    height: 250px;
+  }
+
+  .login .logout {
+    cursor: pointer;
+  }
 </style>

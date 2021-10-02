@@ -90,14 +90,14 @@ def get_encoded_weather(data,labelencoder_dict,onehotencoder_dict):
 # 로그인 불필요
 @api_view(['GET'])
 def user_review_list(request, user_id):
-    user_reviews = Review.objects.filter(user_id=request.user.id).order_by('-created_at')
+    user_reviews = Review.objects.filter(user_id=user_id).order_by('-created_at')
     user_profile = get_object_or_404(User, pk=user_id)
     page = request.GET.get('page', '1')
     paginator = Paginator(user_reviews, 5)
     user_reviews = paginator.get_page(page)
     serializer = ReviewListSerializer(user_reviews, many=True)
     data = serializer.data
-    data.append({'user_profile': user_profile})
+    data.append({'user_name': user_profile.name, 'user_profile_url': user_profile.profile_url, 'page_total': paginator.num_pages})
     return Response(data)
 
 

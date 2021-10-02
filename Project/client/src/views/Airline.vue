@@ -50,6 +50,7 @@ export default {
         })
     },
     getAirlineInfo: function () {
+      console.log(this.airlineId)
       axios({
         url: API.URL + API.ROUTES.getAirlineInfo + this.airlineId + '/',
         method: "get",

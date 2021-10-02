@@ -13,5 +13,6 @@ export default {
     review_list: '/reviews/airline/',
     getProfile: '/auth/profile/',
     updateProfile: '/auth/',
+    getMyReviews: '/profiles/'
   }
 }

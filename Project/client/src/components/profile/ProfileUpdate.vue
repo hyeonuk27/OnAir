@@ -37,7 +37,6 @@ export default {
       ['setName']
       ),
     profileUpdate: function () {
-      console.log(API.URL + API.ROUTES.updateProfile)
       axios({
         url: API.URL + API.ROUTES.updateProfile,
         method: "put",
@@ -141,7 +140,7 @@ export default {
   .profile-update {
     display: flex;
     justify-content: center;
-    margin-top: 99.19px;
+    margin-top: 150px;
   }
 
   .profile-update-button {

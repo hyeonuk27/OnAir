@@ -374,6 +374,8 @@ def review_score(request, airline_id):
     }
     return Response(review_score)
 
+def review_sentiment(request, airline_id):
+    pass
 
 @api_view(['GET'])
 def review_keyword(request, airline_id):

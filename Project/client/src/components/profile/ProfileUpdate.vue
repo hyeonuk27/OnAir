@@ -37,7 +37,6 @@ export default {
       ['setName']
       ),
     profileUpdate: function () {
-      console.log(API.URL + API.ROUTES.updateProfile)
       axios({
         url: API.URL + API.ROUTES.updateProfile,
         method: "put",

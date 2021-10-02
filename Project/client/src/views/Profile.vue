@@ -14,7 +14,7 @@
       </div>
       <div class="profile-tabs">
         <vs-button v-if="profileId == userId" class="profile-tab" :color="colorx" type="line" @click.native="goProfileUpdate">닉네임 수정</vs-button>
-        <vs-button class="profile-tab" :color="colorx" type="line">남긴 리뷰</vs-button>
+        <vs-button class="profile-tab" :color="colorx" type="line" @click.native="goMyReview">남긴 리뷰</vs-button>
         <vs-button v-if="profileId == userId" class="profile-tab" :color="colorx" type="line">검색 기록</vs-button>
         <vs-button class="profile-tab" :color="colorx" type="line" onclick="window.open('https://www.notion.so/jiu-park/4a14719b6de04f31bcbd932e8d2032b5')">1:1문의</vs-button>
       </div>
@@ -55,6 +55,9 @@ export default {
     },
     goProfileUpdate: function () {
       this.$router.push({ name: "ProfileUpdate" , params: { userId: this.userId, name : this.name, profileUrl : this.profileUrl }})
+    },
+    goMyReview: function () {
+      this.$router.push({ name: "MyReview", params: { userId: this.userId }})
     }
   },
   created() {

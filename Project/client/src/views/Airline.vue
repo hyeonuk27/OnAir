@@ -37,7 +37,7 @@ export default {
   methods: {
     getAirlineStatistics: function () {
       axios({
-        url: API.URL + API.ROUTES.get_airlines + this.arrivalId + '/' + this.airlineId + '/',
+        url: API.URL + API.ROUTES.getAirlines + this.arrivalId + '/' + this.airlineId + '/',
         method: "get",
       })
         .then((res) => {
@@ -50,8 +50,9 @@ export default {
         })
     },
     getAirlineInfo: function () {
+      console.log(this.airlineId)
       axios({
-        url: API.URL + API.ROUTES.get_airlineInfo + this.airlineId + '/',
+        url: API.URL + API.ROUTES.getAirlineInfo + this.airlineId + '/',
         method: "get",
       })
         .then((res) => {

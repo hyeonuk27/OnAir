@@ -42,11 +42,11 @@ export default {
         url: API.URL + API.ROUTES.updateProfile,
         method: "put",
         headers: {
-          Authorization: this.token
+          Authorization: this.token,
         },
         data: {
-          name: this.newName
-        }
+          name: this.newName,
+        },
       })
         .then((res) => {
           this.$vs.notify({
@@ -55,9 +55,10 @@ export default {
           localStorage.setItem('name', res.data.name)
           this.setName(res.data.name)
           this.$router.go(-1)
+          console.log(this.newName)
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err.response.data)
         })
     }
   },

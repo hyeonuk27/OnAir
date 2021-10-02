@@ -78,7 +78,7 @@ export default {
   .airline {
     display: flex;
     justify-content: center;
-    margin-top: 100px;
+    margin-top: 150px;
   }
 
   .airline-container {

@@ -6,8 +6,12 @@
     <ReviewSentiment/>
     <ReviewScore/>
     <ReviewScoreChart/>
-    <ReviewCreateButton/>
-    <ReviewList/>
+    <ReviewCreateButton
+    :airlineId="airlineId"
+    />
+    <ReviewList
+    :airlineId="airlineId"    
+    />
   </div>
 </template>
 
@@ -24,6 +28,9 @@ import ReviewList from "@/components/airline/reviews/ReviewList"
 
 export default {
   name: "ReviewTab",
+  props: {
+    airlineId: String,
+  },  
   components: {
     ReviewKeyword,
     ArrivalDelayInfo,

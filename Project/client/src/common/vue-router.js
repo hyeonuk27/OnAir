@@ -4,9 +4,9 @@ import Main from '@/views/Main.vue'
 import Login from '@/views/Login.vue'
 import Airline from '@/views/Airline.vue'
 import Profile from '@/views/Profile.vue'
-import ReviewCreate from '@/components/airline/reviews/ReviewCreate.vue'
 import ProfileUpdate from '@/components/profile/ProfileUpdate.vue'
 import MyReview from '@/components/profile/MyReview.vue'
+import Form from '@/views/Form.vue'
 
 
 Vue.use(VueRouter)
@@ -33,11 +33,6 @@ const routes = [
     component: Profile
   },
   {
-    path: '/airline/create',
-    name: 'ReviewCreate',
-    component: ReviewCreate
-  },
-  {
     path: '/profile/:userId/update',
     name: 'ProfileUpdate',
     component: ProfileUpdate
@@ -46,7 +41,12 @@ const routes = [
     path: '/profile/:userId/reviews',
     name: 'MyReview',
     component: MyReview
-  }
+  },
+  {
+    path: '/form',
+    name: 'Form',
+    component: Form
+  },
 ]
 
 const router = new VueRouter({

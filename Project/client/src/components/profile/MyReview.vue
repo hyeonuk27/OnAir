@@ -9,9 +9,11 @@
           <MyReviewElement
           v-for="(review, idx) in reviews"
           :key="idx"
+          :review="review"
+          :name="name"
           />
         </div>
-        <vs-pagination class="my-review-pagination" :total="pageTotal" v-model="pageNum" @change="getMyReviews"></vs-pagination>
+        <vs-pagination class="my-review-pagination" :total="pageTotal" v-model="pageNum" color="#B9A6C9" @change="getMyReviews"></vs-pagination>
       </div>
     </div>
   </div>

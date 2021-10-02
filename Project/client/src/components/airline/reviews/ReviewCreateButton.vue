@@ -1,18 +1,20 @@
 <template>
   <div>
-    <button @click="moveToReviewCreate">리뷰 작성</button>
+    <button @click="moveToReviewForm">리뷰 작성</button>
   </div>
 </template>
 
 <script>
 export default {
   name: "ReviewCreateButton",
-  method: {
-    moveToReviewCreate() {
-      this.$router.push({ name: "ReviewCreate" })
+  props: {
+    airlineId: String,
+  },
+  methods: {
+    moveToReviewForm() {
+      this.$router.push({ name: "Form" , params: {airlineId: this.airlineId}})
     }
   } 
-  
 }
 </script>
 

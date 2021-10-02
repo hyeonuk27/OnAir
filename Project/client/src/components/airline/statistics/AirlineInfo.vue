@@ -42,13 +42,6 @@
 export default {
   name: 'AirlineInfo',
   props: ['airlineInfo'],
-  data() {
-    return {
-      
-    }
-  },
-  methods: {
-  }
 }
 </script>
 

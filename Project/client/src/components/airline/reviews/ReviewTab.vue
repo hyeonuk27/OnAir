@@ -7,7 +7,7 @@
     <ReviewScore/>
     <ReviewScoreChart/>
     <ReviewCreateButton
-    :airlineId="airlineId"  
+    :airlineId="airlineId"
     />
     <ReviewList
     :airlineId="airlineId"    

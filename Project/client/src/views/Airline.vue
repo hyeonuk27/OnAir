@@ -1,7 +1,6 @@
 <template>
   <div class="airline">
     <div class="airline-container">
-      {{airlineId}}
       <AirlineInfo 
       :airlineInfo="airlineInfo"
       />

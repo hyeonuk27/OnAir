@@ -174,8 +174,8 @@
 </template>
 
 <script>
-import axios from "axios";
-import API from "@/common/drf.js";
+import axios from "axios"
+import API from "@/common/drf.js"
 
 export default {
   name: "Form",
@@ -196,18 +196,18 @@ export default {
       scoreList: [1, 2, 3, 4, 5],
       arrivalList: [],
       seatList: ["퍼스트", "비즈니스", "이코노미"],
-    };
+    }
   },
   methods: {
     setToken: function () {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token")
       const config = {
         Authorization: token,
-      };
-      return config;
+      }
+      return config
     },
     createReview: function () {
-      const headers = this.setToken();
+      const headers = this.setToken()
 
       const data = {
         arrival_id: this.arrivalId,
@@ -221,7 +221,7 @@ export default {
         service_score: this.serviceScore,
         checkin_score: this.checkinScore,
         food_score: this.foodScore,
-      };
+      }
       axios({
         url: API.URL + API.ROUTES.reviewList + this.airlineId,
         method: "post",
@@ -229,11 +229,11 @@ export default {
         headers,
       })
         .then(() => {
-          this.$router.push({ name: "Airline", params: {airlineId: this.airlineId, arrivalId:this.arrivalId}});
+          this.$router.push({ name: "Airline", params: {airlineId: this.airlineId, arrivalId:this.arrivalId} })
         })
         .catch((err) => {
-          console.log(err);
-        });
+          console.log(err)
+        })
     },
     getArrivals: function () {
       axios({
@@ -241,38 +241,38 @@ export default {
         method: "get",
       })
         .then((res) => {
-          const arrivals = res.data;
+          const arrivals = res.data
           arrivals.sort(function (a, b) {
             if (a.name[4] > b.name[4]) {
-              return 1;
+              return 1
             } else if (a.name[4] < b.name[4]) {
-              return -1;
+              return -1
             }
-            return 0;
-          });
+            return 0
+          })
           for (let i = 0; i < arrivals.length; i++) {
             this.arrivalList.push({
               id: arrivals[i].id,
               text: arrivals[i].name,
               value: i + 1,
-            });
+            })
           }
         })
         .catch((err) => {
-          console.log(err);
-        });
+          console.log(err)
+        })
     },
   },
   created() {
-    this.airlineId = this.$route.params.airlineId;
-    this.getArrivals();
+    this.airlineId = this.$route.params.airlineId
+    this.getArrivals()
   },
-};
+}
 </script>
 
 <style>
 .select-box {
-  justify-content: center;
+  justify-content: center
 }
 
 .review-form {

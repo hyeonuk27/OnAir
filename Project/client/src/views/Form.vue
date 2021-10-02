@@ -111,6 +111,8 @@ export default {
     },
     createReview: function () {
       const headers = this.setToken()
+      console.log('111')
+      console.log(headers)
 
       const data = {
         airlineId: this. airlineId,
@@ -124,6 +126,7 @@ export default {
         checkin_score: this.checkinScore,
         food_score: this.foodScore
       }
+      console.log(data)
       axios({
         url: API.URL + API.ROUTES.review_list + this.airlineId,
         method: 'post',
@@ -132,11 +135,12 @@ export default {
       })
       .then(() => {
         // 추후 수정 필요
-        console.log('111')
+        console.log('통과')
         this.$router.push({ name: 'ReviewList' })
       })
       .catch((err) => {
         console.log(err)
+        console.log('통과x')
       })
     },
   },

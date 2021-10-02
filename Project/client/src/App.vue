@@ -37,6 +37,7 @@ html,body {
   color: #2c3e50;
   display: flex;
   flex-direction: column;
+  /* max-width: 960px; */
   height: 100%;
   position: relative;
 }

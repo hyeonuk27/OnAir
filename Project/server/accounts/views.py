@@ -63,6 +63,7 @@ def login(request):
 @api_view(['PUT'])
 @check_login
 def update(request):
+    print(request)
     serializer = UserSerializer(request.user, data=request.data, partial=True)
     if serializer.is_valid(raise_exception=True):
         serializer.save()
@@ -71,6 +72,9 @@ def update(request):
 
 @api_view(['GET'])
 def profile(request, user_id):
+    print(request)
     user = get_object_or_404(User, id=user_id)
     serializer = UserSerializer(user)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+    

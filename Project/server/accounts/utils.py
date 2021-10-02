@@ -1,3 +1,4 @@
+from os import access
 from decouple import config
 from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
@@ -13,6 +14,7 @@ User = get_user_model()
 def check_login(func):
     @wraps(func)
     def wrapper(request, *args, **kwargs):
+        # print(request)
         try:
             access_token = request.headers["Authorization"]
             user_id = jwt.decode(access_token, JWT_SECRET_KEY, algorithm='HS256')

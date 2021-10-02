@@ -2,7 +2,14 @@
   <div class="review-container">
     <div class="review-form">
       <div id="review-box">
-        
+        <h2 class="mb-3">리뷰 작성</h2>
+        <p>목적지로 가는 여정, 이용하신 항공사에 대한 리뷰와 세부 평점을 입력해주세요.<br>
+          남겨주신 리뷰는 On: Air의 리포트와 항공사의 더 나은 서비스 제공을 위해 활용될 수 있습니다.</p>
+        <div id="circles" class="d-flex justify-content-center">
+          <div style="width: 15px; height: 15px; border-radius: 50%; background-color: #656F8C;"></div>
+          <div class="mx-4" style="width: 15px; height: 15px; border-radius: 50%; background-color: #656F8C;"></div>
+          <div style="width: 15px; height: 15px; border-radius: 50%; background-color: #656F8C;"></div>
+        </div>
         
         <!-- 제목 -->
         <div id="title" class="mb-3">
@@ -174,8 +181,8 @@
 </template>
 
 <script>
-import axios from "axios"
-import API from "@/common/drf.js"
+import axios from "axios";
+import API from "@/common/drf.js";
 
 export default {
   name: "Form",
@@ -196,18 +203,18 @@ export default {
       scoreList: [1, 2, 3, 4, 5],
       arrivalList: [],
       seatList: ["퍼스트", "비즈니스", "이코노미"],
-    }
+    };
   },
   methods: {
     setToken: function () {
-      const token = localStorage.getItem("token")
+      const token = localStorage.getItem("token");
       const config = {
         Authorization: token,
-      }
-      return config
+      };
+      return config;
     },
     createReview: function () {
-      const headers = this.setToken()
+      const headers = this.setToken();
 
       const data = {
         arrival_id: this.arrivalId,
@@ -221,7 +228,7 @@ export default {
         service_score: this.serviceScore,
         checkin_score: this.checkinScore,
         food_score: this.foodScore,
-      }
+      };
       axios({
         url: API.URL + API.ROUTES.reviewList + this.airlineId,
         method: "post",
@@ -229,11 +236,11 @@ export default {
         headers,
       })
         .then(() => {
-          this.$router.push({ name: "Airline", params: {airlineId: this.airlineId, arrivalId:this.arrivalId} })
+          this.$router.push({ name: "Airline", params: {airlineId: this.airlineId, arrivalId:this.arrivalId}});
         })
         .catch((err) => {
-          console.log(err)
-        })
+          console.log(err);
+        });
     },
     getArrivals: function () {
       axios({
@@ -241,38 +248,38 @@ export default {
         method: "get",
       })
         .then((res) => {
-          const arrivals = res.data
+          const arrivals = res.data;
           arrivals.sort(function (a, b) {
             if (a.name[4] > b.name[4]) {
-              return 1
+              return 1;
             } else if (a.name[4] < b.name[4]) {
-              return -1
+              return -1;
             }
-            return 0
-          })
+            return 0;
+          });
           for (let i = 0; i < arrivals.length; i++) {
             this.arrivalList.push({
               id: arrivals[i].id,
               text: arrivals[i].name,
               value: i + 1,
-            })
+            });
           }
         })
         .catch((err) => {
-          console.log(err)
-        })
+          console.log(err);
+        });
     },
   },
   created() {
-    this.airlineId = this.$route.params.airlineId
-    this.getArrivals()
+    this.airlineId = this.$route.params.airlineId;
+    this.getArrivals();
   },
-}
+};
 </script>
 
 <style>
 .select-box {
-  justify-content: center
+  justify-content: center;
 }
 
 .review-form {

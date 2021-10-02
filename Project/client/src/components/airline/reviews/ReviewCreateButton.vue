@@ -7,9 +7,12 @@
 <script>
 export default {
   name: "ReviewCreateButton",
+  props: {
+    airlineId: String,
+  },
   methods: {
     moveToReviewForm() {
-      this.$router.push({ name: "Form" })
+      this.$router.push({ name: "Form" , params: {airlineId: this.airlineId}})
     }
   } 
 }

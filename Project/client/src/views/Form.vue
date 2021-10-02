@@ -1,7 +1,7 @@
 <template>
   <div class="mt-5">
     <h1>리뷰 작성</h1>
-
+    
     <!-- 리뷰 -->
     <input 
       type="text"
@@ -128,7 +128,7 @@ export default {
       }
       console.log(data)
       axios({
-        url: API.URL + API.ROUTES.review_list + this.airlineId,
+        url: API.URL + API.ROUTES.reviewList + this.airlineId,
         method: 'post',
         data,
         headers,
@@ -145,7 +145,7 @@ export default {
     },
   },
   created() {
-    this.arrivalId = this.$route.params.arrival_id
+    this.airlineId = this.$route.params.airlineId
   }
 }
 </script>

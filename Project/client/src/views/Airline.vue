@@ -1,12 +1,13 @@
 <template>
   <div class="airline">
     <div class="airline-container">
+      {{airlineId}}
       <AirlineInfo 
       :airlineInfo="airlineInfo"
       />
       <!-- <DetailTab  -->
       <ReviewTab
-      :airlineId="airline_id"
+      :airlineId="airlineId"
       />
     </div>
   </div>

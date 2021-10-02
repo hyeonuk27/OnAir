@@ -12,6 +12,8 @@ export default new Vuex.Store({
   state: {
     token: localStorage.getItem('token'),
     userId: localStorage.getItem('userId'),
+    name: localStorage.getItem('name'),
+    profileUrl: localStorage.getItem('profileUrl'),
   },
   getters: {
     isLogin: function (state) {
@@ -19,9 +21,14 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    
+    SET_NAME: (state, name) => {
+      state.name = name
+    }
   },
   actions: {
+    setName({commit}, name) {
+      commit('SET_NAME', name)
+    }
   },
   modules: {
   },

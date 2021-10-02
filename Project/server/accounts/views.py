@@ -27,11 +27,11 @@ def login(request):
     url = 'https://oauth2.googleapis.com/tokeninfo?id_token='
     response = requests.get(url+token)
     user = response.json()
-
     # 로그인
     if User.objects.filter(google_id = user['sub']).exists():
         user_info = User.objects.get(google_id=user['sub'])
-        encoded_jwt = jwt.encode({'id': user["sub"]}, JWT_SECRET_KEY, algorithm='HS256')
+        encoded_jwt = jwt.encode({'id': user_info.id}, JWT_SECRET_KEY, algorithm='HS256')
+        print(encoded_jwt)
         serializer = UserSerializer(user_info)
     # 회원가입
     else:
@@ -56,6 +56,7 @@ def login(request):
         'info': serializer.data,
         'access_token': encoded_jwt,
     }
+    print(data)
     return Response(data, status=status.HTTP_201_CREATED)
 
 

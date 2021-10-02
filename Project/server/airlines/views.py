@@ -336,8 +336,8 @@ def review_list(request, airline_id):
         return Response(serializer.data)
     
 
-@api_view(['DELETE', 'PUT'])
 @check_login
+@api_view(['DELETE', 'PUT'])
 def review_detail(request, review_id):
     print('test')
     review = get_object_or_404(Review, id=review_id)
@@ -372,14 +372,9 @@ def review_score(request, airline_id):
 
 @api_view(['GET'])
 def review_keyword(request, airline_id):
-    
-    # file = open('./static/airlines/npl/stopwords.txt', 'r')
     # file = open('https://j5a203.p.ssafy.io/static/airlines/npl/stopwords.txt', 'r')
     # stopwords = file.read()
     # stopwords = stopwords.split('\n')
-    # stopwords = ['메롱', '안녕']   
-    # airline = get_object_or_404(Airline, id=airline_id)
-    # reviews = airline.reviews.all()
     reviews = get_list_or_404(Review, airline=airline_id)
 
     airline_review = ""
@@ -387,7 +382,7 @@ def review_keyword(request, airline_id):
         airline_review += review.content.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
         airline_review += review.title.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
 
-    # # konlpy ver.
+    # # konlpy ver. =============================================================
     # # 말뭉치 (형태소랑 품사 짝)
     # from konlpy.tag import Okt
     # reviews = Okt()
@@ -398,7 +393,7 @@ def review_keyword(request, airline_id):
     #     if (tag in['Noun'] or tag in['Adjective']) and word:
     #         noun_adj_list.append(word)
 
-    # komoran ver.
+    # komoran ver. =============================================================
     from PyKomoran import Komoran, DEFAULT_MODEL
     komoran = Komoran(DEFAULT_MODEL['LIGHT'])
     target_tags = ['NNG', 'VA']
@@ -407,10 +402,8 @@ def review_keyword(request, airline_id):
     #빈도수로 정렬하고 단어와 빈도수를 딕셔너리로 전달
     count = Counter(noun_adj_list)
     words = dict(count.most_common())
-    # keyword = list(words)[:6]
 
     # 딕셔너리를 제이슨으로 변환하여 전달
-    return HttpResponse(json.dumps(words))
+    return HttpResponse(json.dumps(words, ensure_ascii = False), content_type = 'application/json; charset=utf8')
     # return HttpResponse(json.dumps(words), content_type = 'application/json; charset=utf8')
-    # return Response(obj)
 

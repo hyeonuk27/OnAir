@@ -286,7 +286,7 @@ export default {
   display: flex;
   margin: 200px auto;
   width: 1190px;
-  height: 800px;
+  height: 700px;
 }
 
 #review-box {

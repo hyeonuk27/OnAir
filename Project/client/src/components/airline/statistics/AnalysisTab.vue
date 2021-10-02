@@ -5,22 +5,22 @@
       <div class="simple-report">
         <p> 
           총 운항횟수 
-          <span style="background-color: #3D2F6B; border-radius: 70%; color: white; display: inline-block; font-weight: 400; padding: 8px 0px 7px 0px; width: 40px; height: 40px; text-align: center; top: -10px;">
+          <span class="counts">
             {{ report.total }}</span> 회
         </p>
         <p>
           {{ report.arrival_name }}으로 출발 시 지연률 
-          <span style="background-color: #B9A6C9; border-radius: 70%; color: white; display: inline-block; font-weight: 400; padding: 8px 0px 7px 0px; width: 40px; height: 40px; text-align: center; top: -10px;">
+          <span class="counts">
             {{ report.delay_rate }}</span> %
         </p>
         <p>
           {{ report.arrival_name }}으로 출발 시 평균 지연시간 
-          <span style="background-color: #B9A6C9; border-radius: 70%; color: white; display: inline-block; font-weight: 400; padding: 8px 0px 7px 0px; width: 40px; height: 40px; text-align: center; top: -10px;">
+          <span class="counts">
             {{ report.delay_time }}</span> 분
         </p>
         <p>
           오늘 예상 지연률 
-          <span style="background-color: #656F8C; border-radius: 70%; color: white; display: inline-block; font-weight: 400; padding: 8px 0px 7px 0px; width: 40px; height: 40px; text-align: center; top: -10px;">
+          <span class="counts">
             </span> %
         </p>
       </div>
@@ -99,5 +99,18 @@ export default {
     font-weight: 700;
     position: relative;
     text-align: start;
+  }
+
+  .counts {
+    background-color: #3D2F6B;
+    border-radius: 70%;
+    color: white;
+    display: inline-block;
+    font-weight: 400;
+    padding: 8px 0px 7px 0px;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    top: -10px;
   }
 </style>

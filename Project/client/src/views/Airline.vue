@@ -42,7 +42,7 @@ export default {
     return {
       arrivalId: '',
       airlineId: '',
-      predictedDelayRate: '',
+      // predictedDelayRate: '',
       airlineInfo: {},
       report: {},
     }

@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 # DEBUG = False
 DEBUG = True
 
-ALLOWED_HOSTS = ['j5a203.p.ssafy.io', 'localhost', '127.0.0.1', '0.0.0.0:8000']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

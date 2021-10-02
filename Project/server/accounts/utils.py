@@ -18,8 +18,7 @@ def check_login(func):
         try:
             access_token = request.headers["Authorization"]
             user_id = jwt.decode(access_token, JWT_SECRET_KEY, algorithm='HS256')
-            # print(user_id)
-            user = User.objects.get(google_id=user_id['id'])
+            user = User.objects.get(id=user_id['id'])
             request.user = user
         
         except jwt.exceptions.DecodeError:

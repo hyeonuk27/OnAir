@@ -1,52 +1,43 @@
 <template>
-  <div class="analysis-container">
-    <div class="anaylsis-preview">
+  <div class="review-container">
+    <di class="anaylsis-preview">
       <h5 class="text-start">#키워드 #키워드 #키워드 #키워드 #키워드 #키워드</h5>
-      <div class="analysis-head">
-        <p class="analysis-head-total"> 
+      <div class="review-head">
+        <p class="review-head-total"> 
           총 운항횟수 
-          <span class="analysis-numbers">
-            {{ report.total }}</span> 회
+          <span class="review-numbers">
+            {{ airlineInfo.total_flight }}</span> 회
         </p>
-        <p class="analysis-head-delay-rate">
-          {{ report.arrival_name }}행 평균 지연률 
-          <span class="analysis-numbers">
-            {{ report.delay_rate }}</span> %
+        <p class="review-head-delay-rate">
+          평균 지연률 
+          <span class="review-numbers">
+            {{ airlineInfo.total_delayed / airlineInfo.total_flight }}</span> %
         </p>
-        <p class="analysis-head-delay-time">
-          {{ report.arrival_name }}행 평균 지연시간 
-          <span class="analysis-numbers">
-            {{ report.delay_time }}</span> 분
-        </p>
-        <p class="analysis-head-predict-time">
-          오늘 예상 지연률 
-          <span class="analysis-numbers">
-            {{ predictedDelayRate }}</span> %
+        <p class="review-head-cancel-rate">
+          평균 결항률 
+          <span class="review-numbers">
+            {{ airlineInfo.total_canceled / airlineInfo.total_flight }}</span> %
         </p>
       </div>
-      <div class="analysis-body">
-        <charts :options="analysisChartOptions" />
+      <div class="review-body">
+        <charts :options="reviewChartOptions" />
       </div>
-      <div class="analysis-charts">
-        <div class="analysis-chart-1">
-          Chart1
+      <div>
+        워드클라우드
+      </div>
+      <div>
+        긍부정비율
+      </div>
+      <div class="review-rate-container">
+        <div>
+          상세 별점
         </div>
-        <div class="analysis-chart-2">
-          Chart1
+        <div>
+          리뷰 파이차트
         </div>
-        <div class="analysis-chart-3">
-          Chart1
-        </div>
-        <div class="analysis-chart-4">
-          Chart1
-        </div>
-        <div class="analysis-chart-5">
-          Chart1
-        </div>
-        <div class="analysis-chart-6">
-          Chart1
-        </div>
-
+      </div>
+      <div>
+        리뷰 리스트
       </div>
     </div>
   </div>
@@ -54,11 +45,11 @@
 
 <script>
 export default {
-  name: 'AnalysisTab',
-  props: ['report', 'predictedDelayRate'],
+  name: 'ReviewTab',
+  props: ['airlineInfo'],
   data () {
     return {
-        analysisChartOptions: {
+        reviewChartOptions: {
           chart: {
               type: 'bar',
               height: 100,
@@ -94,13 +85,13 @@ export default {
           },
           series: [{
               name: '30분 내 출발',
-              data: [this.report.under_30]
+              data: [this.airlineInfo.under_30]
           }, {
               name: '30분 초과 60분 내 출발',
-              data: [this.report.under_60]
+              data: [this.airlineInfo.under_60]
           }, {
               name: '60분 이상 지연',
-              data: [this.report.over_60]
+              data: [this.airlineInfo.over_60]
           }],
         },
       }
@@ -109,16 +100,16 @@ export default {
 </script>
 
 <style>
-  .analysis-container {
+  .review-container {
     height: auto;
     min-height: 1000px;
   }
 
-  .analysis-preview {
+  .review-preview {
     max-width: 1000px;
   }
 
-  .analysis-numbers {
+  .review-numbers {
     background-color: #3D2F6B;
     border-radius: 70%;
     color: white;
@@ -131,7 +122,7 @@ export default {
     top: -10px;
   }
 
-  .analysis-head {
+  .review-head {
     display: grid;
     padding: 10px;
     grid-template-columns: repeat(4, 1fr);
@@ -140,59 +131,38 @@ export default {
     font-size: 14px;
   }
 
-  .analysis-head-total {
+  .review-head-total {
     grid-column: 1;
     grid-row: 1;
     width: 180px;
   }
 
-  .analysis-head-delay-rate {
+  .review-head-delay-rate {
     grid-column: 2;
     grid-row: 1;
     width: 280px;
   }
   
-  .analysis-head-delay-time {
+  .review-head-cancel-rate {
     grid-column: 3;
     grid-row: 1;
     width: 280px;
   }
 
-  .analysis-head-predict-time {
-    grid-column: 4;
-    grid-row: 1;
-    width: 180px;
-  }
-
-  .analysis-charts {
+  .review-rate-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 30px;
     grid-auto-rows: min-content;
   }
 
-  .analysis-chart-1 {
+  .review-rate-details {
     grid-column: 1;
     grid-row: 1;
   }
-  .analysis-chart-2 {
+
+  .review-rate-chart {
     grid-column: 2;
     grid-row: 1;
-  }
-  .analysis-chart-3 {
-    grid-column: 1;
-    grid-row: 2;
-  }
-  .analysis-chart-4 {
-    grid-column: 2;
-    grid-row: 2;
-  }
-  .analysis-chart-5 {
-    grid-column: 1;
-    grid-row: 3;
-  }
-  .analysis-chart-6 {
-    grid-column: 2;
-    grid-row: 3;
   }
 </style>

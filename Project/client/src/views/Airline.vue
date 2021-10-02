@@ -4,9 +4,20 @@
       <AirlineInfo 
       :airlineInfo="airlineInfo"
       />
-      <!-- <DetailTab  -->
-      <!-- /> -->
-      <!-- <ReviewTab/> -->
+      <div class="tab-container">
+        <input id="tab-analysis" type="radio" name="tab-check" checked>
+        <label for="tab-analysis">분석 리포트</label>
+        <input id="tab-review" type="radio" name="tab-check">
+        <label for="tab-review">리뷰 리포트</label>
+        <section id="content-analysis">
+          <AnalysisTab
+          :report="report"
+          />
+        </section>
+        <section id="content-review">
+          <!-- <ReviewTab /> -->
+        </section>
+      </div>
     </div>
   </div>
 </template>
@@ -14,7 +25,7 @@
 
 <script>
 import AirlineInfo from "@/components/airline/statistics/AirlineInfo"
-// import DetailTab from '../components/airline/statistics/DetailTab'
+import AnalysisTab from '../components/airline/statistics/AnalysisTab'
 // import ReviewTab from "@/components/airline/reviews/ReviewTab"
 
 import axios from "axios"
@@ -24,14 +35,16 @@ export default {
   name: 'AirlineDetail',
   components: {
     AirlineInfo,
-    // DetailTab,
+    AnalysisTab,
     // ReviewTab,
   },
   data () {
     return {
       arrivalId: '',
       airlineId: '',
+      predictedDelayRate: '',
       airlineInfo: {},
+      report: {},
     }
   },
   methods: {
@@ -42,15 +55,14 @@ export default {
       })
         .then((res) => {
           const report = res.data.data
-          console.log(report)
-          // this.report_detail = report
+          this.report = report
+          // console.log(report)
         })
         .catch((err) => {
           console.log(err)
         })
     },
     getAirlineInfo: function () {
-      console.log(this.airlineId)
       axios({
         url: API.URL + API.ROUTES.getAirlineInfo + this.airlineId + '/',
         method: "get",
@@ -58,7 +70,6 @@ export default {
         .then((res) => {
           const airlineInfo = res.data
           this.airlineInfo = airlineInfo
-          console.log(airlineInfo)
         })
         .catch((err) => {
           console.log(err)
@@ -68,8 +79,11 @@ export default {
   created() {
     this.arrivalId = this.$route.params.arrivalId
     this.airlineId = this.$route.params.airlineId
+    // this.predictedDelayRate = this.$route.params.predictedDelayRate
     this.getAirlineInfo()
-    // this.getAirlineStatistics()
+    this.getAirlineStatistics()
+    // console.log(this.arrivalId)
+    // console.log(this.predictedDelayRate)
   }
 }
 </script>
@@ -81,8 +95,53 @@ export default {
     margin-top: 150px;
   }
 
+  .tab-container {
+    min-width: 1000px;
+    max-width: 1000px;
+    padding-top: 20px;
+    margin: 0 auto;
+  }
+
   .airline-container {
-    width: 1190px;
-    min-width: 1190px;
+    width: 1000px;
+    min-width: 1000px;
+  }
+
+  section {
+    display: none;
+    padding: 20px 0 0;
+    border-top: 1px solid #ddd
+  }
+
+  input {
+    display: none;
+  }
+
+  label {
+    display: inline-flex;
+    justify-content: left;
+    margin: 0 0 -1px;
+    padding: 15px 25px;
+    font-weight: 600;
+    text-align: center;
+    color: #bbb;
+    border: 1px solid transparent;
+  }
+
+  label:hover {
+    color: #3D2F6B;
+    cursor: pointer;
+  }
+
+  input:checked + label {
+    color: #555;
+    border: 1px solid #ddd;
+    border-top: 2px solid #3D2F6B;
+    border-bottom: 1px solid #ffffff
+  }
+
+  #tab-analysis:checked ~ #content-analysis,
+  #tab-review:checked ~ #content-review {
+    display: block;
   }
 </style>

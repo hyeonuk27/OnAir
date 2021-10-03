@@ -112,8 +112,8 @@ def user_review_list(request, user_id):
             'airline_id': openapi.Schema(type=openapi.TYPE_STRING, description='The desc'),
             'arrival_id': openapi.Schema(type=openapi.TYPE_STRING, description='The desc'),
         }))
-
 @api_view(['GET', 'POST'])
+@check_login
 def user_log_list(request):
     if request.method == 'GET':
         logs = Log.objects.filter(user_id=request.user.id).order_by('-reg_dt')[:10]

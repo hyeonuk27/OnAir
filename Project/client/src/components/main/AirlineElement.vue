@@ -50,7 +50,6 @@ export default {
         params: {
           airlineId: this.airline.id,
           arrivalId: this.arrivalId,
-          predictedDelayRate: this.airline.predicted_delay_rate,
         },
       })
     },

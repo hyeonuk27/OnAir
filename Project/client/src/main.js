@@ -9,6 +9,7 @@ import 'material-icons/iconfont/material-icons.css'
 import HighchartsVue from 'highcharts-vue'
 import VueMoment from 'vue-moment'
 
+
 Vue.use(VueRouter)
 Vue.use(Vuesax)
 Vue.use(HighchartsVue, {tagName: 'charts'})

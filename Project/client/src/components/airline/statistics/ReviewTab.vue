@@ -12,16 +12,12 @@
         <p class="review-head-delay-rate">
           평균 지연률
           <span class="review-numbers">
-            {{ airlineInfo.total_delayed / airlineInfo.total_flight }}</span
-          >
-          %
+            {{ (airlineInfo.total_delayed / airlineInfo.total_flight * 100).toFixed(2) }}</span> %
         </p>
         <p class="review-head-cancel-rate">
           평균 결항률
           <span class="review-numbers">
-            {{ airlineInfo.total_canceled / airlineInfo.total_flight }}</span
-          >
-          %
+            {{ (airlineInfo.total_canceled / airlineInfo.total_flight * 100).toFixed(2) }}</span> %
         </p>
       </div>
       <div class="review-body">
@@ -67,6 +63,15 @@ import ReviewList from "@/components/airline/reviews/ReviewList";
 export default {
   name: "ReviewTab",
   props: ["airlineInfo", "airlineId"],
+  components: {
+    ReviewKeyword,
+    ReviewWordcloud,
+    ReviewSentiment,
+    ReviewScore,
+    ReviewScoreChart,
+    ReviewCreateButton,
+    ReviewList,
+  },
   data() {
     return {
       reviewChartOptions: {
@@ -121,15 +126,9 @@ export default {
       },
     };
   },
-  components: {
-    ReviewKeyword,
-    ReviewWordcloud,
-    ReviewSentiment,
-    ReviewScore,
-    ReviewScoreChart,
-    ReviewCreateButton,
-    ReviewList,
-  },
+  created() {
+    console.log(this.airlineInfo)
+  }
 };
 </script>
 

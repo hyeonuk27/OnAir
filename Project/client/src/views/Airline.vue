@@ -11,9 +11,14 @@
         <label class="airline-tablabel" for="tab-review">리뷰 리포트</label>
         <section class="airline-tab" id="content-analysis">
           <AnalysisTab
+          v-if="isStatisticsRendered"
           :report="report"
-          :predictedDelayRate="predictedDelayRate"
           />
+          <div
+          v-else
+          style="height: 1000px;"
+          >
+          </div>
         </section>
         <section class="airline-tab" id="content-review">
           <ReviewTab 
@@ -44,9 +49,10 @@ export default {
   },
   data () {
     return {
+      isStatisticsRendered: false,
+      isReviewRendered: false,
       arrivalId: '',
       airlineId: '',
-      predictedDelayRate: '',
       airlineInfo: {},
       report: {},
     }
@@ -60,7 +66,7 @@ export default {
         .then((res) => {
           const report = res.data.data
           this.report = report
-          console.log(report)
+          this.isStatisticsRendered = true
         })
         .catch((err) => {
           console.log(err)
@@ -74,7 +80,7 @@ export default {
         .then((res) => {
           const airlineInfo = res.data
           this.airlineInfo = airlineInfo
-          console.log(airlineInfo)
+          this.isReviewRendered = true
         })
         .catch((err) => {
           console.log(err)
@@ -84,7 +90,6 @@ export default {
   created() {
     this.arrivalId = this.$route.params.arrivalId
     this.airlineId = this.$route.params.airlineId
-    this.predictedDelayRate = this.$route.params.predictedDelayRate
     this.getAirlineInfo()
     this.getAirlineStatistics()
   }

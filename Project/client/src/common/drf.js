@@ -15,6 +15,7 @@ export default {
     getProfile: '/auth/profile/',
     updateProfile: '/auth/',
     getMyReviews: '/profiles/',
-    createLog: '/logs/'
+    createLog: '/logs/',
+    getSearchLogs: '/logs/',
   }
 }

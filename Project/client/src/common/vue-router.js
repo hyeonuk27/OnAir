@@ -7,6 +7,7 @@ import Profile from '@/views/Profile.vue'
 import ProfileUpdate from '@/components/profile/ProfileUpdate.vue'
 import MyReview from '@/components/profile/MyReview.vue'
 import Form from '@/views/Form.vue'
+import SearchLog from '@/components/profile/SearchLog.vue'
 
 
 Vue.use(VueRouter)
@@ -46,6 +47,11 @@ const routes = [
     path: '/form',
     name: 'Form',
     component: Form
+  },
+  {
+    path: '/profile/logs',
+    name: 'SearchLog',
+    component: SearchLog
   },
 ]
 

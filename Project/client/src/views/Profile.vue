@@ -60,7 +60,7 @@ export default {
       this.$router.push({ name: "MyReview", params: { userId: this.userId }})
     },
     goSearchLog: function () {
-      this.$router.push({ name: "SearchLog" })
+      this.$router.push({ name: "SearchLog", params: { userId: this.userId }})
     }
   },
   created() {

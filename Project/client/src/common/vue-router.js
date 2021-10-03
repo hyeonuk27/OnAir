@@ -49,7 +49,7 @@ const routes = [
     component: Form
   },
   {
-    path: '/profile/logs',
+    path: '/:userId/logs',
     name: 'SearchLog',
     component: SearchLog
   },

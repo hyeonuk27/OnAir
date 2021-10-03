@@ -119,6 +119,9 @@ def user_log_list(request):
         logs = Log.objects.filter(user_id=request.user.id).order_by('-reg_dt')[:10]
         serializer = LogListSerializer(logs, many=True)
         data = serializer.data
+        for d in data:
+            d['airline_name'] = get_object_or_404(Airline, id=d['airline']).name
+            d['arrival_name'] = get_object_or_404(Arrival, id=d['arrival']).name
         return Response(data)
     elif request.method == 'POST':
         airline = get_object_or_404(Airline, pk=request.data.get('airline_id'))

@@ -207,14 +207,15 @@ export default {
   },
   methods: {
     setToken: function () {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token")
       const config = {
         Authorization: token,
       };
       return config;
     },
+    // views.py 수정 후 확인해야 함.
     createReview: function () {
-      const headers = this.setToken();
+      const headers = this.setToken()
 
       const data = {
         arrival_id: this.arrivalId,
@@ -270,15 +271,29 @@ export default {
       })
     },
     setReview: function () {
+      const headers = this.setToken()
+
       axios({
         url: API.URL + API.ROUTES.reviewDetail + this.reviewId,
         method: "get",
+        headers,
       })
       .then((res) => {
-        console.log(res)
+        const review = res.data
+
+        this.arrivalId = review.arrival_id,
+        this.airlineId = review.airline_id,
+        this.title = review.title,
+        this.content = review.content,
+        this.flightAt = review.flight_at,
+        this.seat = review.seat,
+        this.score = review.score,
+        this.seatScore = review.seat_score,
+        this.serviceScore = review.service_score,
+        this.checkinScore = review.checkin_score,
+        this.foodScore = review.food_score
       })
       .catch((err) => {
-        console.log('실패')
         console.log(err)
       })
     }

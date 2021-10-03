@@ -40,12 +40,14 @@ export default {
       'setArrival'
     ]),
     search: function() {
-      if (typeof this.departure != 'object' && typeof this.arrival != 'object') {
+      if (this.departure != '' && this.arrival != '' && this.departure != 'null' && this.arrival != 'null' && this.departure != null && this.arrival != null) {
         this.$emit('search', this.arrivalList[this.arrival-1].id, this.departureList[this.departure-1].text.substring(0, 3), this.arrivalList[this.arrival-1].text.substring(0, 3))
       }
     }
   },
   created() {
+    localStorage.setItem('departure', [])
+    localStorage.setItem('arrival', [])
     this.departureIdx = this.departure
     this.arrivalIdx = this.arrival
   },

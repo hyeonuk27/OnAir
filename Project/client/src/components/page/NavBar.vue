@@ -3,10 +3,10 @@
     <div style="width: 1190px;">
       <nav v-if="this.$route.name === 'Main'" class="nav justify-content-end">
         <div v-if="isLogin" class="nav-menu d-flex mt-5">
-          <div class="nav-element" @click="moveToMypage">마이페이지</div>
-          <div class="nav-element" @click="logOut">로그아웃</div>
+          <div style="color: white; cursor: pointer; text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);" class="nav-element" @click="moveToMypage">마이페이지</div>
+          <div style="color: white; cursor: pointer; text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);" class="nav-element" @click="logOut">로그아웃</div>
         </div>
-        <div v-else class="login mt-5" @click="moveToLogin">로그인</div>   
+        <div v-else style="color: white; cursor: pointer; text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);" class="login mt-5" @click="moveToLogin">로그인</div>   
       </nav>
       <nav v-else class="nav justify-content-between nav-not-main">
         <!-- 로고 -->

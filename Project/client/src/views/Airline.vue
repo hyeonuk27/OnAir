@@ -18,6 +18,7 @@
         <section class="airline-tab" id="content-review">
           <ReviewTab 
           :airlineInfo="airlineInfo"
+          :airlineId="airlineId"
           />
         </section>
       </div>

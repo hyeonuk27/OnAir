@@ -32,6 +32,7 @@ class Review(models.Model):
     id = models.CharField(max_length=13, primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
     airline = models.ForeignKey(Airline, on_delete=models.CASCADE, related_name='reviews')
+    arrival = models.ForeignKey(Arrival, on_delete=models.CASCADE, related_name='reviews', null=True)
     title = models.TextField()
     content = models.TextField()
     flight_at = models.DateField()
@@ -42,6 +43,15 @@ class Review(models.Model):
     checkin_score = models.IntegerField(null=True, blank=True)
     food_score = models.IntegerField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def username(self):
+        return self.user.name
+
+    def userid(self):
+        return self.user.id
+
+    def userpic(self):
+        return self.user.profile_url
 
 
 class Log(models.Model):

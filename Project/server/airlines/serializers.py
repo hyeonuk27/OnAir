@@ -5,6 +5,8 @@ class ReviewListSerializer(serializers.ModelSerializer):
     username = serializers.ReadOnlyField()
     userid = serializers.ReadOnlyField()
     userpic = serializers.ReadOnlyField()
+    arrivalname = serializers.ReadOnlyField()
+
 
     class Meta:
         model = Review

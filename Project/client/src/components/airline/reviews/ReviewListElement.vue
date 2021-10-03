@@ -9,9 +9,11 @@
           <li @click="deleteReview(review.id)">삭제</li>
         </ul>
       </div>
-      <div>유저: {{ review.user }}</div>
+      <img :src="review.userpic" alt="user-image" class="profile-image">
+      <div>작성자: {{ review.username }}</div>
       <div>제목: {{ review.title }}</div>
       <div>내용: {{ review.content }}</div>
+      <div>내용: {{ review.arrivalname }}</div>
       <div>출발 일자: {{ review.flight_at }}</div>
       <div>클래스: {{ review.seat }}</div>
       <div>총 평점: {{ review.score }}</div>
@@ -50,7 +52,6 @@ export default {
       })
         .then(() => {
           console.log('111')
-          this.getReviewList()
         })
         .catch((err) => {
           console.log(err)
@@ -69,5 +70,9 @@ export default {
 </script>
 
 <style>
-
+.profile-image {
+  border-radius: 70%;
+  height: 50px;
+  width: 50px;
+}
 </style>

@@ -4,7 +4,8 @@
       <div id="review-box">
         <h2 class="mb-3">리뷰 작성</h2>
         <p>목적지로 가는 여정, 이용하신 항공사에 대한 리뷰와 세부 평점을 입력해주세요.<br>
-          남겨주신 리뷰는 On: Air의 리포트와 항공사의 더 나은 서비스 제공을 위해 활용될 수 있습니다.</p>
+          남겨주신 리뷰는 On: Air의 리포트와 항공사의 더 나은 서비스 제공을 위해 활용될 수 있습니다.
+        </p>
         <div id="circles" class="d-flex justify-content-center">
           <div style="width: 15px; height: 15px; border-radius: 50%; background-color: #656F8C;"></div>
           <div class="mx-4" style="width: 15px; height: 15px; border-radius: 50%; background-color: #656F8C;"></div>
@@ -25,7 +26,7 @@
         <div id="info" class="mb-3 d-flex justify-content-between">
           <!-- 여행 출발일 -->
           <div id="date">
-            날짜 &nbsp;
+            출발일 &nbsp;
             <input
               type="date"
               id="start"
@@ -44,12 +45,12 @@
               width="200px"
               v-model="arrivalId"
             >
-            <vs-select-item
-              :key="index"
-              :value="item.id"
-              :text="item.text"
-              v-for="(item, index) in arrivalList"
-            />
+              <vs-select-item
+                :key="index"
+                :value="item.id"
+                :text="item.text"
+                v-for="(item, index) in arrivalList"
+              />
             </vs-select>
 
             <!-- CLASS -->
@@ -61,11 +62,11 @@
               v-model="seat"
             >
             <vs-select-item
-              :key="index"
-              :value="item"
-              :text="item"
-              v-for="(item, index) in seatList"
-            />
+                :key="index"
+                :value="item"
+                :text="item"
+                v-for="(item, index) in seatList"
+              />
             </vs-select>
           </div>
         </div>
@@ -162,8 +163,10 @@
         </vs-select>
 
         <!-- 필수 항목 모두 입력 시 버튼 활성화 -->
-        <button id="submit"
+        <button 
           @click="createReview"
+          class="submit"
+          :class="{ disable : !arrivalId || !title || !content || !flightAt || !seat || !score }" 
           :disabled="
             !arrivalId ||
             !title ||
@@ -218,7 +221,7 @@ export default {
       const headers = this.setToken()
 
       const data = {
-        arrival_id: this.arrivalId,
+        arrival: this.arrivalId,
         airline_id: this.airlineId,
         title: this.title,
         content: this.content,
@@ -230,13 +233,19 @@ export default {
         checkin_score: this.checkinScore,
         food_score: this.foodScore,
       };
+      
+      console.log('이상하다')
+      console.log('data')
       axios({
-        url: API.URL + API.ROUTES.reviewList + this.airlineId,
+        url: API.URL + API.ROUTES.reviewList + this.airlineId +'/',
         method: "post",
         data,
         headers,
       })
-      .then(() => {
+      .then((res) => {
+        console.log('여기여기')
+        console.log(res.data)
+        console.log('저저기')
         this.$router.push({ name: "Airline", params: {airlineId: this.airlineId, arrivalId:this.arrivalId} })
       })
       .catch((err) => {
@@ -280,9 +289,10 @@ export default {
       })
       .then((res) => {
         const review = res.data
-
-        this.arrivalId = review.arrival_id,
-        this.airlineId = review.airline_id,
+        console.log('불러온다불러와')
+        console.log(review)
+        this.arrivalId = review.arrival,
+        this.airlineId = review.airline,
         this.title = review.title,
         this.content = review.content,
         this.flightAt = review.flight_at,
@@ -351,9 +361,17 @@ export default {
   margin-bottom: 40px;
 }
 
-#submit {
+.submit {
   background-color: #3D2F6B;
   color: white;
+  margin-top: 35px;
+  width: 200px;
+  height: 40px;
+}
+
+.disable {
+  background-color: #585858;
+  color: rgb(128, 128, 128);
   margin-top: 35px;
   width: 200px;
   height: 40px;

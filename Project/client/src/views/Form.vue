@@ -2,30 +2,57 @@
   <div class="review-container">
     <div class="review-form">
       <div id="review-box">
-        <h2 class="mb-3">리뷰 작성</h2>
-        <p>목적지로 가는 여정, 이용하신 항공사에 대한 리뷰와 세부 평점을 입력해주세요.<br>
-          남겨주신 리뷰는 On: Air의 리포트와 항공사의 더 나은 서비스 제공을 위해 활용될 수 있습니다.</p>
+        <h2 class="mb-3">리뷰</h2>
+        <p>
+          목적지로 가는 여정, 이용하신 항공사에 대한 리뷰와 세부 평점을
+          입력해주세요.<br />
+          남겨주신 리뷰는 On: Air의 리포트와 항공사의 더 나은 서비스 제공을 위해
+          활용될 수 있습니다.
+        </p>
+        <div>도착지: {{arrivalName}}</div>
         <div id="circles" class="d-flex justify-content-center">
-          <div style="width: 15px; height: 15px; border-radius: 50%; background-color: #656F8C;"></div>
-          <div class="mx-4" style="width: 15px; height: 15px; border-radius: 50%; background-color: #656F8C;"></div>
-          <div style="width: 15px; height: 15px; border-radius: 50%; background-color: #656F8C;"></div>
-        </div>
-        
-        <!-- 제목 -->
-        <div id="title" class="mb-3">
-          제목 &nbsp;
-          <input
-            type="text"
-            v-model="title"
-            placeholder="제목을 입력하세요."
-            size=80
-          />
+          <div
+            style="
+              width: 15px;
+              height: 15px;
+              border-radius: 50%;
+              background-color: #656f8c;
+            "
+          ></div>
+          <div
+            class="mx-4"
+            style="
+              width: 15px;
+              height: 15px;
+              border-radius: 50%;
+              background-color: #656f8c;
+            "
+          ></div>
+          <div
+            style="
+              width: 15px;
+              height: 15px;
+              border-radius: 50%;
+              background-color: #656f8c;
+            "
+          ></div>
         </div>
 
+        <!-- 제목 -->
         <div id="info" class="mb-3 d-flex justify-content-between">
+          <div id="title" class="mb-3">
+            제목 &nbsp;
+            <input
+              type="text"
+              v-model="title"
+              placeholder="제목을 입력하세요."
+              size="50"
+            />
+          </div>
+          
           <!-- 여행 출발일 -->
           <div id="date">
-            날짜 &nbsp;
+            출발일 &nbsp;
             <input
               type="date"
               id="start"
@@ -34,54 +61,36 @@
               v-model="flightAt"
             />
           </div>
-
-          <div id="select" class="d-flex">
-            <!-- 도착지 -->
-            <vs-select
-              color="#B9A6C9"
-              class="select-box"
-              placeholder="도착지"
-              width="200px"
-              v-model="arrivalId"
-            >
-            <vs-select-item
-              :key="index"
-              :value="item.id"
-              :text="item.text"
-              v-for="(item, index) in arrivalList"
-            />
-            </vs-select>
-
-            <!-- CLASS -->
-            <vs-select
-              color="#B9A6C9"
-              class="select-box"
-              placeholder="Class"
-              width="200px"
-              v-model="seat"
-            >
-            <vs-select-item
-              :key="index"
-              :value="item"
-              :text="item"
-              v-for="(item, index) in seatList"
-            />
-            </vs-select>
-          </div>
         </div>
-        
+
         <!-- 내용 -->
         <div id="content" class="mt-4">
-          <textarea 
+          <textarea
             type="text"
             v-model="content"
             placeholder="내용을 입력하세요."
-            style="height: 400px; width: 750px;"
+            style="height: 400px; width: 750px"
           ></textarea>
         </div>
       </div>
-      
-      <div id="score-box">
+
+      <div id="select-box">
+        <!-- CLASS -->
+        <vs-select
+          color="#B9A6C9"
+          class="select-box"
+          placeholder="Class"
+          width="200px"
+          v-model="seat"
+        >
+          <vs-select-item
+            :key="index"
+            :value="item"
+            :text="item"
+            v-for="(item, index) in seatList"
+          />
+        </vs-select>
+
         <!-- 전체 평점 -->
         <vs-select
           color="#B9A6C9"
@@ -90,12 +99,12 @@
           width="200px"
           v-model="score"
         >
-        <vs-select-item
-          :key="index"
-          :value="item"
-          :text="item"
-          v-for="(item, index) in scoreList"
-        />
+          <vs-select-item
+            :key="index"
+            :value="item"
+            :text="item"
+            v-for="(item, index) in scoreList"
+          />
         </vs-select>
 
         <!-- 좌석 평점 -->
@@ -162,15 +171,15 @@
         </vs-select>
 
         <!-- 필수 항목 모두 입력 시 버튼 활성화 -->
-        <button id="submit"
+        <button
           @click="createReview"
+          class="submit"
+          :class="{
+            disable:
+              !arrivalId || !title || !content || !flightAt || !seat || !score,
+          }"
           :disabled="
-            !arrivalId ||
-            !title ||
-            !content ||
-            !flightAt ||
-            !seat ||
-            !score
+            !arrivalId || !title || !content || !flightAt || !seat || !score
           "
         >
           작성 완료
@@ -190,6 +199,7 @@ export default {
     return {
       reviewId: "",
       arrivalId: "",
+      arrivalName: "",
       airlineId: "",
       title: "",
       content: "",
@@ -207,7 +217,7 @@ export default {
   },
   methods: {
     setToken: function () {
-      const token = localStorage.getItem("token")
+      const token = localStorage.getItem("token");
       const config = {
         Authorization: token,
       };
@@ -215,10 +225,10 @@ export default {
     },
     // views.py 수정 후 확인해야 함.
     createReview: function () {
-      const headers = this.setToken()
+      const headers = this.setToken();
 
       const data = {
-        arrival_id: this.arrivalId,
+        arrival: this.arrivalId,
         airline_id: this.airlineId,
         title: this.title,
         content: this.content,
@@ -231,47 +241,23 @@ export default {
         food_score: this.foodScore,
       };
       axios({
-        url: API.URL + API.ROUTES.reviewList + this.airlineId,
+        url: API.URL + API.ROUTES.reviewList + this.airlineId + "/",
         method: "post",
         data,
         headers,
       })
-      .then(() => {
-        this.$router.push({ name: "Airline", params: {airlineId: this.airlineId, arrivalId:this.arrivalId} })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    },
-    getArrivals: function () {
-      axios({
-        url: API.URL + API.ROUTES.getArrivals,
-        method: "get",
-      })
-      .then((res) => {
-        const arrivals = res.data
-        arrivals.sort(function (a, b) {
-          if (a.name[4] > b.name[4]) {
-            return 1
-          } else if (a.name[4] < b.name[4]) {
-            return -1
-          }
-          return 0
+        .then(() => {
+          this.$router.push({
+            name: "Airline",
+            params: { airlineId: this.airlineId, arrivalId: this.arrivalId },
+          });
         })
-        for (let i = 0; i < arrivals.length; i++) {
-          this.arrivalList.push({
-            id: arrivals[i].id,
-            text: arrivals[i].name,
-            value: i + 1,
-          })
-        }
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     setReview: function () {
-      const headers = this.setToken()
+      const headers = this.setToken();
 
       axios({
         url: API.URL + API.ROUTES.reviewDetail + this.reviewId,
@@ -279,10 +265,10 @@ export default {
         headers,
       })
       .then((res) => {
-        const review = res.data
+        const review = res.data;
 
-        this.arrivalId = review.arrival_id,
-        this.airlineId = review.airline_id,
+        this.arrivalId = review.arrival,
+        this.airlineId = review.airline,
         this.title = review.title,
         this.content = review.content,
         this.flightAt = review.flight_at,
@@ -294,16 +280,17 @@ export default {
         this.foodScore = review.food_score
       })
       .catch((err) => {
-        console.log(err)
-      })
-    }
+        console.log(err);
+      });
+    },
   },
   created() {
+    this.arrivalName = this.$route.params.arrivalName
+    this.arrivalId = this.$route.params.arrivalId
     this.airlineId = this.$route.params.airlineId
     this.reviewId = this.$route.params.reviewId
-    this.getArrivals()
     if (this.reviewId) {
-      this.setReview()
+      this.setReview();
     }
   },
 };
@@ -321,7 +308,7 @@ export default {
 }
 
 #review-box {
-  border: 5px solid #DAD6DD;
+  border: 5px solid #dad6dd;
   padding: 30px;
   width: 900px;
   height: 800px;
@@ -338,11 +325,11 @@ export default {
   margin-bottom: 1rem;
 }
 
-#score-box {
-  background-color: #DAD6DD;
+#select-box {
+  background-color: #dad6dd;
   width: 300px;
   height: 800px;
-  padding-top: 350px;
+  padding-top: 330px;
 }
 
 #circles {
@@ -350,9 +337,17 @@ export default {
   margin-bottom: 40px;
 }
 
-#submit {
-  background-color: #3D2F6B;
+.submit {
+  background-color: #3d2f6b;
   color: white;
+  margin-top: 35px;
+  width: 200px;
+  height: 40px;
+}
+
+.disable {
+  background-color: #585858;
+  color: rgb(128, 128, 128);
   margin-top: 35px;
   width: 200px;
   height: 40px;

@@ -48,6 +48,8 @@
           :arrivalId="arrivalId"
           :arrivalName="arrivalName"
         />
+      </div>
+      <div>
         <!-- 리뷰 리스트 -->
         <ReviewList :airlineId="airlineId" />
       </div>
@@ -130,13 +132,10 @@ export default {
       },
     };
   },
-  created() {
-    console.log(this.airlineInfo)
-  }
 };
 </script>
 
-<style>
+<style scoped>
 .review-container {
   height: auto;
   min-height: 1000px;

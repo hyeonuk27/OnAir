@@ -1,6 +1,12 @@
 <template>
-  <div>
-    <button class="review-button" @click="moveToReviewForm">리뷰 작성</button>
+  <div id="review-button-container">
+    <vs-button 
+      color="rgba(182,168,198)" 
+      border 
+      @click="moveToReviewForm"
+    >
+    리뷰 작성
+    </vs-button>
   </div>
 </template>
 
@@ -14,18 +20,23 @@ export default {
   },
   methods: {
     moveToReviewForm() {
-      this.$router.push({ name: "Form" , params: {airlineId: this.airlineId, arrivalId: this.arrivalId, arrivalName: this.arrivalName }})
-    }
-  } 
-}
+      this.$router.push({
+        name: "Form",
+        params: {
+          airlineId: this.airlineId,
+          arrivalId: this.arrivalId,
+          arrivalName: this.arrivalName,
+        },
+      });
+    },
+  },
+};
 </script>
 
 <style>
-.review-button {
-  background-color: #3d2f6b;
-  color: white;
-  margin-top: 35px;
-  width: 100px;
-  height: 40px;
+#review-button-container {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 10px;
 }
 </style>

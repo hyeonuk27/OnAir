@@ -1,5 +1,5 @@
 <template>
-  <div class="review-list-container">
+  <div id="review-list-container">
     <!-- 리뷰 리스트 -->
     <div>
       <ReviewListElement
@@ -8,7 +8,7 @@
         :review="review"
         @reviewListUpdate="getReviewList"
       />
-      <vs-pagination class="review-list-pagination" :total="pageTotal" v-model="pageNum" color="#B9A6C9" @change="getReviewList"></vs-pagination>
+      <vs-pagination class="review-list-pagination justify-self-center" :total="pageTotal" v-model="pageNum" color="#B9A6C9" @change="getReviewList"></vs-pagination>
     </div>
   </div>
 </template>
@@ -42,15 +42,14 @@ export default {
           page: this.pageNum,
         },
       })
-        .then((res) => {
-          this.pageTotal = res.data[res.data.length - 1]["page_total"]
-          this.reviewList = res.data.slice(0, 5)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+      .then((res) => {
+        this.pageTotal = res.data[res.data.length - 1]["page_total"]
+        this.reviewList = res.data.slice(0, 5)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
     },
-
   },
   created() {
     this.getReviewList()
@@ -58,11 +57,9 @@ export default {
 }
 </script>
 
-<style>
-  .review-list-container {
-    display: flex;
-    justify-content: center;
-    width: 1190px;
+<style scoped>
+  #review-list-container {
+    height: 100%;
   }
 
   .review-list-pagination {

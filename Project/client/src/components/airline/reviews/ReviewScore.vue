@@ -1,5 +1,5 @@
 <template>
-  <div class="review-score">
+  <div>
     <div class="review-score-detail">
       <div class="score-title">레그룸</div>
       <div v-for="i in seat" :key="i" class="score"></div>

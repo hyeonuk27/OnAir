@@ -4526,7 +4526,7 @@
   "resolved" "https://registry.npmjs.org/highcharts-vue/-/highcharts-vue-1.4.0.tgz"
   "version" "1.4.0"
 
-"highcharts@^9.2.2", "highcharts@>=5.0.0":
+"highcharts@^6.0.3", "highcharts@^9.2.2", "highcharts@>=5.0.0":
   "integrity" "sha512-OMEdFCaG626ES1JEcKAvJTpxAOMuchy0XuAplmnOs0Yu7NMd2RMfTLFQ2fCJOxo3ubSdm/RVQwKAWC+5HYThnw=="
   "resolved" "https://registry.npmjs.org/highcharts/-/highcharts-9.2.2.tgz"
   "version" "9.2.2"
@@ -5878,6 +5878,11 @@
   "integrity" "sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw=="
   "resolved" "https://registry.npmjs.org/mkdirp/-/mkdirp-1.0.4.tgz"
   "version" "1.0.4"
+
+"moment@^2.19.2":
+  "integrity" "sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ=="
+  "resolved" "https://registry.npmjs.org/moment/-/moment-2.29.1.tgz"
+  "version" "2.29.1"
 
 "move-concurrently@^1.0.1":
   "integrity" "sha1-viwAX9oy4LKa8fBdfEszIUxwH5I="
@@ -8805,6 +8810,13 @@
     "vue-hot-reload-api" "^2.3.0"
     "vue-style-loader" "^4.1.0"
 
+"vue-moment@^4.1.0":
+  "integrity" "sha512-Gzisqpg82ItlrUyiD9d0Kfru+JorW2o4mQOH06lEDZNgxci0tv/fua1Hl0bo4DozDV2JK1r52Atn/8QVCu8qQw=="
+  "resolved" "https://registry.npmjs.org/vue-moment/-/vue-moment-4.1.0.tgz"
+  "version" "4.1.0"
+  dependencies:
+    "moment" "^2.19.2"
+
 "vue-router@^3.5.2":
   "integrity" "sha512-807gn82hTnjCYGrnF3eNmIw/dk7/GE4B5h69BlyCK9KHASwSloD1Sjcn06zg9fVG4fYH2DrsNBZkpLtb25WtaQ=="
   "resolved" "https://registry.npmjs.org/vue-router/-/vue-router-3.5.2.tgz"
@@ -8831,10 +8843,15 @@
   "resolved" "https://registry.npmjs.org/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@^2 || ^3.0.0-0", "vue@^2.0.0", "vue@^2.6.11", "vue@^2.6.9", "vue@>=1.0.0":
+"vue@^2 || ^3.0.0-0", "vue@^2.0.0", "vue@^2.1.0", "vue@^2.6.11", "vue@^2.6.9", "vue@>=1.0.0", "vue@>=1.x.x":
   "integrity" "sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-2.6.14.tgz"
   "version" "2.6.14"
+
+"vue2-highcharts@^1.2.5":
+  "integrity" "sha512-di7kuqZyqo77pmCs23s+wIyA1aBuKMxRJg871ggcj0Y1GopfF9j/cPlmwgjyIMaOHz4iQmvfn8hEDNOMW7etEQ=="
+  "resolved" "https://registry.npmjs.org/vue2-highcharts/-/vue2-highcharts-1.2.5.tgz"
+  "version" "1.2.5"
 
 "vuesax@^3.12.2":
   "integrity" "sha512-fdzcTPsrVklhWXtC8o07n9+SCmdQ8rxD9cZxNUx8KnbSH/Ss5azIHLLwMoNQuwT6kBFUcRzxVTfDh8jHzoSXaw=="

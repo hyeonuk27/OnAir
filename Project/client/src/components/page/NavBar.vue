@@ -29,7 +29,7 @@
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'NavBar',
@@ -39,7 +39,13 @@ export default {
     }
   },  
   methods: {
+    ...mapActions([
+      'setDeparture',
+      'setArrival'
+    ]),
     moveToMain: function() {
+      this.setDeparture([])
+      this.setArrival([])
       if (this.$route.path !== "/") {
         this.$router.push({ name: "Main" })
       }

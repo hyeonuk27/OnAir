@@ -14,6 +14,8 @@ export default new Vuex.Store({
     userId: localStorage.getItem('userId'),
     name: localStorage.getItem('name'),
     profileUrl: localStorage.getItem('profileUrl'),
+    departure: [],
+    arrival: [],
   },
   getters: {
     isLogin: function (state) {
@@ -23,12 +25,24 @@ export default new Vuex.Store({
   mutations: {
     SET_NAME: (state, name) => {
       state.name = name
+    },
+    SET_DEPARTURE: (state, idx) => {
+      state.departure = idx
+    },
+    SET_ARRIVAL: (state, idx) => {
+      state.arrival = idx
     }
   },
   actions: {
     setName({commit}, name) {
       commit('SET_NAME', name)
-    }
+    },
+    setDeparture({commit}, idx) {
+      commit('SET_DEPARTURE', idx)
+    },
+    setArrival({commit}, idx) {
+      commit('SET_ARRIVAL', idx)
+    },
   },
   modules: {
   },

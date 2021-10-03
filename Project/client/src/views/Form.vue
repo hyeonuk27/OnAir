@@ -316,7 +316,7 @@ export default {
 
 .review-form {
   display: flex;
-  margin: 200px auto;
+  margin: 200px auto 200px;
   width: 1190px;
   height: 700px;
 }

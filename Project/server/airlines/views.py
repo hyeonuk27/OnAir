@@ -112,13 +112,16 @@ def user_review_list(request, user_id):
             'airline_id': openapi.Schema(type=openapi.TYPE_STRING, description='The desc'),
             'arrival_id': openapi.Schema(type=openapi.TYPE_STRING, description='The desc'),
         }))
-
 @api_view(['GET', 'POST'])
+@check_login
 def user_log_list(request):
     if request.method == 'GET':
         logs = Log.objects.filter(user_id=request.user.id).order_by('-reg_dt')[:10]
         serializer = LogListSerializer(logs, many=True)
         data = serializer.data
+        for d in data:
+            d['airline_name'] = get_object_or_404(Airline, id=d['airline']).name
+            d['arrival_name'] = get_object_or_404(Arrival, id=d['arrival']).name
         return Response(data)
     elif request.method == 'POST':
         airline = get_object_or_404(Airline, pk=request.data.get('airline_id'))
@@ -196,7 +199,18 @@ def airline_report(request, arrival_id, airline_id):
     labelencoder = joblib.load('predict_models/ml_delay/labelencoder_dict.pkl')
     onehotencoder = joblib.load('predict_models/ml_delay/onehotencoder_dict.pkl')
     scaler = joblib.load('predict_models/ml_delay/passengers_min_max_scaler.pkl')
-    
+    model = joblib.load('predict_models/ml_delay/delay_rate_predict.pkl')
+
+    URL = 'https://api.openweathermap.org/data/2.5/weather?lat=37.46&lon=126.44&appid=%s' % config('WEATHER_API_KEY')
+    weather = requests.get(url=URL).json().get('weather')[0].get('main')
+    # 목적지, 항공사에 해당하는 이번달 이용객수 예측값 가져오기
+    df = pd.read_csv('predict_models/ets_passengers/predict_data/%s.csv' % airline.name)
+    predicted_data = df[df['date'].str.startswith('%s' % datetime.today().strftime("%Y-%m"))]['passengers']
+    scaled_passengers = scaler.transform(pd.DataFrame([[predicted_data]]))
+    # 머신러닝 모델 가져와서 오늘 날씨, 이번달 이용객수의 지연률 예측
+    data = pd.DataFrame([[airline.name, arrival.name, weather, scaled_passengers]], columns = ['airline', 'arrival', 'weather', 'passengers'])
+    total_input_data = get_encoded(data, labelencoder, onehotencoder)
+
     # 오늘 날씨, 이번달 이용객수에 따른 예측값은 항공사 리스트로부터 router.push의 파라미터로 받는다.
     # 날씨에 따른 지연률 예측값 리스트
     weather_model = joblib.load('predict_models/ml_delay/delay_rate_weather_predict.pkl')
@@ -225,7 +239,7 @@ def airline_report(request, arrival_id, airline_id):
         input_data = get_encoded(df, labelencoder, onehotencoder)
         predicted_by_passengers.append(round(passengers_model.predict_proba(input_data)[0, 1] * 100, 2))
     
-    # 통계
+# 통계
 
     # 항공사 필터
     airlinedata = pd.read_csv('statistics/preprocessing/statistics_data.csv')
@@ -270,22 +284,13 @@ def airline_report(request, arrival_id, airline_id):
     monthly_data = list()
     for i in range(len(dates_list)):
         monthly_data.append([dates_list[i], passengers_cnt[i]])
-
+#
     response_data = {
         'data': {
             'airline_id': airline.id,
             'airline_name': airline.name,
-            # 'airline_profile_url': airline.profile_url,
-            # 'airline_address': airline.address,
-            # 'airline_phone_number': airline.phone_number,
-            # 'airline_site_url': airline.site_url,
-            # 'airline_corona_url': airline.corona_url,
-            # 'airline_is_skyteam': airline.is_skyteam,
-            # 'airline_is_star': airline.is_star,
-            # 'airline_is_oneworld': airline.is_oneworld,
             'arrival_id': arrival.id,
             'arrival_name': arrival.name,
-            # 'arrival_image_url': arrival.image_url,
             'total': statistics_result.total,
             'under_30': statistics_result.under_30,
             'under_60': statistics_result.under_60,
@@ -300,6 +305,7 @@ def airline_report(request, arrival_id, airline_id):
             'month_list': month_list,
             'predicted_by_passengers': predicted_by_passengers,
             'passengers_by_month': monthly_data,
+            'predicted_delay_rate': round(model.predict_proba(total_input_data)[0, 1] * 100, 2)
         }   
     }
 

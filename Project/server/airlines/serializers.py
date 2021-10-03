@@ -22,7 +22,7 @@ class LogListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Log
-        fields = ('user', 'airline', 'arrival')        
+        fields = '__all__'       
 
 class ArrivalListSerializer(serializers.ModelSerializer):
 

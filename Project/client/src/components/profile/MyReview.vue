@@ -5,7 +5,7 @@
         <img class="my-review-img" :src="profileUrl" alt="">
       </div>
       <div>
-        <div class="my-review-list">
+        <div v-if="reviews.length != 1" class="my-review-list">
           <MyReviewElement
           v-for="(review, idx) in reviews"
           :key="idx"
@@ -13,7 +13,10 @@
           :name="name"
           />
         </div>
-        <vs-pagination class="my-review-pagination" :total="pageTotal" v-model="pageNum" color="#B9A6C9" @change="getMyReviews"></vs-pagination>
+        <vs-pagination v-if="reviews.length != 1" class="my-review-pagination" :total="pageTotal" v-model="pageNum" color="#B9A6C9" @change="getMyReviews"></vs-pagination>
+        <div class="my-review-default" v-else>
+          아직 작성하신 리뷰가 없습니다. 여행을 떠나볼까요? ✈
+        </div>
       </div>
     </div>
   </div>
@@ -81,6 +84,14 @@ export default {
     display: flex;
     justify-content: center;
     width: 1190px;
+  }
+
+  .my-review-default {
+    border: 1px solid rgba(180, 180, 180, 0.658);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.151);
+    width: 1000px;
+    height: 200px;
+    padding: 50px;
   }
 
   .my-review-img {

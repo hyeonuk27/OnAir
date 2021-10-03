@@ -21,7 +21,7 @@
         <p class="analysis-head-predict-time">
           오늘 예상 지연률 
           <span class="analysis-numbers">
-            {{ predictedDelayRate }}</span> %
+            {{ report.predicted_delay_rate }}</span> %
         </p>
       </div>
       <div class="analysis-body">
@@ -29,24 +29,23 @@
       </div>
       <div class="analysis-charts">
         <div class="analysis-chart-1">
-          Chart1
+          종합지연사유파이차트
         </div>
         <div class="analysis-chart-2">
-          Chart1
+          지연시간 평균 시계열 막대 차트
         </div>
         <div class="analysis-chart-3">
-          Chart1
+          목적지 지연사유파이차트
         </div>
         <div class="analysis-chart-4">
-          Chart1
+          지연사유별 평균지연시간
         </div>
         <div class="analysis-chart-5">
-          Chart1
+          월별이용객 시계열 꺾은선
         </div>
         <div class="analysis-chart-6">
-          Chart1
+          머신러닝차트
         </div>
-
       </div>
     </div>
   </div>
@@ -55,17 +54,19 @@
 <script>
 export default {
   name: 'AnalysisTab',
-  props: ['report', 'predictedDelayRate'],
-  data () {
+  props: ['report'],
+  data() {
     return {
+        analysisReport: this.report,
         analysisChartOptions: {
           chart: {
               type: 'bar',
-              height: 100,
+              height: 150,
               width: 1000,
           },
           title: {
-            text: null
+            // text: null,
+            text: '지연시간 분포표'
           },
           xAxis: {
             visible: false,
@@ -84,7 +85,7 @@ export default {
               }
           },
           legend: {
-              enabled: false
+              // enabled: false
           },
           credits: {
               enabled: false
@@ -103,8 +104,11 @@ export default {
               data: [this.report.over_60]
           }],
         },
-      }
+    }
   },
+  created() {
+    console.log(this.report)
+  }
 }
 </script>
 
@@ -175,22 +179,27 @@ export default {
     grid-column: 1;
     grid-row: 1;
   }
+
   .analysis-chart-2 {
     grid-column: 2;
     grid-row: 1;
   }
+
   .analysis-chart-3 {
     grid-column: 1;
     grid-row: 2;
   }
+
   .analysis-chart-4 {
     grid-column: 2;
     grid-row: 2;
   }
+
   .analysis-chart-5 {
     grid-column: 1;
     grid-row: 3;
   }
+
   .analysis-chart-6 {
     grid-column: 2;
     grid-row: 3;

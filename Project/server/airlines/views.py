@@ -343,13 +343,16 @@ def review_list(request, airline_id):
         return Response(data)
     
 
+@api_view(['GET', 'DELETE', 'PUT'])
 @check_login
-@api_view(['DELETE', 'PUT'])
 def review_detail(request, review_id):
     print('test')
     review = get_object_or_404(Review, id=review_id)
     if request.user == review.user:
-        if request.method == 'DELETE':
+        if request.method == 'GET':
+            serializer = ReviewSerializer(review)
+            return Response(serializer.data)
+        elif request.method == 'DELETE':
             review.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         elif request.method == 'PUT':

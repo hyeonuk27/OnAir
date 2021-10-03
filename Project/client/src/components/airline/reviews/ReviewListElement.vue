@@ -266,6 +266,7 @@ export default {
   justify-self: end;
   background-color: rgba(0, 0, 0, 0);
 }
+
 .dropdown-menu {
   text-align: center;
 }

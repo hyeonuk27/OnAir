@@ -33,12 +33,12 @@
       </div>
       <!-- 리뷰 긍부정 비율 -->
       <div>
-        <ReviewSentiment />
+        <ReviewSentiment :airlineId="airlineId"/>
       </div>
       <div class="review-rate-container">
         <!-- 리뷰 평점 -->
         <div>
-          <ReviewScore />
+          <ReviewScore :airlineId="airlineId"/>
         </div>
         <!-- 리뷰 평점 파이 차트 -->
         <div>

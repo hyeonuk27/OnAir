@@ -5,6 +5,9 @@
 </template>
 
 <script>
+import axios from "axios"
+import API from "@/common/drf.js"
+
 export default {
   name: "ReviewScore",
   props: {

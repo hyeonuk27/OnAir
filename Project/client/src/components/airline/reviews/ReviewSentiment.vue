@@ -1,15 +1,17 @@
 <template>
   <div>
-    <div class="progress">
+    <div id="bar-container" class="progress">
       <div class="progress-bar progress-bar-animated bg-danger" 
+        id ="bar-negative"
         role="progressbar" aria-valuenow="75" 
         aria-valuemin="0" aria-valuemax="100" 
-        style="width: {{ negative }}%">
+        :style="negative">
       </div>
       <div class="progress-bar progress-bar-animated" 
+        id ="bar-positive"
         role="progressbar" aria-valuenow="75" 
         aria-valuemin="0" aria-valuemax="100" 
-        style="width: {{ positive }}%">
+        :style="positive">
       </div>
   </div>
 
@@ -17,6 +19,9 @@
 </template>
 
 <script>
+import axios from "axios"
+import API from "@/common/drf.js"
+
 export default {
   name: "ReviewSentiment",
   props: {
@@ -24,8 +29,8 @@ export default {
   },
   data() {
     return {
-      positive: 0,
-      negative: 0,
+      positive: null,
+      negative: null,
     }
   },
   methods: {
@@ -35,8 +40,8 @@ export default {
         method: "get",
       })
       .then((res) => {
-        this.positive = res.data['positive']
-        this.negative = res.data['negative']
+        this.positive = { width: res.data['positive']+'%'}
+        this.negative = { width: res.data['negative']+'%'}
       })
       .catch((err) => {
         console.log(err)

@@ -20,6 +20,7 @@
           :airlineInfo="airlineInfo"
           :airlineId="airlineId"
           :arrivalId="arrivalId"
+          :arrivalName="arrivalName"
           />
         </section>
       </div>
@@ -45,6 +46,7 @@ export default {
   },
   data () {
     return {
+      arrivalName: "",
       arrivalId: '',
       airlineId: '',
       predictedDelayRate: '',
@@ -61,6 +63,7 @@ export default {
         .then((res) => {
           const report = res.data.data
           this.report = report
+          this.arrivalName = report.arrival_name
           console.log(report)
         })
         .catch((err) => {

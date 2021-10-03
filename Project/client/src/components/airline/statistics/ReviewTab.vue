@@ -47,7 +47,11 @@
       </div>
       <div>
         <!-- 리뷰 작성 버튼 -->
-        <ReviewCreateButton :airlineId="airlineId" :arrivalId="arrivalId" />
+        <ReviewCreateButton
+          :airlineId="airlineId"
+          :arrivalId="arrivalId"
+          :arrivalName="arrivalName"
+        />
         <!-- 리뷰 리스트 -->
         <ReviewList :airlineId="airlineId" />
       </div>
@@ -66,7 +70,7 @@ import ReviewList from "@/components/airline/reviews/ReviewList";
 
 export default {
   name: "ReviewTab",
-  props: ["airlineInfo", "airlineId", "arrivalId"],
+  props: ["airlineInfo", "airlineId", "arrivalId", "arrivalName"],
   data() {
     return {
       reviewChartOptions: {

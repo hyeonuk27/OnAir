@@ -6,6 +6,7 @@
         v-for="(review, idx) in reviewList"
         :key="idx"
         :review="review"
+        @reviewListUpdate="getReviewList"
       />
       <vs-pagination class="my-review-pagination" :total="pageTotal" v-model="pageNum" color="#B9A6C9" @change="getReviewList"></vs-pagination>
     </div>

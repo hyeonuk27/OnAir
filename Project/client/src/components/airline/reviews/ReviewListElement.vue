@@ -51,7 +51,7 @@ export default {
         headers,
       })
         .then(() => {
-          console.log('111')
+          this.$emit("reviewListUpdate")
         })
         .catch((err) => {
           console.log(err)

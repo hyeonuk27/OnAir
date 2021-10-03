@@ -206,15 +206,15 @@ export default {
       scoreList: [1, 2, 3, 4, 5],
       arrivalList: [],
       seatList: ["퍼스트", "비즈니스", "이코노미"],
-    };
+    }
   },
   methods: {
     setToken: function () {
       const token = localStorage.getItem("token")
       const config = {
         Authorization: token,
-      };
-      return config;
+      }
+      return config
     },
     // views.py 수정 후 확인해야 함.
     createReview: function () {
@@ -232,20 +232,14 @@ export default {
         service_score: this.serviceScore,
         checkin_score: this.checkinScore,
         food_score: this.foodScore,
-      };
-      
-      console.log('이상하다')
-      console.log('data')
+      }
       axios({
         url: API.URL + API.ROUTES.reviewList + this.airlineId +'/',
         method: "post",
         data,
         headers,
       })
-      .then((res) => {
-        console.log('여기여기')
-        console.log(res.data)
-        console.log('저저기')
+      .then(() => {
         this.$router.push({ name: "Airline", params: {airlineId: this.airlineId, arrivalId:this.arrivalId} })
       })
       .catch((err) => {
@@ -289,8 +283,7 @@ export default {
       })
       .then((res) => {
         const review = res.data
-        console.log('불러온다불러와')
-        console.log(review)
+
         this.arrivalId = review.arrival,
         this.airlineId = review.airline,
         this.title = review.title,
@@ -316,7 +309,7 @@ export default {
       this.setReview()
     }
   },
-};
+}
 </script>
 
 <style>

@@ -2,6 +2,9 @@ from rest_framework import serializers
 from .models import Airline, Arrival, Review, Log, StatisticsResult
 
 class ReviewListSerializer(serializers.ModelSerializer):
+    username = serializers.ReadOnlyField()
+    userid = serializers.ReadOnlyField()
+    userpic = serializers.ReadOnlyField()
 
     class Meta:
         model = Review

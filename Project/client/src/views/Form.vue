@@ -208,44 +208,61 @@ export default {
         data,
         headers,
       })
-        .then(() => {
-          this.$router.push({ name: "Airline", params: {airlineId: this.airlineId, arrivalId:this.arrivalId} })
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+      .then(() => {
+        this.$router.push({ name: "Airline", params: {airlineId: this.airlineId, arrivalId:this.arrivalId} })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
     },
     getArrivals: function () {
       axios({
         url: API.URL + API.ROUTES.getArrivals,
         method: "get",
       })
-        .then((res) => {
-          const arrivals = res.data
-          arrivals.sort(function (a, b) {
-            if (a.name[4] > b.name[4]) {
-              return 1
-            } else if (a.name[4] < b.name[4]) {
-              return -1
-            }
-            return 0
-          })
-          for (let i = 0; i < arrivals.length; i++) {
-            this.arrivalList.push({
-              id: arrivals[i].id,
-              text: arrivals[i].name,
-              value: i + 1,
-            })
+      .then((res) => {
+        const arrivals = res.data
+        arrivals.sort(function (a, b) {
+          if (a.name[4] > b.name[4]) {
+            return 1
+          } else if (a.name[4] < b.name[4]) {
+            return -1
           }
+          return 0
         })
-        .catch((err) => {
-          console.log(err)
-        })
+        for (let i = 0; i < arrivals.length; i++) {
+          this.arrivalList.push({
+            id: arrivals[i].id,
+            text: arrivals[i].name,
+            value: i + 1,
+          })
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
     },
+    setReview: function () {
+      axios({
+        url: API.URL + API.ROUTES.reviewDetail + this.reviewId,
+        method: "get",
+      })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log('실패')
+        console.log(err)
+      })
+    }
   },
   created() {
     this.airlineId = this.$route.params.airlineId
+    this.reviewId = this.$route.params.reviewId
     this.getArrivals()
+    if (this.reviewId) {
+      this.setReview()
+    }
   },
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="bar-container" class="progress">
-      <div class="progress-bar progress-bar-animated bg-danger" 
+      <div class="progress-bar progress-bar-animated" 
         id ="bar-negative"
         role="progressbar" aria-valuenow="75" 
         aria-valuemin="0" aria-valuemax="100" 
@@ -56,5 +56,13 @@ export default {
 </script>
 
 <style>
-
+#bar-container {
+  height: 25px;
+}
+#bar-negative {
+  background-color: #F7CAC9;
+}
+#bar-positive {
+  background-color: #92A8D1;
+}
 </style>

@@ -112,13 +112,16 @@ def user_review_list(request, user_id):
             'airline_id': openapi.Schema(type=openapi.TYPE_STRING, description='The desc'),
             'arrival_id': openapi.Schema(type=openapi.TYPE_STRING, description='The desc'),
         }))
-
 @api_view(['GET', 'POST'])
+@check_login
 def user_log_list(request):
     if request.method == 'GET':
         logs = Log.objects.filter(user_id=request.user.id).order_by('-reg_dt')[:10]
         serializer = LogListSerializer(logs, many=True)
         data = serializer.data
+        for d in data:
+            d['airline_name'] = get_object_or_404(Airline, id=d['airline']).name
+            d['arrival_name'] = get_object_or_404(Arrival, id=d['arrival']).name
         return Response(data)
     elif request.method == 'POST':
         airline = get_object_or_404(Airline, pk=request.data.get('airline_id'))
@@ -346,13 +349,16 @@ def review_list(request, airline_id):
         return Response(data)
     
 
+@api_view(['GET', 'DELETE', 'PUT'])
 @check_login
-@api_view(['DELETE', 'PUT'])
 def review_detail(request, review_id):
     print('test')
     review = get_object_or_404(Review, id=review_id)
     if request.user == review.user:
-        if request.method == 'DELETE':
+        if request.method == 'GET':
+            serializer = ReviewSerializer(review)
+            return Response(serializer.data)
+        elif request.method == 'DELETE':
             review.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         elif request.method == 'PUT':

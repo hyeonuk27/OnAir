@@ -14,6 +14,8 @@ export default {
     reviewDetail: '/reviews/',
     getProfile: '/auth/profile/',
     updateProfile: '/auth/',
-    getMyReviews: '/profiles/'
+    getMyReviews: '/profiles/',
+    createLog: '/logs/',
+    getSearchLogs: '/logs/',
   }
 }

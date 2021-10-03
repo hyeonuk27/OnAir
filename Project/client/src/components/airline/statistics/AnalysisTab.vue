@@ -21,33 +21,30 @@
         <p class="analysis-head-predict-time">
           오늘 예상 지연률 
           <span class="analysis-numbers">
-            {{ predictedDelayRate }}</span> %
+            {{ report.predicted_delay_rate }}</span> %
         </p>
       </div>
       <div class="analysis-body">
-        <highcharts :options="analysisChartOptions"></highcharts>
-        <TotalDelayChart 
-        :report="report"/>
-        <GChart />
+        <charts :options="analysisChartOptions" />
       </div>
       <div class="analysis-charts">
         <div class="analysis-chart-1">
-          Chart1
+          종합지연사유파이차트
         </div>
         <div class="analysis-chart-2">
-          Chart2
+          지연시간 평균 시계열 막대 차트
         </div>
         <div class="analysis-chart-3">
-          Chart3
+          목적지 지연사유파이차트
         </div>
         <div class="analysis-chart-4">
-          Chart4
+          지연사유별 평균지연시간
         </div>
         <div class="analysis-chart-5">
-          Chart5
+          월별이용객 시계열 꺾은선
         </div>
         <div class="analysis-chart-6">
-          Chart6
+          머신러닝차트
         </div>
       </div>
     </div>
@@ -55,24 +52,16 @@
 </template>
 
 <script>
-import TotalDelayChart from '@/components/airline/statistics/charts/TotalDelayChart'
-import { GChart } from 'vue-google-charts'
-import {Chart} from 'highcharts-vue'
-
 export default {
   name: 'AnalysisTab',
-  props: ['report', 'predictedDelayRate'],
-  components: {
-    highcharts: Chart,
-    TotalDelayChart,
-    GChart
-  },
+  props: ['report'],
   data() {
     return {
+        analysisReport: this.report,
         analysisChartOptions: {
           chart: {
               type: 'bar',
-              height: 100,
+              height: 150,
               width: 1000,
           },
           title: {
@@ -96,7 +85,7 @@ export default {
               }
           },
           legend: {
-              enabled: false
+              // enabled: false
           },
           credits: {
               enabled: false
@@ -117,6 +106,9 @@ export default {
         },
     }
   },
+  created() {
+    console.log(this.report)
+  }
 }
 </script>
 

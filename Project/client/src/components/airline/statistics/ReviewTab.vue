@@ -63,6 +63,15 @@ import ReviewList from "@/components/airline/reviews/ReviewList";
 export default {
   name: "ReviewTab",
   props: ["airlineInfo", "airlineId"],
+  components: {
+    ReviewKeyword,
+    ReviewWordcloud,
+    ReviewSentiment,
+    ReviewScore,
+    ReviewScoreChart,
+    ReviewCreateButton,
+    ReviewList,
+  },
   data() {
     return {
       reviewChartOptions: {
@@ -117,15 +126,9 @@ export default {
       },
     };
   },
-  components: {
-    ReviewKeyword,
-    ReviewWordcloud,
-    ReviewSentiment,
-    ReviewScore,
-    ReviewScoreChart,
-    ReviewCreateButton,
-    ReviewList,
-  },
+  created() {
+    console.log(this.airlineInfo)
+  }
 };
 </script>
 

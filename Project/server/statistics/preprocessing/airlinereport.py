@@ -96,6 +96,7 @@ for airline in airlines:
     # merge_right.to_csv('./right.csv')
 
     res = merge_right
+    # print(res.head())
 
     # 지연률
     res['delayed_time'] = round(res['delayed_time'])
@@ -104,12 +105,13 @@ for airline in airlines:
     # 결항률
     res['cancelrate'] = round(res['canceled'] / res['total'] * 100, 2)
 
-    # 30분이내
-    res['rateu30'] = round(res['under_30'] / res['total'] * 100, 2)
-    res['rateu60'] = round(res['under_60'] / res['total'] * 100, 2)
-    res['rateo60'] = round(res['over_60'] / res['total'] * 100, 2)
+    res = res.fillna(0)
 
-    res = res.drop(columns=['under_30', 'under_60', 'over_60', 'delayed', 'canceled'])
+    res['under_30'] = round(res['under_30'] / (res['total'] - res['canceled']) * 100, 2)
+    res['under_60'] = round(res['under_60'] / (res['total'] - res['canceled']) * 100, 2)
+    res['over_60'] = round(res['over_60'] / (res['total'] - res['canceled']) * 100, 2)
+
+    res = res.drop(columns=['delayed', 'canceled'])
     res = res.assign(airline=f'{airline}')
     
     # id
@@ -119,8 +121,9 @@ for airline in airlines:
     # nan->0
     res = res.fillna(0)
 
-    # print(res.head())
-    # res.to_csv(f'./res_{airline}.csv')
+    # print(res.columns)
+    res.rename(columns={'delayed_time': 'delay_time', 'delayrate': 'delay_rate', 'cancelrate': 'cancel_rate'}, inplace=True)
+    res.to_csv(f'./res_{airline}.csv')
 
     ##### 목적지 따로 지정해야 함 ->
     # 지연사유별 개수
@@ -141,7 +144,7 @@ for airline in airlines:
     merge_chart = pd.merge(reason_count, reason_avg, on="reason", how='left')
     merge_chart = merge_chart.drop(columns=['index'])
 
-    merge_chart.to_csv('./delaychart.csv')
+    # merge_chart.to_csv('./delaychart.csv')
 
 
 

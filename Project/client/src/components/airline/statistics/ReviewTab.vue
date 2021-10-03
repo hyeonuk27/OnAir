@@ -1,6 +1,6 @@
 <template>
   <div class="review-container">
-    <di class="anaylsis-preview">
+    <div class="anaylsis-preview">
       <h5 class="text-start">#키워드 #키워드 #키워드 #키워드 #키워드 #키워드</h5>
       <div class="review-head">
         <p class="review-head-total"> 

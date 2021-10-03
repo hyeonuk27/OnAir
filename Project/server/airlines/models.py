@@ -18,7 +18,9 @@ class Airline(models.Model):
     total_flight = models.IntegerField()
     total_delayed = models.IntegerField()
     total_canceled = models.IntegerField()
-
+    under_30 = models.IntegerField()
+    under_60 = models.IntegerField()
+    over_60 = models.IntegerField()
 
 class Arrival(models.Model):
     id = models.CharField(max_length=13, primary_key=True)

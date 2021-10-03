@@ -333,12 +333,14 @@ def review_list(request, airline_id):
             serializer.save(airline=airline, user=user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
     elif request.method == 'GET':
-        reviews = get_list_or_404(Review, airline=airline_id)
+        reviews = Review.objects.filter(airline=airline_id).order_by('-created_at')
         page = request.GET.get('page', '1')
         paginator = Paginator(reviews, 5)
         reviews = paginator.get_page(page)
         serializer = ReviewListSerializer(reviews, many=True)
-        return Response(serializer.data)
+        data = serializer.data
+        data.append({'page_total': paginator.num_pages})
+        return Response(data)
     
 
 @check_login

@@ -9,10 +9,11 @@ export default {
   name: "ReviewCreateButton",
   props: {
     airlineId: String,
+    arrivalId: String,
   },
   methods: {
     moveToReviewForm() {
-      this.$router.push({ name: "Form" , params: {airlineId: this.airlineId}})
+      this.$router.push({ name: "Form" , params: {airlineId: this.airlineId, arrivalId: this.arrivalId }})
     }
   } 
 }

@@ -19,6 +19,7 @@
           <ReviewTab 
           :airlineInfo="airlineInfo"
           :airlineId="airlineId"
+          :arrivalId="arrivalId"
           />
         </section>
       </div>

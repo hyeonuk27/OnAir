@@ -12,6 +12,7 @@
       </div>
       <div class="search-box">
         <Search
+        v-if="isRendered"
         :arrivalList="arrivalList"
         :departureList="departureList"
         @search="getAirlines"
@@ -53,6 +54,7 @@ export default {
       arrival: '✈Air',
       arrivalId: '',
       isSearched: false,
+      isRendered: false,
     }
   },
   methods: {
@@ -77,6 +79,7 @@ export default {
               {id: arrivals[i].id, text: arrivals[i].name, value: i+1}
             )
           }
+          this.isRendered = true
         })
         .catch((err) => {
           console.log(err)

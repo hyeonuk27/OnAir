@@ -316,9 +316,8 @@ export default {
 
 .review-form {
   display: flex;
-  margin: 200px auto 200px;
+  margin: 160px auto;
   width: 1190px;
-  height: 700px;
 }
 
 #review-box {

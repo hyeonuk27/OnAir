@@ -16,7 +16,9 @@
     "node-sass": "^6.0.1",
     "sass-loader": "^10.2.0",
     "vue": "^2.6.11",
+    "vue-google-charts": "^0.3.3",
     "vue-router": "^3.5.2",
+    "vue2-highcharts": "^1.2.5",
     "vuesax": "^3.12.2",
     "vuex": "^3.6.2",
     "vuex-persistedstate": "^4.1.0"

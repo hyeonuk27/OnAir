@@ -25,38 +25,49 @@
         </p>
       </div>
       <div class="analysis-body">
-        <charts :options="analysisChartOptions" />
+        <highcharts :options="analysisChartOptions"></highcharts>
+        <TotalDelayChart 
+        :report="report"/>
+        <GChart />
       </div>
       <div class="analysis-charts">
         <div class="analysis-chart-1">
           Chart1
         </div>
         <div class="analysis-chart-2">
-          Chart1
+          Chart2
         </div>
         <div class="analysis-chart-3">
-          Chart1
+          Chart3
         </div>
         <div class="analysis-chart-4">
-          Chart1
+          Chart4
         </div>
         <div class="analysis-chart-5">
-          Chart1
+          Chart5
         </div>
         <div class="analysis-chart-6">
-          Chart1
+          Chart6
         </div>
-
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import TotalDelayChart from '@/components/airline/statistics/charts/TotalDelayChart'
+import { GChart } from 'vue-google-charts'
+import {Chart} from 'highcharts-vue'
+
 export default {
   name: 'AnalysisTab',
   props: ['report', 'predictedDelayRate'],
-  data () {
+  components: {
+    highcharts: Chart,
+    TotalDelayChart,
+    GChart
+  },
+  data() {
     return {
         analysisChartOptions: {
           chart: {
@@ -65,7 +76,8 @@ export default {
               width: 1000,
           },
           title: {
-            text: null
+            // text: null,
+            text: '지연시간 분포표'
           },
           xAxis: {
             visible: false,
@@ -103,7 +115,7 @@ export default {
               data: [this.report.over_60]
           }],
         },
-      }
+    }
   },
 }
 </script>
@@ -175,22 +187,27 @@ export default {
     grid-column: 1;
     grid-row: 1;
   }
+
   .analysis-chart-2 {
     grid-column: 2;
     grid-row: 1;
   }
+
   .analysis-chart-3 {
     grid-column: 1;
     grid-row: 2;
   }
+
   .analysis-chart-4 {
     grid-column: 2;
     grid-row: 2;
   }
+
   .analysis-chart-5 {
     grid-column: 1;
     grid-row: 3;
   }
+
   .analysis-chart-6 {
     grid-column: 2;
     grid-row: 3;

@@ -1,6 +1,6 @@
 <template>
   <div class="review-container">
-    <di class="anaylsis-preview">
+    <div class="anaylsis-preview">
       <h5 class="text-start">#키워드 #키워드 #키워드 #키워드 #키워드 #키워드</h5>
       <div class="review-head">
         <p class="review-head-total"> 
@@ -11,12 +11,12 @@
         <p class="review-head-delay-rate">
           평균 지연률 
           <span class="review-numbers">
-            {{ airlineInfo.total_delayed / airlineInfo.total_flight }}</span> %
+            {{ (airlineInfo.total_delayed / airlineInfo.total_flight * 100).toFixed(2) }}</span> %
         </p>
         <p class="review-head-cancel-rate">
           평균 결항률 
           <span class="review-numbers">
-            {{ airlineInfo.total_canceled / airlineInfo.total_flight }}</span> %
+            {{ (airlineInfo.total_canceled / airlineInfo.total_flight * 100).toFixed(2) }}</span> %
         </p>
       </div>
       <div class="review-body">

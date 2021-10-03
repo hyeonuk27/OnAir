@@ -6,11 +6,13 @@ import router from './common/vue-router.js'
 import Vuesax from 'vuesax'
 import 'vuesax/dist/vuesax.css'
 import 'material-icons/iconfont/material-icons.css'
-import HighchartsVue from 'highcharts-vue'
+// import HighchartsVue from 'highcharts-vue'
+// import boost from 'highcharts/modules/boost'
 
 Vue.use(VueRouter)
 Vue.use(Vuesax)
-Vue.use(HighchartsVue, {tagName: 'charts'})
+// Vue.use(HighchartsVue, {tagName: 'charts'})
+// boost(HighchartsVue)
 Vue.config.productionTip = false
 
 new Vue({

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="review-list-container">
     <!-- 리뷰 리스트 -->
     <div>
       <ReviewListElement
@@ -8,7 +8,7 @@
         :review="review"
         @reviewListUpdate="getReviewList"
       />
-      <vs-pagination class="my-review-pagination" :total="pageTotal" v-model="pageNum" color="#B9A6C9" @change="getReviewList"></vs-pagination>
+      <vs-pagination class="review-list-pagination" :total="pageTotal" v-model="pageNum" color="#B9A6C9" @change="getReviewList"></vs-pagination>
     </div>
   </div>
 </template>
@@ -59,8 +59,18 @@ export default {
 </script>
 
 <style>
-.container {
-  margin-top: 20vh;
-}
+  .review-list-container {
+    display: flex;
+    justify-content: center;
+    width: 1190px;
+  }
+
+  .review-list-pagination {
+    margin: 40px 100px 50px 0px;
+  }
+
+  .vs-pagination--mb {
+    justify-content: center;
+  }
 </style>
 

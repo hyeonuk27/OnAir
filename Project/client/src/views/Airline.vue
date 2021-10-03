@@ -16,7 +16,8 @@
           />
           <div
           v-else
-          style="height: 1000px;"
+          id="loading"
+          style="height: 700px;"
           >
           </div>
         </section>
@@ -59,6 +60,9 @@ export default {
   },
   methods: {
     getAirlineStatistics: function () {
+      this.$vs.loading({
+        type: 'material'
+      })
       axios({
         url: API.URL + API.ROUTES.getAirlines + this.arrivalId + '/' + this.airlineId + '/',
         method: "get",
@@ -67,6 +71,7 @@ export default {
           const report = res.data.data
           this.report = report
           this.isStatisticsRendered = true
+          this.$vs.loading.close()
         })
         .catch((err) => {
           console.log(err)

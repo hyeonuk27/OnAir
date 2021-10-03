@@ -83,6 +83,9 @@ export default {
         })
     },
     getAirlines: function (arrivalId, departureCode, arrivalCode) {
+      this.$vs.loading({
+        type: 'material'
+      })
       this.airlineList = []
       this.arrivalId = arrivalId
       this.setDeparture(departureCode)
@@ -109,6 +112,7 @@ export default {
             }
           }
           this.isSearched = true
+          this.$vs.loading.close()
         })
         .catch((err) => {
           console.log(err)

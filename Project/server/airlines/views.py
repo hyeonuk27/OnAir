@@ -344,15 +344,12 @@ def review_list(request, airline_id):
     
 
 @check_login
-@api_view(['GET', 'DELETE', 'PUT'])
+@api_view(['DELETE', 'PUT'])
 def review_detail(request, review_id):
     print('test')
     review = get_object_or_404(Review, id=review_id)
     if request.user == review.user:
-        if request.method == 'GET':
-            serializer = ReviewSerializer(review)
-            return Response(serializer.data)
-        elif request.method == 'DELETE':
+        if request.method == 'DELETE':
             review.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         elif request.method == 'PUT':
@@ -385,8 +382,19 @@ def review_score(request, airline_id):
     
     return Response(review_score)
 
+@api_view(['GET'])
 def review_sentiment(request, airline_id):
-    pass
+    sentiments = pd.read_csv('npl/sentiment.csv', sep='\t')
+    condition = (sentiments.airlines == airline_id)
+    sentiment = sentiments[condition]
+    positive = int(sentiment.positive / sentiment.total * 100)
+    
+    data = {
+        'positive': positive,
+        'negative': 100 - positive
+    }
+
+    return Response(data)
 
 @api_view(['GET'])
 def review_keyword(request, airline_id):

@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 // import SERVER from '@/common/drf.js'
 // import router from '@/common/vue-router.js'
 // import axios from 'axios'
-import createPersistedState from "vuex-persistedstate";
+// import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex)
 
@@ -14,8 +14,8 @@ export default new Vuex.Store({
     userId: localStorage.getItem('userId'),
     name: localStorage.getItem('name'),
     profileUrl: localStorage.getItem('profileUrl'),
-    departure: [],
-    arrival: [],
+    departure: localStorage.getItem('departure'),
+    arrival: localStorage.getItem('arrival'),
   },
   getters: {
     isLogin: function (state) {
@@ -38,15 +38,17 @@ export default new Vuex.Store({
       commit('SET_NAME', name)
     },
     setDeparture({commit}, idx) {
+      localStorage.setItem('departure', idx)
       commit('SET_DEPARTURE', idx)
     },
     setArrival({commit}, idx) {
+      localStorage.setItem('arrival', idx)
       commit('SET_ARRIVAL', idx)
     },
   },
   modules: {
   },
   plugins: [
-    createPersistedState(),
+    // createPersistedState(),
   ],
 })

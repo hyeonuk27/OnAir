@@ -49,7 +49,6 @@ export default {
         },
       })
         .then((res) => {
-          console.log(res.data)
           this.pageTotal = res.data[res.data.length-1]['page_total']
           this.name = res.data[res.data.length-1]['user_name']
           this.profileUrl = res.data[res.data.length-1]['user_profile_url']

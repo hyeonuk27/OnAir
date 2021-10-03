@@ -36,18 +36,14 @@
 export default {
   name: 'AirlineElement',
   props: ['airline', 'arrivalId'],
-  data() {
-    return {
-
-    }
-  },
   methods: {
     goAirline: function () {
       this.$router.push({
         name: "Airline",
         params: {
           airlineId: this.airline.id,
-          arrivalId: this.arrivalId
+          arrivalId: this.arrivalId,
+          predictedDelayRate: this.airline.predicted_delay_rate,
         },
       })
     }

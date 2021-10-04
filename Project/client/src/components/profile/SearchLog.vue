@@ -70,6 +70,7 @@ export default {
     display: flex;
     justify-content: center;
     margin-top: 150px;
+    margin-bottom: 50px;
   }
 
   .search-log-container {

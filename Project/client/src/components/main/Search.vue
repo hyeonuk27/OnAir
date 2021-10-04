@@ -5,8 +5,7 @@
       class="select-box"
       placeholder="출발지 선택"
       width="300px"
-      v-model="departure"
-      @change="search"
+      v-model="departureIdx"
       >
       <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in departureList" />
     </vs-select>
@@ -16,8 +15,7 @@
       class="select-box"
       placeholder="도착지 선택"
       width="300px"
-      v-model="arrival"
-      @change="search"
+      v-model="arrivalIdx"
       >
       <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in arrivalList" />
     </vs-select>
@@ -25,20 +23,45 @@
 </template>
 
 <script>
+import {mapState, mapActions} from 'vuex'
+
 export default {
   name: 'Search',
   props: ['departureList', 'arrivalList'],
   data() {
     return {
-      departure: [],
-      arrival: [],
+      departureIdx: '',
+      arrivalIdx: '',
     }
   },
   methods: {
+    ...mapActions([
+      'setDeparture',
+      'setArrival'
+    ]),
     search: function() {
-      if (typeof this.departure != 'object' && typeof this.arrival != 'object') {
+      if (this.departure != '' && this.arrival != '' && this.departure != 'null' && this.arrival != 'null' && this.departure != null && this.arrival != null) {
         this.$emit('search', this.arrivalList[this.arrival-1].id, this.departureList[this.departure-1].text.substring(0, 3), this.arrivalList[this.arrival-1].text.substring(0, 3))
       }
+    }
+  },
+  created() {
+    localStorage.setItem('departure', [])
+    localStorage.setItem('arrival', [])
+    this.departureIdx = this.departure
+    this.arrivalIdx = this.arrival
+  },
+  computed: {
+    ...mapState(['arrival', 'departure'])
+  },
+  watch: {
+    departureIdx: function (val) {
+      this.setDeparture(val)
+      this.search()
+    },
+    arrivalIdx: function (val) {
+      this.setArrival(val)
+      this.search()
     }
   }
 }

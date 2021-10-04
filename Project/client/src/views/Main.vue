@@ -12,6 +12,7 @@
       </div>
       <div class="search-box">
         <Search
+        v-if="isRendered"
         :arrivalList="arrivalList"
         :departureList="departureList"
         @search="getAirlines"
@@ -53,6 +54,7 @@ export default {
       arrival: '✈Air',
       arrivalId: '',
       isSearched: false,
+      isRendered: false,
     }
   },
   methods: {
@@ -77,12 +79,16 @@ export default {
               {id: arrivals[i].id, text: arrivals[i].name, value: i+1}
             )
           }
+          this.isRendered = true
         })
         .catch((err) => {
           console.log(err)
         })
     },
     getAirlines: function (arrivalId, departureCode, arrivalCode) {
+      this.$vs.loading({
+        type: 'material'
+      })
       this.airlineList = []
       this.arrivalId = arrivalId
       this.setDeparture(departureCode)
@@ -93,22 +99,27 @@ export default {
         method: "get",
       })
         .then((res) => {
-          const airlines = res.data.Airlines
-          airlines.sort(function (a, b) {
-            if (a.total > b.total) {
-              return -1
-            } 
-            else if (a.total < b.total) {
-              return 1
+          if (this.airlineList.length == 0) {
+            const airlines = res.data.Airlines
+            airlines.sort(function (a, b) {
+              if (a.total > b.total) {
+                return -1
+              } 
+              else if (a.total < b.total) {
+                return 1
+              }
+              return 0
+            })
+            for (const airline of airlines) {
+              if (airline.total != 0) {
+                console.log(airline)
+                this.airlineList.push(airline)
+              }
             }
-            return 0
-          })
-          for (const airline of airlines) {
-            if (airline.total != 0) {
-              this.airlineList.push(airline)
-            }
+            this.isSearched = true
+            this.$vs.loading.close()
+            console.log(this.airlineList)
           }
-          this.isSearched = true
         })
         .catch((err) => {
           console.log(err)
@@ -121,8 +132,10 @@ export default {
       this.arrival = '✈' + name
     }
   },
-  created() {
+  mounted() {
     this.getArrivals()
+  },
+  created() {
   }
 }
 </script>

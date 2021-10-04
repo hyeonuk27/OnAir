@@ -25,6 +25,8 @@
           <ReviewTab 
           :airlineInfo="airlineInfo"
           :airlineId="airlineId"
+          :arrivalId="arrivalId"
+          :arrivalName="arrivalName"
           />
         </section>
       </div>
@@ -52,6 +54,7 @@ export default {
     return {
       isStatisticsRendered: false,
       isReviewRendered: false,
+      arrivalName: "",
       arrivalId: '',
       airlineId: '',
       airlineInfo: {},
@@ -72,6 +75,8 @@ export default {
           this.report = report
           this.isStatisticsRendered = true
           this.$vs.loading.close()
+          this.arrivalName = report.arrival_name
+          console.log(report)
         })
         .catch((err) => {
           console.log(err)

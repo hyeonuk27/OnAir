@@ -43,7 +43,13 @@
       </div>
       <div>
         <!-- 리뷰 작성 버튼 -->
-        <ReviewCreateButton :airlineId="airlineId" />
+        <ReviewCreateButton
+          :airlineId="airlineId"
+          :arrivalId="arrivalId"
+          :arrivalName="arrivalName"
+        />
+      </div>
+      <div>
         <!-- 리뷰 리스트 -->
         <ReviewList :airlineId="airlineId" />
       </div>
@@ -62,7 +68,7 @@ import ReviewList from "@/components/airline/reviews/ReviewList";
 
 export default {
   name: "ReviewTab",
-  props: ["airlineInfo", "airlineId"],
+  props: ["airlineInfo", "airlineId", "arrivalId", "arrivalName"],
   components: {
     ReviewKeyword,
     ReviewWordcloud,
@@ -126,13 +132,10 @@ export default {
       },
     };
   },
-  created() {
-    console.log(this.airlineInfo)
-  }
 };
 </script>
 
-<style>
+<style scoped>
 .review-container {
   height: auto;
   min-height: 1000px;

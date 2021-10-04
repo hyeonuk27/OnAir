@@ -1,21 +1,27 @@
 <template>
-  <div class="container">
-    <!-- 리뷰 리스트 -->
+  <div id="review-list-container">
     <div>
       <ReviewListElement
         v-for="(review, idx) in reviewList"
         :key="idx"
         :review="review"
+        @reviewListUpdate="getReviewList"
       />
-      <vs-pagination class="my-review-pagination" :total="pageTotal" v-model="pageNum" color="#B9A6C9" @change="getReviewList"></vs-pagination>
+      <vs-pagination
+        class="review-list-pagination justify-self-center"
+        :total="pageTotal"
+        v-model="pageNum"
+        color="#B9A6C9"
+        @change="getReviewList"
+      ></vs-pagination>
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios"
-import API from "@/common/drf.js"
-import ReviewListElement from '@/components/airline/reviews/ReviewListElement'
+import axios from "axios";
+import API from "@/common/drf.js";
+import ReviewListElement from "@/components/airline/reviews/ReviewListElement";
 
 export default {
   name: "ReviewList",
@@ -27,10 +33,10 @@ export default {
       pageNum: 1,
       pageTotal: 0,
       reviewList: [],
-    }
+    };
   },
   components: {
-    ReviewListElement
+    ReviewListElement,
   },
   methods: {
     getReviewList: function () {
@@ -42,24 +48,31 @@ export default {
         },
       })
         .then((res) => {
-          this.pageTotal = res.data[res.data.length - 1]["page_total"]
-          this.reviewList = res.data.slice(0, 5)
+          this.pageTotal = res.data[res.data.length - 1]["page_total"];
+          this.reviewList = res.data.slice(0, 5);
         })
         .catch((err) => {
-          console.log(err)
-        })
+          console.log(err);
+        });
     },
-
   },
   created() {
-    this.getReviewList()
+    this.getReviewList();
   },
-}
+};
 </script>
 
-<style>
-.container {
-  margin-top: 20vh;
+<style scoped>
+#review-list-container {
+  height: 100%;
+}
+
+.review-list-pagination {
+  margin: 40px 100px 50px 0px;
+}
+
+.vs-pagination--mb {
+  justify-content: center;
 }
 </style>
 

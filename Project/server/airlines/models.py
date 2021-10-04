@@ -53,6 +53,9 @@ class Review(models.Model):
     def userpic(self):
         return self.user.profile_url
 
+    def arrivalname(self):
+        return self.arrival.name
+
 
 class Log(models.Model):
     id = models.CharField(max_length=13, primary_key=True)

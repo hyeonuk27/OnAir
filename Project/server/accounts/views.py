@@ -31,7 +31,6 @@ def login(request):
     if User.objects.filter(google_id = user['sub']).exists():
         user_info = User.objects.get(google_id=user['sub'])
         encoded_jwt = jwt.encode({'id': user_info.id}, JWT_SECRET_KEY, algorithm='HS256')
-        print(encoded_jwt)
         serializer = UserSerializer(user_info)
     # 회원가입
     else:
@@ -56,7 +55,6 @@ def login(request):
         'info': serializer.data,
         'access_token': encoded_jwt,
     }
-    print(data)
     return Response(data, status=status.HTTP_201_CREATED)
 
 
@@ -71,7 +69,6 @@ def update(request):
 
 @api_view(['GET'])
 def profile(request, user_id):
-    print(request)
     user = get_object_or_404(User, id=user_id)
     serializer = UserSerializer(user)
     return Response(serializer.data, status=status.HTTP_200_OK)

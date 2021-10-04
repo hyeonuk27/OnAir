@@ -1,5 +1,21 @@
 <template>
   <div class="my-review-el" @click="goAirline">
+    <div class="dropdown">
+      <button
+        v-if="userId == review.user"
+        class="btn btn-sm dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton1"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        ...
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li @click="moveToReviewForm(review.id)">수 정</li>
+        <li @click="deleteReview(review.id)">삭 제</li>
+      </ul>
+    </div>
     <div class="my-review-el-name">
       <div>NAME OF PASSENGER</div>
       {{name}}
@@ -30,6 +46,10 @@
 </template>
 
 <script>
+import axios from "axios";
+import API from "@/common/drf.js";
+import { mapState } from 'vuex';
+
 export default {
   name: 'MyReviewElement',
   props: ['review', 'name'],
@@ -43,11 +63,41 @@ export default {
         },
       })
     },
-  }
+    deleteReview: function (reviewId) {
+      const headers = this.setToken();
+      axios({
+        url: API.URL + API.ROUTES.reviewDetail + reviewId,
+        method: "delete",
+        headers,
+      })
+      .then(() => {
+        this.$emit("reviewListUpdate");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    },
+    moveToReviewForm: function (reviewId) {
+      this.$router.push({ name: "Form", params: { reviewId: reviewId } });
+    },
+  },
+  computed: {
+    ...mapState(["userId"]),
+  },
 }
 </script>
 
 <style>
+  .dropdown {
+    grid-column: 4;
+    grid-row: 1;
+    justify-self: end;
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  .dropdown-menu {
+    text-align: center;
+  }
   .my-review-el {
     border: 1px solid rgba(180, 180, 180, 0.658);
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.151);

@@ -36,6 +36,7 @@
       class="review-list-el-profile"
       :src="review.userpic"
       alt="user-image"
+      @click="moveToMyReview(review.user)"
     />
     <div class="review-list-el-title">"{{ review.title }}"</div>
     <div class="review-list-el-content">{{ review.content }}</div>
@@ -134,15 +135,18 @@ export default {
         method: "delete",
         headers,
       })
-        .then(() => {
-          this.$emit("reviewListUpdate");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      .then(() => {
+        this.$emit("reviewListUpdate");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     },
     moveToReviewForm: function (reviewId) {
       this.$router.push({ name: "Form", params: { reviewId: reviewId } });
+    },
+    moveToMyReview: function (userId) {
+      this.$router.push({ name: "MyReview", params: { userId: userId } });
     },
   },
   computed: {

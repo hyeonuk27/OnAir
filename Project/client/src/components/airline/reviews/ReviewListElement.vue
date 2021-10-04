@@ -148,7 +148,7 @@ export default {
       });
     },
     moveToReviewForm: function (reviewId) {
-      this.$router.push({ name: "Form", params: { reviewId: reviewId, flag: this.flag } });
+      this.$router.push({ name: "Update", params: { reviewId: reviewId, flag: this.flag } });
     },
     moveToMyReview: function (userId) {
       this.$router.push({ name: "MyReview", params: { userId: userId } });

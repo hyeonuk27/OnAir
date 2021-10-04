@@ -6,6 +6,9 @@
   </div>
 </template>
 <script>
+export default {
+  name: "ReviewWordcloud",
+}
 // import axios from "axios";
 // import API from "@/common/drf.js"
 // import * as d3 from "d3";
@@ -87,4 +90,5 @@
 //     },
 //   }
 // };
+// </script>
 </script>

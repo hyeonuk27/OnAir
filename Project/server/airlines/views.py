@@ -242,25 +242,6 @@ def airline_report(request, arrival_id, airline_id):
     
 # 통계
 
-#     # 항공사 필터
-#     airlinedata = pd.read_csv('statistics/preprocessing/statistics_data.csv')
-#     airline_filter = airlinedata[airlinedata['airline'] != f'{airline.name}'].index
-#     airlinedata = airlinedata.drop(airline_filter)
-
-# # 지연 필터
-#     d_filter = airlinedata[airlinedata['state'] != '지연'].index
-#     reason_group = airlinedata.drop(d_filter).reset_index(drop=True)
-
-# # 목적지 필터
-#     arrival_filter = reason_group[reason_group['arrival'] != f'{arrival.name}'].index
-#     reason_group = reason_group.drop(arrival_filter).reset_index(drop=True)
-#     reason_group = reason_group.drop(columns=['date', 'arrival', 'passengers', 'state'])
-    
-#     reason_list = merge_chart['reason'].values.tolist()
-#     reason_cnt_list = merge_chart['total'].values.tolist()
-#     avg_delayed_time_list = merge_chart['delayed_time'].values.tolist()
-
-#
     df = pd.read_csv('./statistics/delaydatas/statistics_data.csv', index_col=0)
     df = df.drop(columns=['passengers'])
 

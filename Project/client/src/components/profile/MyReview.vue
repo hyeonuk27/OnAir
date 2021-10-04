@@ -11,6 +11,7 @@
           :key="idx"
           :review="review"
           :name="name"
+          @myReviewsUpdate="getMyReviews"
           />
         </div>
         <vs-pagination v-if="reviews.length != 1" class="my-review-pagination" :total="pageTotal" v-model="pageNum" color="#B9A6C9" @change="getMyReviews"></vs-pagination>

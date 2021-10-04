@@ -1,5 +1,5 @@
 <template>
-  <div class="my-review-el" @click="goAirline">
+  <div class="my-review-el">
     <div class="dropdown">
       <button
         v-if="userId == review.user"
@@ -12,8 +12,9 @@
         ...
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-        <li @click="moveToReviewForm(review.id)">수 정</li>
-        <li @click="deleteReview(review.id)">삭 제</li>
+        <li class="dropdown-item" @click="goAirline">이 동</li>
+        <li class="dropdown-item" @click="moveToReviewForm(review.id)">수 정</li>
+        <li class="dropdown-item" @click="deleteReview(review.id)">삭 제</li>
       </ul>
     </div>
     <div class="my-review-el-name">
@@ -53,6 +54,11 @@ import { mapState } from 'vuex';
 export default {
   name: 'MyReviewElement',
   props: ['review', 'name'],
+  data() {
+    return {
+      flag: 0,
+    }
+  },
   methods: {
     goAirline: function () {
       this.$router.push({
@@ -63,6 +69,13 @@ export default {
         },
       })
     },
+    setToken: function () {
+      const token = localStorage.getItem("token");
+      const config = {
+        Authorization: token,
+      };
+      return config;
+    },
     deleteReview: function (reviewId) {
       const headers = this.setToken();
       axios({
@@ -71,14 +84,14 @@ export default {
         headers,
       })
       .then(() => {
-        this.$emit("reviewListUpdate");
+        this.$emit("myReviewsUpdate");
       })
       .catch((err) => {
         console.log(err);
       });
     },
     moveToReviewForm: function (reviewId) {
-      this.$router.push({ name: "Form", params: { reviewId: reviewId } });
+      this.$router.push({ name: "Form", params: { reviewId: reviewId, flag: this.flag, userId: this.userId  } });
     },
   },
   computed: {
@@ -95,9 +108,15 @@ export default {
     background-color: rgba(0, 0, 0, 0);
   }
 
+  .dropdown-item:hover {
+    background-color: rgba(223, 223, 223, 0.904);
+    transition: 0.3s
+  }
+
   .dropdown-menu {
     text-align: center;
   }
+
   .my-review-el {
     border: 1px solid rgba(180, 180, 180, 0.658);
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.151);

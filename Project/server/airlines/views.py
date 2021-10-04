@@ -242,45 +242,65 @@ def airline_report(request, arrival_id, airline_id):
     
 # 통계
 
-    # 항공사 필터
-    airlinedata = pd.read_csv('statistics/preprocessing/statistics_data.csv')
-    airline_filter = airlinedata[airlinedata['airline'] != f'{airline.name}'].index
-    airlinedata = airlinedata.drop(airline_filter)
+#     # 항공사 필터
+#     airlinedata = pd.read_csv('statistics/preprocessing/statistics_data.csv')
+#     airline_filter = airlinedata[airlinedata['airline'] != f'{airline.name}'].index
+#     airlinedata = airlinedata.drop(airline_filter)
 
-    # 지연 필터
-    d_filter = airlinedata[airlinedata['state'] != '지연'].index
-    reason_group = airlinedata.drop(d_filter).reset_index(drop=True)
+# # 지연 필터
+#     d_filter = airlinedata[airlinedata['state'] != '지연'].index
+#     reason_group = airlinedata.drop(d_filter).reset_index(drop=True)
 
-    # 목적지 필터
-    arrival_filter = reason_group[reason_group['arrival'] != f'{arrival.name}'].index
-    reason_group = reason_group.drop(arrival_filter).reset_index(drop=True)
-    reason_group = reason_group.drop(columns=['date', 'arrival', 'passengers', 'state'])
-
-    # 지연사유 개수
-    reason_count = reason_group.groupby('reason').count().reset_index()
-    reason_count = reason_count.drop(columns=['delayed_time'])
-    reason_count.rename(columns = {'airline' : 'total'}, inplace = True)
-
-    # 지연사유별 평균지연시간
-    reason_avg = reason_group.groupby(by=['reason'], as_index=False).mean().reset_index()
-    reason_avg.rename(columns = {'airline' : 'avg_time'}, inplace = True)
-    reason_avg['delayed_time'] = round(reason_avg['delayed_time'], 2)
-
-    # 지연사유별 개수와 평균지연시간
-    merge_chart = pd.merge(reason_count, reason_avg, on="reason", how='left')
+# # 목적지 필터
+#     arrival_filter = reason_group[reason_group['arrival'] != f'{arrival.name}'].index
+#     reason_group = reason_group.drop(arrival_filter).reset_index(drop=True)
+#     reason_group = reason_group.drop(columns=['date', 'arrival', 'passengers', 'state'])
     
-    reason_list = merge_chart['reason'].values.tolist()
-    reason_cnt_list = merge_chart['total'].values.tolist()
-    avg_delayed_time_list = merge_chart['delayed_time'].values.tolist()
+#     reason_list = merge_chart['reason'].values.tolist()
+#     reason_cnt_list = merge_chart['total'].values.tolist()
+#     avg_delayed_time_list = merge_chart['delayed_time'].values.tolist()
 
-    # 월별 이용객 시계열
+#
+    df = pd.read_csv('./statistics/delaydatas/statistics_data.csv', index_col=0)
+    df = df.drop(columns=['passengers'])
+
+# 전체 지연 사유 분포
+    airline_filter = df[df['airline'] != airline.name].index
+    airlinedata = df.drop(airline_filter)
+    delay_filter = airlinedata[airlinedata['state'] != '지연'].index
+    delaydata = airlinedata.drop(delay_filter)
+    total_delay = delaydata.groupby('reason').count().reset_index()
+    total_delay = total_delay.drop(columns=['date', 'airline', 'arrival', 'delayed_time'])
+    total_delay = total_delay.sort_values(by=['state'], ascending=False)
+    total_delay_list = total_delay['reason'].values.tolist()
+    total_delay_cnt = total_delay['state'].values.tolist()
+
+# 월별 평균 지연시간
+    monthly_delay = delaydata
+    monthly_delay['date'] = monthly_delay['date'].str[:7]
+    monthly_delay = monthly_delay.groupby(['date'], as_index=False).mean().groupby('date')['delayed_time'].mean().reset_index()
+    delay_month_list = monthly_delay['date'].values.tolist()
+    delay_month_avg_time = monthly_delay['delayed_time'].values.tolist()
+
+
+# 목적지별 지연 사유 분포
+    arrival_filter = delaydata[delaydata['arrival'] != arrival.name].index
+    arrivals_data = delaydata.drop(arrival_filter)
+    arrivals_delay_reason = arrivals_data.groupby(['reason'], as_index=False).size().reset_index()
+    arrival_delay_list = arrivals_delay_reason['reason'].values.tolist()
+    arrival_delay_cnt = arrivals_delay_reason['size'].values.tolist()
+    
+# 지연사유별 평균 지연시간
+    arrivals_delay = arrivals_data.groupby(['arrival', 'reason'], as_index=False).mean().reset_index()
+    arrival_reason_list = arrivals_delay['reason'].values.tolist()
+    arrival_avg_time = arrivals_delay['delayed_time'].values.tolist()
+
+# 월별 이용객 시계열
     monthly = pd.read_csv(f'predict_models/ets_passengers/{airline.name}.csv')
     dates_list = monthly['date'].values.tolist()
     # print(dates_list)
     dates_list = list(map(lambda x: int((time.mktime(datetime.strptime(x, "%Y-%m-%d").timetuple()) + 32400) * 1000), dates_list))
     passengers_cnt = monthly['passengers'].values.tolist()
-
-    # int((time.mktime(datetime.datetime.strptime(a, "%Y-%m-%d").timetuple()) + 32400) * 1000)
 
     monthly_data = list()
     for i in range(len(dates_list)):
@@ -298,9 +318,14 @@ def airline_report(request, arrival_id, airline_id):
             'over_60': statistics_result.over_60,
             'delay_rate': statistics_result.delay_rate,
             'delay_time': statistics_result.delay_time,
-            'airline_arrival_delay_reason_list': reason_list,
-            'airline_arrival_delay_reason_count_list': reason_cnt_list,
-            'airline_arrival_avg_delayed_time_by_reason_list': avg_delayed_time_list,
+            'total_delay_list': total_delay_list,
+            'total_delay_cnt': total_delay_cnt,
+            'delay_month_list': delay_month_list,
+            'delay_month_avg_time': delay_month_avg_time,
+            'arrival_delay_list': arrival_delay_list,
+            'arrival_delay_cnt': arrival_delay_cnt,
+            'arrival_reason_list': arrival_reason_list,
+            'arrival_avg_time': arrival_avg_time,
             'weather_list': weather_list,
             'predicted_by_weather': predicted_by_weather,
             'month_list': month_list,

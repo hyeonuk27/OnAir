@@ -2,11 +2,11 @@
   <div style="display: flex; justify-content: center;">
     <div style="width: 1190px;">
       <nav v-if="this.$route.name === 'Main'" class="nav justify-content-end">
-        <div v-if="isLogin" class="nav-menu d-flex mt-5">
-          <div style="color: white; cursor: pointer; text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);" class="nav-element" @click="moveToMypage">마이페이지</div>
-          <div style="color: white; cursor: pointer; text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);" class="nav-element" @click="logOut">로그아웃</div>
+        <div v-if="isLogin" style="height: 30px;" class="nav-menu d-flex mt-5">
+          <div style="color: white; cursor: pointer; text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);" class="nav-element nav-element-main" @click="moveToMypage">마이페이지</div>
+          <div style="color: white; cursor: pointer; text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);" class="nav-element nav-element-main" @click="logOut">로그아웃</div>
         </div>
-        <div v-else style="color: white; cursor: pointer; text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);" class="login mt-5" @click="moveToLogin">로그인</div>   
+        <div v-else style="color: white; height: 30px; cursor: pointer; text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);" class="login mt-5 nav-element-main" @click="moveToLogin">로그인</div>   
       </nav>
       <nav v-else class="nav justify-content-between nav-not-main">
         <!-- 로고 -->
@@ -14,14 +14,15 @@
           alt="logo-image"
           id="logo-image"
           class="mt-5"
+          style="cursor: pointer;"
           @click="moveToMain"
           />
         <!-- 로그인 -->
-        <div v-if="isLogin" class="nav-menu d-flex mt-5">
-          <div class="nav-element" @click="moveToMypage">마이페이지</div>
-          <div class="nav-element" @click="logOut">로그아웃</div>
+        <div v-if="isLogin" style="height:30px;" class="nav-menu d-flex mt-5">
+          <div class="nav-element nav-element-not-main" @click="moveToMypage">마이페이지</div>
+          <div class="nav-element nav-element-not-main" @click="logOut">로그아웃</div>
         </div>
-        <div v-else class="login mt-5" @click="moveToLogin">로그인</div>        
+        <div v-else style="height:30px;" class="login mt-5 nav-element-not-main" @click="moveToLogin">로그인</div>        
       </nav>
     </div>
   </div>
@@ -100,6 +101,27 @@ export default {
 
   .navbar {
     height: 250px;
+  }
+
+  .nav-element-main {
+    border-bottom: 1px solid rgba(255, 255, 255, 0);
+    transition: 0.3s;
+  }
+
+  .nav-element-main:hover {
+    border-bottom: 1px solid rgb(255, 255, 255);
+    box-shadow: 0px 5px 5px -5px #0000002d;
+  }
+
+  .nav-element-not-main {
+    border-bottom: 1px solid white;
+    color: #656F8C;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .nav-element-not-main:hover {
+    border-bottom: 1px solid #656F8C;
   }
 
   .login .logout {

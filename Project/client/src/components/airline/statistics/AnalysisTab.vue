@@ -150,7 +150,7 @@ export default {
               sliced: true,
               selected: true
             }, {
-              name: 'Internet Explorer',
+              name: this.report.,
               y: 11.84
             }, {
               name: 'Firefox',

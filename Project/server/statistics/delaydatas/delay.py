@@ -27,9 +27,10 @@ for airline in airlines:
     arrival_filter = delaydata[delaydata['arrival'] != 'PUS(김해)'].index
     arrivals_data = delaydata.drop(arrival_filter)
     arrivals_delay_reason = arrivals_data.groupby(['reason'], as_index=False).size().reset_index()
-    # print(arrivals_delay_reason.head())
+    arrivals_delay_reason = arrivals_delay_reason.sort_values(by=['size'], ascending=False)
+    print(arrivals_delay_reason.head())
     
 # 지연사유별 평균 지연시간
     arrivals_delay = arrivals_data.groupby(['arrival', 'reason'], as_index=False).mean().reset_index()
-    print(arrivals_delay.head())
-
+    arrivals_delay = arrivals_delay.sort_values(by=['delayed_time'], ascending=False)
+    print(arrivals_delay)

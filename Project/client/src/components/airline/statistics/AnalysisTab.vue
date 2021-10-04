@@ -288,24 +288,24 @@ export default {
             name: 'Brands',
             colorByPoint: true,
             data: [{
-              name: 'Chrome',
+              name: this.report.arrival_delay_list[0],
               y: 61.41,
               sliced: true,
               selected: true
             }, {
-              name: 'Internet Explorer',
+              name: this.report.arrival_delay_list[1],
               y: 11.84
             }, {
-              name: 'Firefox',
+              name: this.report.arrival_delay_list[2],
               y: 10.85
             }, {
-              name: 'Edge',
+              name: this.report.arrival_delay_list[3],
               y: 4.67
             }, {
-              name: 'Safari',
+              name: this.report.arrival_delay_list[4],
               y: 4.18
             }, {
-              name: 'Other',
+              name: this.report.arrival_delay_list[5],
               y: 7.05
             }]
           }]

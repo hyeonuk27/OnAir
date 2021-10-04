@@ -53,7 +53,7 @@
           class="review-not-score"
         ></div>
       </div>
-      <div class="review-el-score">
+      <div v-show="review.seat_score" class="review-el-score">
         <div class="me-3">레그룸</div>
         <div
           v-for="index in review.seat_score"
@@ -66,7 +66,7 @@
           class="review-not-score"
         ></div>
       </div>
-      <div class="review-el-score">
+      <div v-show="review.service_score" class="review-el-score">
         <div class="me-3">서비스</div>
         <div
           v-for="index in review.service_score"
@@ -79,7 +79,7 @@
           class="review-not-score"
         ></div>
       </div>
-      <div class="review-el-score">
+      <div v-show="review.checkin_score" class="review-el-score">
         <div class="me-3">체크인</div>
         <div
           v-for="index in review.checkin_score"
@@ -92,7 +92,7 @@
           class="review-not-score"
         ></div>
       </div>
-      <div class="review-el-score">
+      <div v-show="review.food_score" class="review-el-score">
         <div class="me-3">기내식</div>
         <div
           v-for="index in review.food_score"

@@ -29,11 +29,12 @@
         </section>
         <section class="airline-tab" id="content-review">
           <ReviewTab 
-          v-if="isInfoRendered"
+          v-if="isInfoRendered & isChartRendered"
           :airlineInfo="airlineInfo"
           :airlineId="airlineId"
           :arrivalId="arrivalId"
           :arrivalName="arrivalName"
+          :chartData="reviewTotalRateChartData"
           />
           <div
           v-else
@@ -67,11 +68,13 @@ export default {
     return {
       isStatisticsRendered: false,
       isInfoRendered: false,
+      isChartRendered: false,
       arrivalName: '',
       arrivalId: '',
       airlineId: '',
       airlineInfo: {},
       report: {},
+      reviewTotalRateChartData: {},
     }
   },
   methods: {
@@ -108,12 +111,27 @@ export default {
           console.log(err)
         })
     },
+    getAirlineTotalRates: function () {
+      axios({
+        url: API.URL + API.ROUTES.reviewDetail + 'score/'  + this.airlineId + '/',
+        method: "get",
+      })
+        .then((res) => {
+          const chartData = res.data
+          this.reviewTotalRateChartData = chartData
+          this.isChartRendered = true
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   },
   created() {
     this.arrivalId = this.$route.params.arrivalId
     this.airlineId = this.$route.params.airlineId
     this.getAirlineInfo()
     this.getAirlineStatistics()
+    this.getAirlineTotalRates()
   }
 }
 </script>

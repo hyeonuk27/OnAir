@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="review-wordcloud-img">
     <img src="@/assets/test.png" style="width:100%" alt="">
     <!-- <div id="word-cloud"> -->
     <!-- </div> -->

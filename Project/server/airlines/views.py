@@ -287,11 +287,13 @@ def airline_report(request, arrival_id, airline_id):
     arrival_filter = delaydata[delaydata['arrival'] != arrival.name].index
     arrivals_data = delaydata.drop(arrival_filter)
     arrivals_delay_reason = arrivals_data.groupby(['reason'], as_index=False).size().reset_index()
+    arrivals_delay_reason = arrivals_delay_reason.sort_values(by=['size'], ascending=False)
     arrival_delay_list = arrivals_delay_reason['reason'].values.tolist()[:6]
     arrival_delay_cnt = arrivals_delay_reason['size'].values.tolist()[:6]
     
 # 지연사유별 평균 지연시간
     arrivals_delay = arrivals_data.groupby(['arrival', 'reason'], as_index=False).mean().reset_index()
+    arrivals_delay = arrivals_delay.sort_values(by=['delayed_time'], ascending=False)
     arrival_reason_list = arrivals_delay['reason'].values.tolist()[:6]
     arrival_avg_time = arrivals_delay['delayed_time'].values.tolist()[:6]
 

@@ -2,13 +2,14 @@
   <div class="review-container">
     <div class="review-form">
       <div id="review-box">
-        <h2 class="mb-3">리뷰 작성</h2>
+        <h2 class="mb-3">리뷰</h2>
         <p>
           목적지로 가는 여정, 이용하신 항공사에 대한 리뷰와 세부 평점을
           입력해주세요.<br />
           남겨주신 리뷰는 On: Air의 리포트와 항공사의 더 나은 서비스 제공을 위해
           활용될 수 있습니다.
         </p>
+        <div>도착지: {{arrivalName}}</div>
         <div id="circles" class="d-flex justify-content-center">
           <div
             style="
@@ -38,8 +39,6 @@
         </div>
 
         <!-- 제목 -->
-
-
         <div id="info" class="mb-3 d-flex justify-content-between">
           <div id="title" class="mb-3">
             제목 &nbsp;
@@ -47,9 +46,10 @@
               type="text"
               v-model="title"
               placeholder="제목을 입력하세요."
-              size="55"
+              size="50"
             />
           </div>
+          
           <!-- 여행 출발일 -->
           <div id="date">
             출발일 &nbsp;
@@ -199,6 +199,7 @@ export default {
     return {
       reviewId: "",
       arrivalId: "",
+      arrivalName: "",
       airlineId: "",
       title: "",
       content: "",
@@ -263,30 +264,31 @@ export default {
         method: "get",
         headers,
       })
-        .then((res) => {
-          const review = res.data;
+      .then((res) => {
+        const review = res.data;
 
-          (this.arrivalId = review.arrival),
-            (this.airlineId = review.airline),
-            (this.title = review.title),
-            (this.content = review.content),
-            (this.flightAt = review.flight_at),
-            (this.seat = review.seat),
-            (this.score = review.score),
-            (this.seatScore = review.seat_score),
-            (this.serviceScore = review.service_score),
-            (this.checkinScore = review.checkin_score),
-            (this.foodScore = review.food_score);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        this.arrivalId = review.arrival,
+        this.airlineId = review.airline,
+        this.title = review.title,
+        this.content = review.content,
+        this.flightAt = review.flight_at,
+        this.seat = review.seat,
+        this.score = review.score,
+        this.seatScore = review.seat_score,
+        this.serviceScore = review.service_score,
+        this.checkinScore = review.checkin_score,
+        this.foodScore = review.food_score
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     },
   },
   created() {
-    this.arrivalId = this.$route.params.arrivalId;
-    this.airlineId = this.$route.params.airlineId;
-    this.reviewId = this.$route.params.reviewId;
+    this.arrivalName = this.$route.params.arrivalName
+    this.arrivalId = this.$route.params.arrivalId
+    this.airlineId = this.$route.params.airlineId
+    this.reviewId = this.$route.params.reviewId
     if (this.reviewId) {
       this.setReview();
     }
@@ -327,7 +329,7 @@ export default {
   background-color: #dad6dd;
   width: 300px;
   height: 800px;
-  padding-top: 350px;
+  padding-top: 330px;
 }
 
 #circles {

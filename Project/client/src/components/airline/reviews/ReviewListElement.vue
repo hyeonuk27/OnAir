@@ -40,13 +40,34 @@
     <div class="review-list-el-title">"{{ review.title }}"</div>
     <div class="review-list-el-content">{{ review.content }}</div>
     <div class="review-list-el-score">
-      <div>TOTAL <div>{{ review.score }}</div></div>
-      <div>SEAT <div>{{ review.seat_score }}</div></div>
-      <div>SERVICE <div>{{ review.service_score }}</div></div>
-      <div>CHECKIN <div>{{ review.checkin_score }}</div></div>
-      <div>FOOD <div>{{ review.food_score }}</div></div>
+      <div class="review-el-score">
+        <div>총평점</div>
+        <div v-for="index in review.score" :key="index" class="review-score"></div>
+        <div v-for="index2 in 5-review.score" :key="index2+'a'" class="review-not-score"></div>
+      </div>
+      <div class="review-el-score">
+        <div>레그룸</div>
+        <div v-for="index in review.seat_score" :key="index" class="review-score"></div>
+        <div v-for="index2 in 5-review.seat_score" :key="index2+'a'" class="review-not-score"></div>
+      </div>
+      <div class="review-el-score">
+        <div>서비스</div>
+        <div v-for="index in review.service_score " :key="index" class="review-score"></div>
+        <div v-for="index2 in 5-review.service_score" :key="index2+'a'" class="review-not-score"></div>
+      </div>
+      <div class="review-el-score">
+        <div>체크인</div>
+        <div v-for="index in review.checkin_score" :key="index" class="review-score"></div>
+        <div v-for="index2 in 5-review.checkin_score" :key="index2+'a'" class="review-not-score"></div>
+      </div>
+      <div class="review-el-score">
+        <div>기내식</div>
+        <div v-for="index in review.food_score" :key="index" class="review-score"></div>
+        <div v-for="index2 in 5-review.food_score" :key="index2+'a'" class="review-not-score"></div>
+      </div>
+    </div>  
     </div>
-  </div>
+
 </template>
 
 <script>
@@ -182,4 +203,28 @@ export default {
   text-align: start;
   font-size: 12px;
 }
+
+.review-el-score{
+  display: flex;
+  grid-column: 2;
+  grid-row: 2;
+  padding: 5px;
+}
+
+.review-score {
+  background-color: #B9A6C9;
+  border-radius: 70%;
+  width: 15px;
+  height: 15px;
+  margin: 0 2px;
+}
+
+.review-not-score {
+  border: 2px solid #B9A6C9;
+  border-radius: 70%;
+  width: 15px;
+  height: 15px;
+  margin: 0 2px;
+}
+
 </style>

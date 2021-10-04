@@ -17,11 +17,11 @@ for airline in airlines:
     total_delay = total_delay.sort_values(by=['state'], ascending=False)
     # print(total_delay.head())
 
-# 월별 평균 지연시간
-    monthly_delay = delaydata
+# 월별 평균 출발시간
+    monthly_delay = airlinedata
     monthly_delay['date'] = monthly_delay['date'].str[:7]
     monthly_delay = monthly_delay.groupby(['date'], as_index=False).mean().groupby('date')['delayed_time'].mean().reset_index()
-    # print(monthly_delay.head())
+    print(monthly_delay.head())
 
 # 목적지별 지연 사유 분포
     arrival_filter = delaydata[delaydata['arrival'] != 'KOJ(가고시마)'].index

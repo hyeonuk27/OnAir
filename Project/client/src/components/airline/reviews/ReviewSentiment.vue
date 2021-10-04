@@ -25,45 +25,6 @@ export default {
       positive: 0,
       negative: 0,
       isSentimentRendered: false,
-      reviewChartOptions: {
-        chart: {
-            type: 'bar',
-            height: 150,
-            width: 1000,
-        },
-        credits: {
-            enabled: false
-        },
-        exporting: {
-            enabled: false
-        },
-        title: {
-          text: null,
-        },
-        xAxis: {
-          visible: false,
-          categories: ['지연건수']
-        },
-        yAxis: {
-          visible: false,
-        },
-        tooltip: {
-            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}%</b><br/>',
-            shared: false
-        },
-        plotOptions: {
-            bar: {
-                stacking: 'percent'
-            }
-        },
-        series: [{
-            name: '긍정',
-            data: [this.positive]
-        }, {
-            name: '부정',
-            data: [this.negative]
-        }],
-      },
     }
   },
   methods: {
@@ -85,22 +46,56 @@ export default {
   created() {
     this.getSentiment();
   },
-  // computed: {
-  //   getPositive: function () {
-  //     return this.positive
-  //   },
-  //   getNegative: function () {
-  //     return this.negative
-  //   }
-  // }
+  computed: {
+      reviewChartOptions: function () {
+        return {
+          chart: {
+              type: 'bar',
+              height: 150,
+              width: 1000,
+          },
+          colors: ['rgba(13, 110, 253, 0.75)', 'rgba(220, 53, 69, 0.75)'],
+          credits: {
+              enabled: false
+          },
+          exporting: {
+              enabled: false
+          },
+          title: {
+            text: null,
+          },
+          legend: {
+            enabled: true,
+          },
+          xAxis: {
+            visible: false,
+            categories: ['리뷰 감성분석']
+          },
+          yAxis: {
+            visible: false,
+            reversedStacks: false,
+          },
+          tooltip: {
+              pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}%</b><br/>',
+              shared: false
+          },
+          plotOptions: {
+              bar: {
+                  stacking: 'percent',
+              },
+          },
+          series: [{
+              name: '긍정',
+              data: [this.positive]
+          }, {
+              name: '부정',
+              data: [this.negative]
+          }],
+        }
+      },
+  }
 };
 </script>
 
 <style>
-#bar-negative {
-  background-color: #f7cac9;
-}
-#bar-positive {
-  background-color: #92a8d1;
-}
 </style>

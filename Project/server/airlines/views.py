@@ -257,7 +257,7 @@ def airline_report(request, arrival_id, airline_id):
     total_delay_cnt = total_delay['state'].values.tolist()[:6]
 
 # 월별 평균 지연시간
-    monthly_delay = delaydata
+    monthly_delay = airlinedata
     monthly_delay['date'] = monthly_delay['date'].str[:7]
     monthly_delay = monthly_delay.groupby(['date'], as_index=False).mean().groupby('date')['delayed_time'].mean().round(2).reset_index()
     delay_month_list = monthly_delay['date'].values.tolist()

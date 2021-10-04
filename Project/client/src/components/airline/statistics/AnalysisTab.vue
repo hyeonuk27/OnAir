@@ -7,22 +7,22 @@
       <div class="analysis-head">
         <p class="analysis-head-total"> 
           총 운항횟수 
-          <span class="analysis-numbers">
+          <span style="background-color: #3D2F6B;" class="analysis-numbers">
             {{ report.total }}</span> 회
         </p>
         <p class="analysis-head-delay-rate">
           {{ report.arrival_name }}행 평균 지연률 
-          <span class="analysis-numbers">
+          <span style="background-color: #B9A6C9;" class="analysis-numbers">
             {{ report.delay_rate }}</span> %
         </p>
         <p class="analysis-head-delay-time">
           {{ report.arrival_name }}행 평균 지연시간 
-          <span class="analysis-numbers">
+          <span style="background-color: #B9A6C9;" class="analysis-numbers">
             {{ report.delay_time }}</span> 분
         </p>
         <p class="analysis-head-predict-time">
           오늘 예상 지연률 
-          <span class="analysis-numbers">
+          <span style="background-color: #656F8C;" class="analysis-numbers">
             {{ report.predicted_delay_rate }}</span> %
         </p>
       </div>
@@ -70,9 +70,12 @@ export default {
         analysisChartOptions: {
           chart: {
               type: 'bar',
-              height: 150,
+              height: 120,
               width: 1000,
           },
+          colors: [
+            '#3D2F6B', '#B9A6C9', '#B81F5A'
+          ], 
           credits: {
               enabled: false
           },
@@ -88,6 +91,7 @@ export default {
           },
           yAxis: {
             visible: false,
+            reversedStacks: false,
           },
           tooltip: {
               pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}%</b><br/>',
@@ -100,12 +104,21 @@ export default {
           },
           series: [{
               name: '30분 내 출발',
+              dataSorting: {
+                enabled: true,
+              },
               data: [this.report.under_30]
           }, {
               name: '30분 초과 60분 내 출발',
+              dataSorting: {
+                enabled: true,
+              },
               data: [this.report.under_60]
           }, {
               name: '60분 이상 지연',
+              dataSorting: {
+                enabled: true,
+              },
               data: [this.report.over_60]
           }],
         },
@@ -115,6 +128,10 @@ export default {
               plotBorderWidth: 0,
               plotShadow: false
           },
+          colors: [
+            '#3D2F6B', '#B9A6C9', '#D4C6E2',
+            '#fff6ef', '#eb488a', '#B81F5A'
+          ], 
           credits: {
               enabled: false
           },
@@ -125,7 +142,7 @@ export default {
               text: this.report.airline_name + '의 전체 지연 사유 분포',
               align: 'center',
               verticalAlign: 'top',
-              y: 30
+              y: 10
           },
           tooltip: {
               pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -175,13 +192,13 @@ export default {
         chart2Options: {
           chart: {
             type: 'spline',
-            width: 910,
-            // height: 340,
+            width: 900,
             scrollablePlotArea: {
               minWidth: 340,
               scrollPositionX: 1
             }
           },
+          colors: ['#B9A6C9'], 
           credits: {
               enabled: false
           },
@@ -210,7 +227,7 @@ export default {
               plotBands: [{ // Light air
                   from: 0,
                   to: 60,
-                  color: 'rgba(68, 170, 213, 0.1)',
+                  color: 'rgba(218, 214, 221)',
                   label: {
                       text: '60분 이하 지연',
                       style: {
@@ -260,8 +277,12 @@ export default {
         chart3Options: {
           chart: {
             type: 'pie',
-            width: 340,
+            width: 450,
           },
+          colors: [
+            '#3D2F6B', '#B9A6C9', '#D4C6E2',
+            '#fff6ef', '#eb488a', '#B81F5A'
+          ], 
           credits: {
               enabled: false
           },
@@ -318,8 +339,11 @@ export default {
         chart4Options: {
           chart: {
             type: 'column',
-            width: 340,
+            width: 450,
           },
+          colors: [
+            '#B9A6C9'
+          ],
           credits: {
               enabled: false
           },
@@ -364,8 +388,11 @@ export default {
         chart5Options: {
           chart: {
             zoomType: 'x',
-            width: 340
+            width: 450
           },
+          colors: [
+            '#B9A6C9'
+          ], 
           title: {
               text: '월별 이용객 추이'
           },
@@ -396,8 +423,8 @@ export default {
                           y2: 1
                       },
                       stops: [
-                          [0, '#2f7ed8'],
-                          [1, '#B2A6A8'],
+                          [0, '#B9A6C9'],
+                          [1, 'rgba(255, 255, 255, 0.5)'],
                       ]
                   },
                   marker: {
@@ -421,8 +448,11 @@ export default {
         chart6Options: {
           chart: {
             type: 'column',
-            width: 340
+            width: 450
           },
+          colors: [
+            '#B9A6C9'
+          ],
           credits: {
               enabled: false
           },
@@ -467,8 +497,9 @@ export default {
         chart7Options: {
           chart: {
             type: 'column',
-            width: 910,
+            width: 900,
           },
+          colors: ['#B9A6C9'], 
           credits: {
               enabled: false
           },
@@ -518,6 +549,7 @@ export default {
   .analysis-container {
     height: auto;
     min-height: 1000px;
+    padding-bottom: 50px;
   }
 
   .analysis-preview {
@@ -525,7 +557,6 @@ export default {
   }
 
   .analysis-numbers {
-    background-color: #3D2F6B;
     border-radius: 70%;
     color: white;
     display: inline-block;
@@ -544,30 +575,34 @@ export default {
     grid-gap: 5px 10px;
     width: 1000px;
     font-size: 14px;
+    text-align: center;
   }
 
   .analysis-head-total {
     grid-column: 1;
     grid-row: 1;
-    width: 180px;
+    width: 175px;
+
   }
 
   .analysis-head-delay-rate {
     grid-column: 2;
     grid-row: 1;
-    width: 280px;
+    width: 310px;
+
   }
   
   .analysis-head-delay-time {
     grid-column: 3;
     grid-row: 1;
-    width: 280px;
+    width: 310px;
+
   }
 
   .analysis-head-predict-time {
     grid-column: 4;
     grid-row: 1;
-    width: 180px;
+    width: 175px;
   }
 
   .analysis-charts {
@@ -587,7 +622,7 @@ export default {
 
   .analysis-chart-2 {
     grid-column: 1 / 3;
-    grid-row: 5;
+    grid-row: 3;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -611,7 +646,7 @@ export default {
 
   .analysis-chart-5 {
     grid-column: 1;
-    grid-row: 3;
+    grid-row: 4;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -619,7 +654,7 @@ export default {
 
   .analysis-chart-6 {
     grid-column: 2;
-    grid-row: 3;
+    grid-row: 4;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -627,7 +662,7 @@ export default {
 
   .analysis-chart-7 {
     grid-column: 1 / 3;
-    grid-row: 4;
+    grid-row: 5;
     display: flex;
     justify-content: center;
     align-items: center;

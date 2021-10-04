@@ -23,11 +23,18 @@
         </section>
         <section class="airline-tab" id="content-review">
           <ReviewTab 
+          v-if="isStatisticsRendered"
           :airlineInfo="airlineInfo"
           :airlineId="airlineId"
           :arrivalId="arrivalId"
           :arrivalName="arrivalName"
           />
+          <div
+          v-else
+          id="loading"
+          style="height: 700px;"
+          >
+          </div>
         </section>
       </div>
     </div>
@@ -89,6 +96,7 @@ export default {
         .then((res) => {
           const airlineInfo = res.data
           this.airlineInfo = airlineInfo
+          this.isReviewRendered = true,
           this.$vs.loading.close()
         })
         .catch((err) => {

@@ -1,29 +1,13 @@
 <template>
-  <div>
-    <div id="bar-container" class="progress">
-      <div
-        class="progress-bar progress-bar-animated"
-        id="bar-negative"
-        role="progressbar"
-        aria-valuenow="75"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        :style="negativeStyle"
-      >
-        {{ negative }}
-      </div>
-      <div
-        class="progress-bar progress-bar-animated"
-        id="bar-positive"
-        role="progressbar"
-        aria-valuenow="75"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        :style="positiveStyle"
-      >
-        {{ positive }}
-      </div>
-    </div>
+  <div 
+  v-if="isSentimentRendered"
+  >
+    <charts :options="reviewChartOptions" />
+  </div>
+  <div
+  v-else
+  style="height: 700px;"
+  >
   </div>
 </template>
 
@@ -38,11 +22,49 @@ export default {
   },
   data() {
     return {
-      positiveStyle: null,
-      negativeStyle: null,
       positive: 0,
       negative: 0,
-    };
+      isSentimentRendered: false,
+      reviewChartOptions: {
+        chart: {
+            type: 'bar',
+            height: 150,
+            width: 1000,
+        },
+        credits: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
+        },
+        title: {
+          text: null,
+        },
+        xAxis: {
+          visible: false,
+          categories: ['지연건수']
+        },
+        yAxis: {
+          visible: false,
+        },
+        tooltip: {
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}%</b><br/>',
+            shared: false
+        },
+        plotOptions: {
+            bar: {
+                stacking: 'percent'
+            }
+        },
+        series: [{
+            name: '긍정',
+            data: [this.positive]
+        }, {
+            name: '부정',
+            data: [this.negative]
+        }],
+      },
+    }
   },
   methods: {
     getSentiment: function () {
@@ -51,10 +73,9 @@ export default {
         method: "get",
       })
         .then((res) => {
-          this.positiveStyle = { width: res.data["positive"] + "%" };
-          this.negativeStyle = { width: res.data["negative"] + "%" };
-          this.positive = res.data["positive"] + "%"
-          this.negative = res.data["negative"] + "%"
+          this.positive = res.data['positive']
+          this.negative = res.data['negative']
+          this.isSentimentRendered = true
         })
         .catch((err) => {
           console.log(err);
@@ -64,13 +85,18 @@ export default {
   created() {
     this.getSentiment();
   },
+  // computed: {
+  //   getPositive: function () {
+  //     return this.positive
+  //   },
+  //   getNegative: function () {
+  //     return this.negative
+  //   }
+  // }
 };
 </script>
 
 <style>
-#bar-container {
-  height: 25px;
-}
 #bar-negative {
   background-color: #f7cac9;
 }

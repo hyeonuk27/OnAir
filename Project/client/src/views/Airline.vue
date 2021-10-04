@@ -54,7 +54,7 @@ export default {
     return {
       isStatisticsRendered: false,
       isReviewRendered: false,
-      arrivalName: "",
+      arrivalName: '',
       arrivalId: '',
       airlineId: '',
       airlineInfo: {},
@@ -76,7 +76,6 @@ export default {
           this.isStatisticsRendered = true
           this.$vs.loading.close()
           this.arrivalName = report.arrival_name
-          console.log(report)
         })
         .catch((err) => {
           console.log(err)
@@ -90,7 +89,7 @@ export default {
         .then((res) => {
           const airlineInfo = res.data
           this.airlineInfo = airlineInfo
-          this.isReviewRendered = true
+          this.$vs.loading.close()
         })
         .catch((err) => {
           console.log(err)
@@ -116,8 +115,9 @@ export default {
   .tab-container {
     min-width: 1000px;
     max-width: 1000px;
-    padding-top: 20px;
+    padding-top: 40px;
     margin: 0 auto;
+    text-align: start;
   }
 
   .airline-container {
@@ -128,7 +128,8 @@ export default {
   .airline-tab {
     display: none;
     padding: 20px 0 0;
-    border-top: 1px solid #ddd
+    border-top: 4px solid #3D2F6B;
+    text-align: center;
   }
 
   .airline-tabradio {
@@ -137,7 +138,6 @@ export default {
 
   .airline-tablabel {
     display: inline-flex;
-    justify-content: left;
     margin: 0 0 -1px;
     padding: 15px 25px;
     font-weight: 600;
@@ -146,7 +146,7 @@ export default {
     border: 1px solid transparent;
   }
 
-  .airline-tabradio:hover {
+  .airline-tablabel:hover {
     color: #3D2F6B;
     cursor: pointer;
   }
@@ -155,7 +155,7 @@ export default {
     color: #555;
     border: 1px solid #ddd;
     border-top: 2px solid #3D2F6B;
-    border-bottom: 1px solid #ffffff
+    border-bottom: 1px solid #ffffff;
   }
 
   #tab-analysis:checked ~ #content-analysis,

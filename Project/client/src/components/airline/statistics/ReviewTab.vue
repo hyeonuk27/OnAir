@@ -1,22 +1,22 @@
 <template>
   <div class="review-container">
-    <div class="anaylsis-preview">
+    <div class="review-preview">
       <h5 class="text-start">
         <ReviewKeyword :airlineId="airlineId"/>
       </h5>
       <div class="review-head">
         <p class="review-head-total">
-          총 운항횟수
-          <span class="review-numbers"> {{ airlineInfo.total_flight }}</span> 회
+          {{ airlineInfo.name }} 총 운항횟수
+          <span style="background-color: #3D2F6B;" class="review-numbers"> {{ airlineInfo.total_flight }}</span> 회
         </p>
         <p class="review-head-delay-rate">
-          평균 지연률
-          <span class="review-numbers">
+          {{ airlineInfo.name }} 평균 지연률
+          <span style="background-color: #B9A6C9;" class="review-numbers">
             {{ (airlineInfo.total_delayed / airlineInfo.total_flight * 100).toFixed(2) }}</span> %
         </p>
         <p class="review-head-cancel-rate">
-          평균 결항률
-          <span class="review-numbers">
+          {{ airlineInfo.name }} 평균 결항률
+          <span style="background-color: #B9A6C9;" class="review-numbers">
             {{ (airlineInfo.total_canceled / airlineInfo.total_flight * 100).toFixed(2) }}</span> %
         </p>
       </div>
@@ -83,8 +83,17 @@ export default {
       reviewChartOptions: {
         chart: {
           type: "bar",
-          height: 100,
+          height: 120,
           width: 1000,
+        },
+        colors: [
+          '#3D2F6B', '#B9A6C9', '#B81F5A'
+        ], 
+        credits: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
         },
         title: {
           text: null,
@@ -95,6 +104,7 @@ export default {
         },
         yAxis: {
           visible: false,
+          reversedStacks: false,
         },
         tooltip: {
           pointFormat:
@@ -107,13 +117,7 @@ export default {
           },
         },
         legend: {
-          enabled: false,
-        },
-        credits: {
-          enabled: false,
-        },
-        exporting: {
-          enabled: false,
+          enabled: true,
         },
         series: [
           {
@@ -146,7 +150,6 @@ export default {
 }
 
 .review-numbers {
-  background-color: #3d2f6b;
   border-radius: 70%;
   color: white;
   display: inline-block;
@@ -161,7 +164,7 @@ export default {
 .review-head {
   display: grid;
   padding: 10px;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 5px 10px;
   grid-auto-rows: min-content;
   font-size: 14px;
@@ -170,19 +173,16 @@ export default {
 .review-head-total {
   grid-column: 1;
   grid-row: 1;
-  width: 180px;
 }
 
 .review-head-delay-rate {
   grid-column: 2;
   grid-row: 1;
-  width: 280px;
 }
 
 .review-head-cancel-rate {
   grid-column: 3;
   grid-row: 1;
-  width: 280px;
 }
 
 .review-rate-container {

@@ -243,13 +243,13 @@ def airline_report(request, arrival_id, airline_id):
         predicted_by_passengers.append(round(passengers_model.predict_proba(input_data)[0, 1] * 100, 2))
     
 # 통계
-
     df = pd.read_csv('./statistics/delaydatas/statistics_data.csv', index_col=0)
     df = df.drop(columns=['passengers'])
 
 # 전체 지연 사유 분포
     airline_filter = df[df['airline'] != airline.name].index
     airlinedata = df.drop(airline_filter)
+    airlinedata['reason']= airlinedata['reason'].replace(['에 의한 지연'],['기타에 의한 지연'])
     delay_filter = airlinedata[airlinedata['state'] != '지연'].index
     delaydata = airlinedata.drop(delay_filter)
     total_delay = delaydata.groupby('reason').count().reset_index()
@@ -259,7 +259,7 @@ def airline_report(request, arrival_id, airline_id):
     total_delay_cnt = total_delay['state'].values.tolist()[:6]
 
 # 월별 평균 지연시간
-    monthly_delay = delaydata
+    monthly_delay = airlinedata
     monthly_delay['date'] = monthly_delay['date'].str[:7]
     monthly_delay = monthly_delay.groupby(['date'], as_index=False).mean().groupby('date')['delayed_time'].mean().round(2).reset_index()
     delay_month_list = monthly_delay['date'].values.tolist()
@@ -363,8 +363,9 @@ def review_list(request, airline_id):
 @api_view(['GET', 'DELETE', 'PUT'])
 @check_login
 def review_detail(request, review_id):
-    print('test')
+    print(review_id)
     review = get_object_or_404(Review, id=review_id)
+    print(review)
     if request.user == review.user:
         if request.method == 'GET':
             serializer = ReviewSerializer(review)
@@ -377,6 +378,7 @@ def review_detail(request, review_id):
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
                 return Response(serializer.data)
+
 
 
 @api_view(['GET'])

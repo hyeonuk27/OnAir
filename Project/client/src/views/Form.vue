@@ -172,6 +172,7 @@
 
         <!-- 필수 항목 모두 입력 시 버튼 활성화 -->
         <button
+          v-if="this.$route.name === 'Form'"
           @click="createReview"
           class="submit"
           :class="{
@@ -183,6 +184,20 @@
           "
         >
           작성 완료
+        </button>
+        <button
+          v-else
+          @click="updateReview"
+          class="submit"
+          :class="{
+            disable:
+              !arrivalId || !title || !content || !flightAt || !seat || !score,
+          }"
+          :disabled="
+            !arrivalId || !title || !content || !flightAt || !seat || !score
+          "
+        >
+          수정 완료
         </button>
       </div>
     </div>
@@ -197,6 +212,8 @@ export default {
   name: "Form",
   data() {
     return {
+      flag: 0,
+      userId: "",
       reviewId: "",
       arrivalId: "",
       arrivalName: "",
@@ -246,15 +263,63 @@ export default {
         data,
         headers,
       })
-        .then(() => {
+      .then(() => {
+        if (this.flag == 1) {
           this.$router.push({
             name: "Airline",
             params: { airlineId: this.airlineId, arrivalId: this.arrivalId },
           });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        }
+        else {
+          this.$router.push({
+            name: "MyReview",
+            params: { userId: this.userId },
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    },
+    updateReview: function () {
+      const headers = this.setToken();
+
+      const data = {
+        arrival: this.arrivalId,
+        airline_id: this.airlineId,
+        title: this.title,
+        content: this.content,
+        flight_at: this.flightAt,
+        seat: this.seat,
+        score: this.score,
+        seat_score: this.seatScore,
+        service_score: this.serviceScore,
+        checkin_score: this.checkinScore,
+        food_score: this.foodScore,
+      };
+      axios({
+        url: API.URL + API.ROUTES.reviewDetail + this.reviewId + "/",
+        method: "put",
+        data,
+        headers,
+      })
+      .then(() => {
+        if (this.flag == 1) {
+          this.$router.push({
+            name: "Airline",
+            params: { airlineId: this.airlineId, arrivalId: this.arrivalId },
+          });
+        }
+        else {
+          this.$router.push({
+            name: "MyReview",
+            params: { userId: this.userId },
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     },
     setReview: function () {
       const headers = this.setToken();
@@ -267,6 +332,7 @@ export default {
       .then((res) => {
         const review = res.data;
 
+        this.reviewId = review.id,
         this.arrivalId = review.arrival,
         this.airlineId = review.airline,
         this.title = review.title,
@@ -285,6 +351,8 @@ export default {
     },
   },
   created() {
+    this.userId = this.$route.params.userId
+    this.flag = this.$route.params.flag
     this.arrivalName = this.$route.params.arrivalName
     this.arrivalId = this.$route.params.arrivalId
     this.airlineId = this.$route.params.airlineId

@@ -12,8 +12,8 @@
         ...
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-        <li @click="moveToReviewForm(review.id)">수정</li>
-        <li @click="deleteReview(review.id)">삭제</li>
+        <li @click="moveToReviewForm(review.id)">수 정</li>
+        <li @click="deleteReview(review.id)">삭 제</li>
       </ul>
     </div>
     <div class="review-list-el-name">
@@ -41,33 +41,72 @@
     <div class="review-list-el-content">{{ review.content }}</div>
     <div class="review-list-el-score">
       <div class="review-el-score">
-        <div>총평점</div>
-        <div v-for="index in review.score" :key="index" class="review-score"></div>
-        <div v-for="index2 in 5-review.score" :key="index2+'a'" class="review-not-score"></div>
+        <div class="me-3">총평점</div>
+        <div
+          v-for="index in review.score"
+          :key="index"
+          class="review-score"
+        ></div>
+        <div
+          v-for="index2 in 5 - review.score"
+          :key="index2 + 'a'"
+          class="review-not-score"
+        ></div>
       </div>
-      <div class="review-el-score">
-        <div>레그룸</div>
-        <div v-for="index in review.seat_score" :key="index" class="review-score"></div>
-        <div v-for="index2 in 5-review.seat_score" :key="index2+'a'" class="review-not-score"></div>
+      <div v-show="review.seat_score" class="review-el-score">
+        <div class="me-3">레그룸</div>
+        <div
+          v-for="index in review.seat_score"
+          :key="index"
+          class="review-score"
+        ></div>
+        <div
+          v-for="index2 in 5 - review.seat_score"
+          :key="index2 + 'a'"
+          class="review-not-score"
+        ></div>
       </div>
-      <div class="review-el-score">
-        <div>서비스</div>
-        <div v-for="index in review.service_score " :key="index" class="review-score"></div>
-        <div v-for="index2 in 5-review.service_score" :key="index2+'a'" class="review-not-score"></div>
+      <div v-show="review.service_score" class="review-el-score">
+        <div class="me-3">서비스</div>
+        <div
+          v-for="index in review.service_score"
+          :key="index"
+          class="review-score"
+        ></div>
+        <div
+          v-for="index2 in 5 - review.service_score"
+          :key="index2 + 'a'"
+          class="review-not-score"
+        ></div>
       </div>
-      <div class="review-el-score">
-        <div>체크인</div>
-        <div v-for="index in review.checkin_score" :key="index" class="review-score"></div>
-        <div v-for="index2 in 5-review.checkin_score" :key="index2+'a'" class="review-not-score"></div>
+      <div v-show="review.checkin_score" class="review-el-score">
+        <div class="me-3">체크인</div>
+        <div
+          v-for="index in review.checkin_score"
+          :key="index"
+          class="review-score"
+        ></div>
+        <div
+          v-for="index2 in 5 - review.checkin_score"
+          :key="index2 + 'a'"
+          class="review-not-score"
+        ></div>
       </div>
-      <div class="review-el-score">
-        <div>기내식</div>
-        <div v-for="index in review.food_score" :key="index" class="review-score"></div>
-        <div v-for="index2 in 5-review.food_score" :key="index2+'a'" class="review-not-score"></div>
+      <div v-show="review.food_score" class="review-el-score">
+        <div class="me-3">기내식</div>
+        <div
+          v-for="index in review.food_score"
+          :key="index"
+          class="review-score"
+        ></div>
+        <div
+          v-for="index2 in 5 - review.food_score"
+          :key="index2 + 'a'"
+          class="review-not-score"
+        ></div>
       </div>
-    </div>  
     </div>
-
+  </div>
 </template>
 
 <script>
@@ -120,7 +159,7 @@ export default {
   grid-template-columns: 250px 200px 200px 350px;
   grid-auto-rows: 90px 40px 70px;
   width: 1000px;
-  height: 300px;
+  height: 290px;
   margin-bottom: 20px;
 }
 
@@ -164,13 +203,6 @@ export default {
   text-align: start;
 }
 
-.dropdown {
-  grid-column: 4;
-  grid-row: 1;
-  justify-self: end;
-  background-color: rgba(0, 0, 0, 0);
-}
-
 .review-list-el-title {
   padding-left: 20px;
   display: flex;
@@ -181,7 +213,7 @@ export default {
   white-space: 100%;
   font-size: 15px;
   overflow: hidden;
-  width: 680px;
+  width: 700px;
   height: 20px;
 }
 
@@ -192,19 +224,20 @@ export default {
   text-align: start;
   font-size: 15px;
   overflow: hidden;
-  width: 680px;
+  width: 700px;
   height: 139px;
 }
 
 .review-list-el-score {
   grid-column: 1;
   grid-row: 2;
-  padding: 20px;
+  padding: 15px;
   text-align: start;
   font-size: 12px;
+  padding-top: 34px;
 }
 
-.review-el-score{
+.review-el-score {
   display: flex;
   grid-column: 2;
   grid-row: 2;
@@ -212,19 +245,29 @@ export default {
 }
 
 .review-score {
-  background-color: #B9A6C9;
+  background-color: #b9a6c9;
   border-radius: 70%;
   width: 15px;
   height: 15px;
-  margin: 0 2px;
+  margin: 1.8px;
 }
 
 .review-not-score {
-  border: 2px solid #B9A6C9;
+  border: 2px solid #b9a6c9;
   border-radius: 70%;
   width: 15px;
   height: 15px;
-  margin: 0 2px;
+  margin: 1.8px;
 }
 
+.dropdown {
+  grid-column: 4;
+  grid-row: 1;
+  justify-self: end;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.dropdown-menu {
+  text-align: center;
+}
 </style>

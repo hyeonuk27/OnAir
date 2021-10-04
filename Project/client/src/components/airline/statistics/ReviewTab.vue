@@ -12,16 +12,12 @@
         <p class="review-head-delay-rate">
           평균 지연률
           <span class="review-numbers">
-            {{ airlineInfo.total_delayed / airlineInfo.total_flight }}</span
-          >
-          %
+            {{ (airlineInfo.total_delayed / airlineInfo.total_flight * 100).toFixed(2) }}</span> %
         </p>
         <p class="review-head-cancel-rate">
           평균 결항률
           <span class="review-numbers">
-            {{ airlineInfo.total_canceled / airlineInfo.total_flight }}</span
-          >
-          %
+            {{ (airlineInfo.total_canceled / airlineInfo.total_flight * 100).toFixed(2) }}</span> %
         </p>
       </div>
       <div class="review-body">
@@ -33,12 +29,12 @@
       </div>
       <!-- 리뷰 긍부정 비율 -->
       <div>
-        <ReviewSentiment />
+        <ReviewSentiment :airlineId="airlineId"/>
       </div>
       <div class="review-rate-container">
         <!-- 리뷰 평점 -->
         <div>
-          <ReviewScore />
+          <ReviewScore :airlineId="airlineId"/>
         </div>
         <!-- 리뷰 평점 파이 차트 -->
         <div>
@@ -52,6 +48,8 @@
           :arrivalId="arrivalId"
           :arrivalName="arrivalName"
         />
+      </div>
+      <div>
         <!-- 리뷰 리스트 -->
         <ReviewList :airlineId="airlineId" />
       </div>
@@ -71,6 +69,15 @@ import ReviewList from "@/components/airline/reviews/ReviewList";
 export default {
   name: "ReviewTab",
   props: ["airlineInfo", "airlineId", "arrivalId", "arrivalName"],
+  components: {
+    ReviewKeyword,
+    ReviewWordcloud,
+    ReviewSentiment,
+    ReviewScore,
+    ReviewScoreChart,
+    ReviewCreateButton,
+    ReviewList,
+  },
   data() {
     return {
       reviewChartOptions: {
@@ -125,19 +132,10 @@ export default {
       },
     };
   },
-  components: {
-    ReviewKeyword,
-    ReviewWordcloud,
-    ReviewSentiment,
-    ReviewScore,
-    ReviewScoreChart,
-    ReviewCreateButton,
-    ReviewList,
-  },
 };
 </script>
 
-<style>
+<style scoped>
 .review-container {
   height: auto;
   min-height: 1000px;

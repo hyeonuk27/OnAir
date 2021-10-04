@@ -7,6 +7,7 @@ import Profile from '@/views/Profile.vue'
 import ProfileUpdate from '@/components/profile/ProfileUpdate.vue'
 import MyReview from '@/components/profile/MyReview.vue'
 import Form from '@/views/Form.vue'
+import SearchLog from '@/components/profile/SearchLog.vue'
 
 
 Vue.use(VueRouter)
@@ -47,11 +48,19 @@ const routes = [
     name: 'Form',
     component: Form
   },
+  {
+    path: '/:userId/logs',
+    name: 'SearchLog',
+    component: SearchLog
+  },
 ]
 
 const router = new VueRouter({
   mode: 'history',
-  routes
+  routes,
+  scrollBehavior() {
+    return { x: 0, y: 0 };
+  },
 })
 
 export default router

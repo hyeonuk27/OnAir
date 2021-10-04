@@ -33,20 +33,50 @@
 </template>
 
 <script>
+import axios from "axios"
+import API from "@/common/drf.js"
+import {mapState} from 'vuex'
+
 export default {
   name: 'AirlineElement',
   props: ['airline', 'arrivalId'],
   methods: {
     goAirline: function () {
+      if (this.token != null) {
+        this.logCreate()
+      }
       this.$router.push({
         name: "Airline",
         params: {
           airlineId: this.airline.id,
           arrivalId: this.arrivalId,
-          predictedDelayRate: this.airline.predicted_delay_rate,
         },
       })
+    },
+    logCreate: function () {
+      axios({
+        url: API.URL + API.ROUTES.createLog,
+        method: "post",
+        headers: {
+          Authorization: this.token,
+        },
+        data: {
+          airline_id: this.airline.id,
+          arrival_id: this.arrivalId,
+        },
+      })
+        .then(() => {
+          
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
+  },
+  computed: {
+    ...mapState([
+      'token'
+    ])
   }
 }
 </script>

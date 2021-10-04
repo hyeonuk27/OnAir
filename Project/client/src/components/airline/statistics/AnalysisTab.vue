@@ -124,72 +124,6 @@ export default {
               data: [this.report.over_60]
           }],
         },
-        chart1Options: {
-          chart: {
-              plotBackgroundColor: null,
-              plotBorderWidth: 0,
-              plotShadow: false
-          },
-          colors: [
-            '#3D2F6B', '#B9A6C9', '#D4C6E2',
-            '#fff6ef', '#eb488a', '#B81F5A'
-          ], 
-          credits: {
-              enabled: false
-          },
-          exporting: {
-              enabled: false
-          },
-          title: {
-              text: this.report.airline_name + '의 전체 지연 사유 분포',
-              align: 'center',
-              verticalAlign: 'top',
-              y: 10
-          },
-          tooltip: {
-              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-          },
-          accessibility: {
-              point: {
-                  valueSuffix: '%'
-              }
-          },
-          plotOptions: {
-              pie: {
-                  dataLabels: {
-                      enabled: true,
-                      distance: 50,
-                      style: {
-                          fontWeight: 'normal',
-                      }
-                  },
-                  startAngle: -90,
-                  endAngle: 90,
-                  center: ['50%', '75%'],
-                  size: '110%'
-              }
-          },
-          series: [{
-              type: 'pie',
-              name: '지연 사유',
-              innerSize: '50%',
-              data: [
-                  [this.report.total_delay_list[0], this.report.total_delay_cnt[0]],
-                  [this.report.total_delay_list[1], this.report.total_delay_cnt[1]],
-                  [this.report.total_delay_list[2], this.report.total_delay_cnt[2]],
-                  [this.report.total_delay_list[3], this.report.total_delay_cnt[3]],
-                  [this.report.total_delay_list[4], this.report.total_delay_cnt[4]],
-                  [this.report.total_delay_list[5], this.report.total_delay_cnt[5]],
-                  {
-                      name: 'Other',
-                      y: 7.61,
-                      dataLabels: {
-                          enabled: false
-                      }
-                  }
-              ]
-          }]
-        },
         chart2Options: {
           chart: {
             type: 'spline',
@@ -274,68 +208,6 @@ export default {
                   fontSize: '10px'
               }
           }
-        },
-        chart3Options: {
-          chart: {
-            type: 'pie',
-            width: 450,
-          },
-          colors: [
-            '#3D2F6B', '#B9A6C9', '#D4C6E2',
-            '#fff6ef', '#eb488a', '#B81F5A'
-          ], 
-          credits: {
-              enabled: false
-          },
-          exporting: {
-              enabled: false
-          },
-          title: {
-            text: this.report.arrival_name + '행 지연 사유 분포'
-          },
-          tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            },
-          accessibility: {
-            point: {
-              valueSuffix: '%'
-            }
-          },
-          plotOptions: {
-            pie: {
-              allowPointSelect: true,
-              cursor: 'pointer',
-              dataLabels: {
-                enabled: false
-              },
-              showInLegend: true
-            }
-          },
-          series: [{
-            name: '비율',
-            colorByPoint: true,
-            data: [{
-              name: this.report.arrival_delay_list[0],
-              y: this.report.arrival_delay_cnt[0],
-              sliced: true,
-              selected: true
-            },{
-              name: this.report.arrival_delay_list[1],
-              y: this.report.arrival_delay_cnt[1]
-            }, {
-              name: this.report.arrival_delay_list[2],
-              y: this.report.arrival_delay_cnt[2]
-            }, {
-              name: this.report.arrival_delay_list[3],
-              y: this.report.arrival_delay_cnt[3]
-            }, {
-              name: this.report.arrival_delay_list[4],
-              y: this.report.arrival_delay_cnt[4]
-            }, {
-              name: this.report.arrival_delay_list[5],
-              y: this.report.arrival_delay_cnt[5]
-            }]
-          }]
         },
         chart4Options: {
           chart: {
@@ -514,7 +386,7 @@ export default {
             text: '날씨에 따른 지연률 예측'
           },
           xAxis: {
-            categories: this.report.weather_list,
+            categories: ['맑음', '구름', '박무(Mist)', '연무(Haze)', '비', '안개', '눈', '먼지', '이슬비', '천둥', '태풍', '대기오염'],
             crosshair: true
           },
           yAxis: {
@@ -639,7 +511,127 @@ export default {
           }]
         },
     }
-  }}
+  },
+  computed: {
+    chart1Options: function () {
+      return {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: 0,
+            plotShadow: false
+        },
+        colors: [
+          '#3D2F6B', '#B9A6C9', '#D4C6E2',
+          '#fff6ef', '#eb488a', '#B81F5A'
+        ], 
+        credits: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
+        },
+        title: {
+            text: this.report.airline_name + '의 전체 지연 사유 분포',
+            align: 'center',
+            verticalAlign: 'top',
+            y: 10
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                dataLabels: {
+                    enabled: true,
+                    distance: 50,
+                    style: {
+                        fontWeight: 'normal',
+                    }
+                },
+                startAngle: -90,
+                endAngle: 90,
+                center: ['50%', '75%'],
+                size: '110%'
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '지연 사유',
+            innerSize: '50%',
+            data: [
+                this.report.total_delay_list[0] ? [this.report.total_delay_list[0], this.report.total_delay_cnt[0]] : null,
+                this.report.total_delay_list[1] ? [this.report.total_delay_list[1], this.report.total_delay_cnt[1]] : null,
+                this.report.total_delay_list[2] ? [this.report.total_delay_list[2], this.report.total_delay_cnt[2]] : null,
+                this.report.total_delay_list[3] ? [this.report.total_delay_list[3], this.report.total_delay_cnt[3]] : null,
+                this.report.total_delay_list[4] ? [this.report.total_delay_list[4], this.report.total_delay_cnt[4]] : null,
+                this.report.total_delay_list[5] ? [this.report.total_delay_list[5], this.report.total_delay_cnt[5]] : null,
+            ]
+        }]
+      }
+    },
+    chart3Options: function () {
+      const chart3Data = [{
+            name: this.report.arrival_delay_list[0],
+            y: this.report.arrival_delay_cnt[0],
+            sliced: true,
+            selected: true
+          }]
+      for (let i = 1; i < this.report.arrival_delay_list.length; i++) {
+        chart3Data.push({
+          name: this.report.arrival_delay_list[i],
+          y: this.report.arrival_delay_cnt[i]
+        })
+      }
+      return {
+        chart: {
+          type: 'pie',
+          width: 450,
+        },
+        colors: [
+          '#3D2F6B', '#B9A6C9', '#D4C6E2',
+          '#fff6ef', '#eb488a', '#B81F5A'
+        ], 
+        credits: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
+        },
+        title: {
+          text: this.report.arrival_name + '행 지연 사유 분포'
+        },
+        tooltip: {
+          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+          },
+        accessibility: {
+          point: {
+            valueSuffix: '%'
+          }
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: false
+            },
+            showInLegend: true
+          }
+        },
+        series: [{
+          name: '비율',
+          colorByPoint: true,
+          data: chart3Data
+        }]
+      }
+    },
+  }
+  }
 </script>
 
 <style>

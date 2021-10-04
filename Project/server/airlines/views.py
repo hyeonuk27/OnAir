@@ -247,6 +247,7 @@ def airline_report(request, arrival_id, airline_id):
 # 전체 지연 사유 분포
     airline_filter = df[df['airline'] != airline.name].index
     airlinedata = df.drop(airline_filter)
+    airlinedata['reason']= airlinedata['reason'].replace(['에 의한 지연'],['기타에 의한 지연'])
     delay_filter = airlinedata[airlinedata['state'] != '지연'].index
     delaydata = airlinedata.drop(delay_filter)
     total_delay = delaydata.groupby('reason').count().reset_index()
@@ -357,11 +358,12 @@ def review_list(request, airline_id):
         return Response(data)
     
 
-@api_view(['GET', 'DELETE'])
+@api_view(['GET', 'DELETE', 'PUT'])
 @check_login
 def review_detail(request, review_id):
-    print('test')
+    print(review_id)
     review = get_object_or_404(Review, id=review_id)
+    print(review)
     if request.user == review.user:
         if request.method == 'GET':
             serializer = ReviewSerializer(review)
@@ -369,6 +371,12 @@ def review_detail(request, review_id):
         elif request.method == 'DELETE':
             review.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
+        elif request.method == 'PUT':
+            serializer = ReviewSerializer(review, data=request.data, partial=True)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                return Response(serializer.data)
+
 
 
 @api_view(['GET'])

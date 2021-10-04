@@ -1,9 +1,15 @@
 <template>
   <div class="airline">
     <div class="airline-container">
-      <AirlineInfo 
+      <AirlineInfo
+      v-if="isInfoRendered"
       :airlineInfo="airlineInfo"
       />
+      <div
+      v-else
+      style="height: 700px;"
+      >
+      </div>
       <div class="tab-container">
         <input class="airline-tabradio" id="tab-analysis" type="radio" name="tab-check" checked>
         <label class="airline-tablabel" for="tab-analysis">분석 리포트</label>
@@ -23,7 +29,7 @@
         </section>
         <section class="airline-tab" id="content-review">
           <ReviewTab 
-          v-if="isStatisticsRendered"
+          v-if="isInfoRendered"
           :airlineInfo="airlineInfo"
           :airlineId="airlineId"
           :arrivalId="arrivalId"
@@ -60,7 +66,7 @@ export default {
   data () {
     return {
       isStatisticsRendered: false,
-      isReviewRendered: false,
+      isInfoRendered: false,
       arrivalName: '',
       arrivalId: '',
       airlineId: '',
@@ -96,8 +102,7 @@ export default {
         .then((res) => {
           const airlineInfo = res.data
           this.airlineInfo = airlineInfo
-          this.isReviewRendered = true,
-          this.$vs.loading.close()
+          this.isInfoRendered = true
         })
         .catch((err) => {
           console.log(err)

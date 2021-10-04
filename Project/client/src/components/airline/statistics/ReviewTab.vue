@@ -87,8 +87,8 @@ export default {
           width: 1000,
         },
         colors: [
-          '#B9A6C9', '#B2A6A8', '#656F8C'
-        ],
+          '#3D2F6B', '#B9A6C9', '#B81F5A'
+        ], 
         credits: {
             enabled: false
         },

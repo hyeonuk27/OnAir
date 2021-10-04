@@ -49,6 +49,11 @@ const routes = [
     component: Form
   },
   {
+    path: '/form/update',
+    name: 'Update',
+    component: Form
+  },
+  {
     path: '/:userId/logs',
     name: 'SearchLog',
     component: SearchLog

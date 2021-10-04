@@ -36,7 +36,7 @@ export default {
 <style>
 #review-button-container {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   margin-bottom: 10px;
 }
 </style>

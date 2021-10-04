@@ -23,22 +23,20 @@
       <div class="review-body">
         <charts :options="reviewChartOptions" />
       </div>
-      <!-- 리뷰 워드클라우드 -->
       <div>
         <ReviewWordcloud />
       </div>
-      <!-- 리뷰 긍부정 비율 -->
       <div>
         <ReviewSentiment :airlineId="airlineId"/>
       </div>
       <div class="review-rate-container">
-        <!-- 리뷰 평점 -->
         <div>
           <ReviewScore :airlineId="airlineId"/>
         </div>
-        <!-- 리뷰 평점 파이 차트 -->
         <div>
-          <ReviewScoreChart />
+          <ReviewScoreChart 
+          :chartData="chartData"
+          />
         </div>
       </div>
       <div>
@@ -68,7 +66,7 @@ import ReviewList from "@/components/airline/reviews/ReviewList";
 
 export default {
   name: "ReviewTab",
-  props: ["airlineInfo", "airlineId", "arrivalId", "arrivalName"],
+  props: ["airlineInfo", "airlineId", "arrivalId", "arrivalName", 'chartData'],
   components: {
     ReviewKeyword,
     ReviewWordcloud,
@@ -100,7 +98,7 @@ export default {
         },
         xAxis: {
           visible: false,
-          categories: ["지연건수"],
+          categories: [this.airlineInfo.name + '의 지연 데이터'],
         },
         yAxis: {
           visible: false,
@@ -108,7 +106,7 @@ export default {
         },
         tooltip: {
           pointFormat:
-            '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+            '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.2f}%)<br/>',
           shared: false,
         },
         plotOptions: {
@@ -168,6 +166,7 @@ export default {
   grid-gap: 5px 10px;
   grid-auto-rows: min-content;
   font-size: 14px;
+  font-weight: bold;
 }
 
 .review-head-total {

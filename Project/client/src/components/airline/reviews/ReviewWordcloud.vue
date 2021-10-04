@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="review-wordcloud-img">
     <img src="@/assets/test.png" style="width:100%" alt="">
   </div>
 </template>
@@ -11,5 +11,8 @@ export default {
 </script>
 
 <style>
-
+  .review-wordcloud-img {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
 </style>

@@ -12,8 +12,8 @@
         ...
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-        <li @click="moveToReviewForm(review.id)">수 정</li>
-        <li @click="deleteReview(review.id)">삭 제</li>
+        <li class="dropdown-item" @click="moveToReviewForm(review.id)">수 정</li>
+        <li class="dropdown-item" @click="deleteReview(review.id)">삭 제</li>
       </ul>
     </div>
     <div class="review-list-el-name">
@@ -120,6 +120,11 @@ export default {
   props: {
     review: Object,
   },
+  data() {
+    return {
+      flag: 1,
+    };
+  },
   methods: {
     setToken: function () {
       const token = localStorage.getItem("token");
@@ -143,7 +148,7 @@ export default {
       });
     },
     moveToReviewForm: function (reviewId) {
-      this.$router.push({ name: "Form", params: { reviewId: reviewId } });
+      this.$router.push({ name: "Form", params: { reviewId: reviewId, flag: this.flag } });
     },
     moveToMyReview: function (userId) {
       this.$router.push({ name: "MyReview", params: { userId: userId } });
@@ -273,5 +278,10 @@ export default {
 
 .dropdown-menu {
   text-align: center;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(223, 223, 223, 0.904);
+  transition: 0.3s
 }
 </style>

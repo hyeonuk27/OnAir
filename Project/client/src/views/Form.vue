@@ -197,6 +197,8 @@ export default {
   name: "Form",
   data() {
     return {
+      flag: 0,
+      userId: "",
       reviewId: "",
       arrivalId: "",
       arrivalName: "",
@@ -247,10 +249,18 @@ export default {
         headers,
       })
         .then(() => {
-          this.$router.push({
-            name: "Airline",
-            params: { airlineId: this.airlineId, arrivalId: this.arrivalId },
-          });
+          if (this.flag == 1) {
+            this.$router.push({
+              name: "Airline",
+              params: { airlineId: this.airlineId, arrivalId: this.arrivalId },
+            });
+          }
+          else {
+            this.$router.push({
+              name: "MyReview",
+              params: { userId: this.userId },
+            });
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -285,6 +295,8 @@ export default {
     },
   },
   created() {
+    this.userId = this.$route.params.userId
+    this.flag = this.$route.params.flag
     this.arrivalName = this.$route.params.arrivalName
     this.arrivalId = this.$route.params.arrivalId
     this.airlineId = this.$route.params.airlineId

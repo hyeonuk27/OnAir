@@ -243,7 +243,7 @@ export default {
               }
           },
           series: [{
-              name: 'Hestavollane',
+              name: '평균 지연 시간',
               data: this.report.delay_month_avg_time
           }],
           navigation: {

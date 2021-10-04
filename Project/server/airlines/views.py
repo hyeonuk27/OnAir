@@ -287,13 +287,13 @@ def airline_report(request, arrival_id, airline_id):
     arrival_filter = delaydata[delaydata['arrival'] != arrival.name].index
     arrivals_data = delaydata.drop(arrival_filter)
     arrivals_delay_reason = arrivals_data.groupby(['reason'], as_index=False).size().reset_index()
-    arrival_delay_list = arrivals_delay_reason['reason'].values.tolist()
-    arrival_delay_cnt = arrivals_delay_reason['size'].values.tolist()
+    arrival_delay_list = arrivals_delay_reason['reason'].values.tolist()[:6]
+    arrival_delay_cnt = arrivals_delay_reason['size'].values.tolist()[:6]
     
 # 지연사유별 평균 지연시간
     arrivals_delay = arrivals_data.groupby(['arrival', 'reason'], as_index=False).mean().reset_index()
-    arrival_reason_list = arrivals_delay['reason'].values.tolist()
-    arrival_avg_time = arrivals_delay['delayed_time'].values.tolist()
+    arrival_reason_list = arrivals_delay['reason'].values.tolist()[:6]
+    arrival_avg_time = arrivals_delay['delayed_time'].values.tolist()[:6]
 
 # 월별 이용객 시계열
     monthly = pd.read_csv(f'predict_models/ets_passengers/{airline.name}.csv')

@@ -14,4 +14,5 @@ urlpatterns = [
     path('reviews/score/<airline_id>/', views.review_score),
     path('reviews/sentiment/<airline_id>/', views.review_sentiment),
     path('reviews/keyword/<airline_id>/', views.review_keyword),
+    path('reviews/wordcloud/<airline_id>/', views.review_wordcloud),
 ]

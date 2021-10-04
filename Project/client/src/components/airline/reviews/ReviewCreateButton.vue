@@ -1,12 +1,6 @@
 <template>
   <div id="review-button-container">
-    <vs-button 
-      color="rgba(182,168,198)" 
-      border 
-      @click="moveToReviewForm"
-    >
-    리뷰 작성
-    </vs-button>
+    <button class="review-button" @click="moveToReviewForm">리뷰 작성</button>
   </div>
 </template>
 
@@ -18,6 +12,11 @@ export default {
     arrivalId: String,
     arrivalName: String,
   },
+  data() {
+    return {
+      flag: 1,
+    };
+  },
   methods: {
     moveToReviewForm() {
       this.$router.push({
@@ -26,6 +25,7 @@ export default {
           airlineId: this.airlineId,
           arrivalId: this.arrivalId,
           arrivalName: this.arrivalName,
+          flag: this.flag,
         },
       });
     },
@@ -38,5 +38,17 @@ export default {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 10px;
+}
+.review-button {
+  background-color: rgb(182, 168, 198);
+  border: 0;
+  color: white;
+  width: 80px;
+  height: 40px;
+  border-radius: 5px;
+}
+.review-button:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: 0.3s
 }
 </style>

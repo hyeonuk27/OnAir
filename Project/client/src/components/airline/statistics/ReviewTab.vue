@@ -2,7 +2,7 @@
   <div class="review-container">
     <div class="review-preview">
       <h5 class="text-start">
-        <ReviewKeyword />
+        <ReviewKeyword :airlineId="airlineId"/>
       </h5>
       <div class="review-head">
         <p class="review-head-total">
@@ -24,7 +24,7 @@
         <charts :options="reviewChartOptions" />
       </div>
       <div>
-        <ReviewWordcloud />
+        <ReviewWordcloud :airlineId="airlineId"/>
       </div>
       <div>
         <ReviewSentiment :airlineId="airlineId"/>

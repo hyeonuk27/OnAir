@@ -24,13 +24,15 @@ for airline in airlines:
     # print(monthly_delay.head())
 
 # 목적지별 지연 사유 분포
-    arrival_filter = delaydata[delaydata['arrival'] != 'PUS(김해)'].index
+    arrival_filter = delaydata[delaydata['arrival'] != 'KOJ(가고시마)'].index
     arrivals_data = delaydata.drop(arrival_filter)
     arrivals_delay_reason = arrivals_data.groupby(['reason'], as_index=False).size().reset_index()
     arrivals_delay_reason = arrivals_delay_reason.sort_values(by=['size'], ascending=False)
-    print(arrivals_delay_reason.head())
+    arrival_delay_list = arrivals_delay_reason['reason'].values.tolist()[:6]
+    # print(arrivals_delay_reason.head())
+    # print('list:', arrival_delay_list)
     
 # 지연사유별 평균 지연시간
     arrivals_delay = arrivals_data.groupby(['arrival', 'reason'], as_index=False).mean().reset_index()
     arrivals_delay = arrivals_delay.sort_values(by=['delayed_time'], ascending=False)
-    print(arrivals_delay)
+    # print(arrivals_delay)

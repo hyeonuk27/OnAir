@@ -145,25 +145,25 @@ export default {
             name: '지연 사유',
             colorByPoint: true,
             data: [{
-              name: 'Chrome',
-              y: 61.41,
+              name: this.report.total_delay_list[0],
+              y: this.report.total_delay_cnt[0],
               sliced: true,
               selected: true
             }, {
-              name: 'Internet Explorer',
-              y: 11.84
+              name: this.report.total_delay_list[1],
+              y: this.report.total_delay_cnt[1],
             }, {
-              name: 'Firefox',
-              y: 10.85
+              name: this.report.total_delay_list[2],
+              y: this.report.total_delay_cnt[2],
             }, {
-              name: 'Edge',
-              y: 4.67
+              name: this.report.total_delay_list[3],
+              y: this.report.total_delay_cnt[3],
             }, {
-              name: 'Safari',
-              y: 4.18
-            }, {
-              name: 'Other',
-              y: 7.05
+              name: this.report.total_delay_list[4],
+              y: this.report.total_delay_cnt[4],
+            },{
+              name: this.report.total_delay_list[5],
+              y: this.report.total_delay_cnt[5],
             }]
           }]
         },
@@ -238,19 +238,13 @@ export default {
                   marker: {
                       enabled: false
                   },
-                  pointInterval: 3600000, // one hour
-                  pointStart: Date.UTC(2018, 1, 13, 0, 0, 0)
+                  pointInterval: 24 * 3600 * 1000 * 31, // one hour
+                  pointStart: Date.UTC(2017, 1, 1, 0, 0, 0)
               }
           },
           series: [{
-              name: 'Hestavollane',
-              data: [
-                  37, 33, 39, 51, 35, 38, 40, 50, 61, 37, 33, 64,
-                  69, 60, 68, 49, 40, 38, 50, 49, 92, 96, 95, 63,
-                  95, 108, 140, 115, 100, 102, 103, 94, 89, 106, 105, 111,
-                  104, 107, 113, 102, 96, 102, 111, 108, 130, 125, 125, 113,
-                  101
-              ]
+              name: '평균 지연 시간',
+              data: this.report.delay_month_avg_time
           }],
           navigation: {
               menuItemStyle: {
@@ -294,24 +288,24 @@ export default {
             name: 'Brands',
             colorByPoint: true,
             data: [{
-              name: 'Chrome',
+              name: this.report.arrival_delay_list[0],
               y: 61.41,
               sliced: true,
               selected: true
             }, {
-              name: 'Internet Explorer',
+              name: this.report.arrival_delay_list[1],
               y: 11.84
             }, {
-              name: 'Firefox',
+              name: this.report.arrival_delay_list[2],
               y: 10.85
             }, {
-              name: 'Edge',
+              name: this.report.arrival_delay_list[3],
               y: 4.67
             }, {
-              name: 'Safari',
+              name: this.report.arrival_delay_list[4],
               y: 4.18
             }, {
-              name: 'Other',
+              name: this.report.arrival_delay_list[5],
               y: 7.05
             }]
           }]
@@ -475,7 +469,6 @@ export default {
           series: [{
             name: '지연률',
             data: this.report.predicted_by_passengers
-            // data: [0.5, 0.6, 0.75]
           }]
         },
         chart7Options: {

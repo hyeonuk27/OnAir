@@ -1,4 +1,4 @@
 ,arrival,total,under_30,under_60,over_60,delay_time,delay_rate,cancel_rate,airline,id
-0,DFW(댈러스),1340,94.84,0.22,4.94,115.0,5.15,0.22,아메리칸항공,QbZGRvnJra8h6
-1,HKG(홍콩),5,80.0,0.0,20.0,130.0,20.0,0.0,아메리칸항공,g4CZSEnlUVXFN
-2,PVG(푸동),1,0.0,0.0,100.0,77.0,100.0,0.0,아메리칸항공,HJkRxMOZtTiYg
+0,DFW(댈러스),1340,94.84,0.22,4.94,6.0,5.15,0.22,아메리칸항공,ct1bufQFv7zdJ
+1,HKG(홍콩),5,80.0,0.0,20.0,26.0,20.0,0.0,아메리칸항공,ei36LuNPTa1Wc
+2,PVG(푸동),1,0.0,0.0,100.0,77.0,100.0,0.0,아메리칸항공,Fs4QZlzPOEDXI

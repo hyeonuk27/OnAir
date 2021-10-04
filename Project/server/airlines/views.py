@@ -247,6 +247,7 @@ def airline_report(request, arrival_id, airline_id):
 # 전체 지연 사유 분포
     airline_filter = df[df['airline'] != airline.name].index
     airlinedata = df.drop(airline_filter)
+    airlinedata['reason']= airlinedata['reason'].replace(['에 의한 지연'],['기타에 의한 지연'])
     delay_filter = airlinedata[airlinedata['state'] != '지연'].index
     delaydata = airlinedata.drop(delay_filter)
     total_delay = delaydata.groupby('reason').count().reset_index()

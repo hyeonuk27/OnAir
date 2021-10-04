@@ -85,10 +85,9 @@ for airline in airlines:
 
 
     # 평균지연시간
-    avg_delay = airlinedata.drop(d_filter).reset_index(drop=True)
-    avg_delay = avg_delay[['delayed_time', 'arrival']].groupby('arrival').mean().reset_index()
+    avg_delay = airlinedata[['delayed_time', 'arrival']].groupby('arrival').mean().reset_index()
     # avg_delay = pd.DataFrame(avg_delay, columns=['delayed_time'])
-    # print(avg_delay.head())
+    print(avg_delay.head())
 
 
     # left

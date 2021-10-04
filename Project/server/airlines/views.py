@@ -241,7 +241,6 @@ def airline_report(request, arrival_id, airline_id):
         predicted_by_passengers.append(round(passengers_model.predict_proba(input_data)[0, 1] * 100, 2))
     
 # 통계
-
     df = pd.read_csv('./statistics/delaydatas/statistics_data.csv', index_col=0)
     df = df.drop(columns=['passengers'])
 

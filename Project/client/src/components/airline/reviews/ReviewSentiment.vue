@@ -8,9 +8,9 @@
         aria-valuenow="75"
         aria-valuemin="0"
         aria-valuemax="100"
-        :style="negative"
+        :style="negativeStyle"
       >
-        {{ positive.width }}
+        {{ negative }}
       </div>
       <div
         class="progress-bar progress-bar-animated"
@@ -19,9 +19,9 @@
         aria-valuenow="75"
         aria-valuemin="0"
         aria-valuemax="100"
-        :style="positive"
+        :style="positiveStyle"
       >
-        {{ negative.width }}
+        {{ positive }}
       </div>
     </div>
   </div>
@@ -38,8 +38,10 @@ export default {
   },
   data() {
     return {
-      positive: null,
-      negative: null,
+      positiveStyle: null,
+      negativeStyle: null,
+      positive: 0,
+      negative: 0,
     };
   },
   methods: {
@@ -49,8 +51,10 @@ export default {
         method: "get",
       })
         .then((res) => {
-          this.positive = { width: res.data["positive"] + "%" };
-          this.negative = { width: res.data["negative"] + "%" };
+          this.positiveStyle = { width: res.data["positive"] + "%" };
+          this.negativeStyle = { width: res.data["negative"] + "%" };
+          this.positive = res.data["positive"] + "%"
+          this.negative = res.data["negative"] + "%"
         })
         .catch((err) => {
           console.log(err);

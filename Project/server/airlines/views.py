@@ -358,7 +358,7 @@ def review_list(request, airline_id):
         return Response(data)
     
 
-@api_view(['GET', 'DELETE', 'PUT'])
+@api_view(['GET', 'DELETE'])
 @check_login
 def review_detail(request, review_id):
     print('test')
@@ -370,11 +370,6 @@ def review_detail(request, review_id):
         elif request.method == 'DELETE':
             review.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        elif request.method == 'PUT':
-            serializer = ReviewSerializer(review, data=request.data, partial=True)
-            if serializer.is_valid(raise_exception=True):
-                serializer.save()
-                return Response(serializer.data)
 
 
 @api_view(['GET'])

@@ -1,5 +1,5 @@
-const SERVER_URL = 'http://127.0.0.1:8000/api/v1'
-// const SERVER_URL = 'https://j5a203.p.ssafy.io/api/v1'
+// const SERVER_URL = 'http://127.0.0.1:8000/api/v1'
+const SERVER_URL = 'https://j5a203.p.ssafy.io/api/v1'
 
 export default {
   URL: SERVER_URL,
@@ -14,6 +14,8 @@ export default {
     reviewDetail: '/reviews/',
     getProfile: '/auth/profile/',
     updateProfile: '/auth/',
-    getMyReviews: '/profiles/'
+    getMyReviews: '/profiles/',
+    createLog: '/logs/',
+    getSearchLogs: '/logs/',
   }
 }

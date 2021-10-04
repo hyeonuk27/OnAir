@@ -1,5 +1,5 @@
 <template>
-  <div class="my-review-el">
+  <div class="my-review-el" @click="goAirline">
     <div class="my-review-el-name">
       <div>NAME OF PASSENGER</div>
       {{name}}
@@ -17,7 +17,7 @@
       {{review.airline_name}}
     </div>
     <div class="my-review-el-img">
-      <span style="font-size: 30px;">✈</span>
+      <span style="font-size: 30px;">ICN <span style="transform: rotate(90deg);" class="material-icons">flight</span> {{review.arrival_name.substring(0, 3)}}</span>
     </div>
     <div class="my-review-el-score">
       <div v-for="index in review.score" :key="index" class="my-review-score"></div>
@@ -32,7 +32,18 @@
 <script>
 export default {
   name: 'MyReviewElement',
-  props: ['review', 'name']
+  props: ['review', 'name'],
+  methods: {
+    goAirline: function () {
+      this.$router.push({
+        name: "Airline",
+        params: {
+          airlineId: this.review.airline,
+          arrivalId: this.review.arrival,
+        },
+      })
+    },
+  }
 }
 </script>
 
@@ -40,12 +51,18 @@ export default {
   .my-review-el {
     border: 1px solid rgba(180, 180, 180, 0.658);
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.151);
+    cursor: pointer;
     display: grid;
     grid-template-columns: 250px 200px 200px 350px;
     grid-auto-rows: 90px 40px 70px;
     width: 1000px;
     height: 200px;
     margin-bottom: 20px;
+    transition: 0.2s;
+  }
+
+  .my-review-el:hover {
+    background-color: rgba(223, 223, 223, 0.904);
   }
 
   .my-review-el-name {

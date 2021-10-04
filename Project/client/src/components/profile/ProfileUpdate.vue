@@ -52,7 +52,7 @@ export default {
             title:'수정 완료', text:`✈ On:Air > ${res.data.name}님 환영합니다.`, color:'#D4C6E2', position:'top-right'
           })
           localStorage.setItem('name', res.data.name)
-          this.setName(res.da0ta.name)
+          this.setName(res.data.name)
           this.$router.go(-1)
         })
         .catch((err) => {

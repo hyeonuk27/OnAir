@@ -4,7 +4,7 @@
       <span
         v-for="keyword in keywordList"
         :key="keyword"
-        class="badge keyword-tag"
+        class="badge rounded-pill keyword-tag"
       >
         {{ '# ' + keyword[0] + ' ' }}
       </span>
@@ -47,13 +47,14 @@ export default {
 
 <style>
 .keyword {
-  color: #3D2F6B;
   text-align: center;
 }
 
 .keyword-tag {
+  color: #3D2F6B;
   background-color: #DAD6DD;
+  font-size: 18px;
   margin-right: 1rem;
-  padding: 1px 8px 1px;
+  padding: 3px 10px 3px;
 }
 </style>

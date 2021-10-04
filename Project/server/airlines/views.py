@@ -468,6 +468,4 @@ def review_wordcloud(request, airline_id):
 
     count = Counter(final_list)
     words = dict(count.most_common())
-    words = sorted(words.items(), key=lambda x: x[1], reverse=True)
-
     return HttpResponse(json.dumps(words, ensure_ascii = False), content_type = 'application/json; charset=utf8')

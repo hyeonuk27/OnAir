@@ -12,8 +12,8 @@
         ...
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-        <li @click="moveToReviewForm(review.id)">수 정</li>
-        <li @click="deleteReview(review.id)">삭 제</li>
+        <li class="dropdown-item" @click="moveToReviewForm(review.id)">수 정</li>
+        <li class="dropdown-item" @click="deleteReview(review.id)">삭 제</li>
       </ul>
     </div>
     <div class="review-list-el-name">
@@ -36,6 +36,7 @@
       class="review-list-el-profile"
       :src="review.userpic"
       alt="user-image"
+      @click="moveToMyReview(review.user)"
     />
     <div class="review-list-el-title">"{{ review.title }}"</div>
     <div class="review-list-el-content">{{ review.content }}</div>
@@ -110,45 +111,80 @@
 </template>
 
 <script>
-import axios from "axios";
-import API from "@/common/drf.js";
-import { mapState } from "vuex";
+import axios from "axios"
+import swal from 'sweetalert'
+import API from "@/common/drf.js"
+import { mapState } from "vuex"
 
 export default {
   name: "ReviewListElement",
   props: {
     review: Object,
   },
+  data() {
+    return {
+      flag: 1,
+    };
+  },
   methods: {
     setToken: function () {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token")
       const config = {
         Authorization: token,
-      };
-      return config;
+      }
+      return config
     },
     deleteReview: function (reviewId) {
-      const headers = this.setToken();
-      axios({
-        url: API.URL + API.ROUTES.reviewDetail + reviewId,
-        method: "delete",
-        headers,
+      swal({
+        title: "게시글을 삭제하시겠습니까?",
+        icon: "warning",
+        buttons: {
+          cancel: "취소",
+          confirm: {
+            text: "확인",
+            className: "confirm-btn"
+          },
+        },
       })
-        .then(() => {
-          this.$emit("reviewListUpdate");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      .then((isDelete) => {
+        if (isDelete) {
+          const headers = this.setToken()
+          axios({
+            url: API.URL + API.ROUTES.reviewDetail + reviewId,
+            method: "delete",
+            headers,
+          })
+          .then(() => {
+            this.$emit("reviewListUpdate")
+            swal({
+              title: "게시글이 삭제되었습니다.",
+              icon: "success",
+              buttons: {
+                confirm: {
+                  text: "확인",
+                  className: "confirm-btn"
+                },
+              },
+            })
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+        }
+      })
+      
     },
     moveToReviewForm: function (reviewId) {
-      this.$router.push({ name: "Form", params: { reviewId: reviewId } });
+      this.$router.push({ name: "Update", params: { reviewId: reviewId, flag: this.flag } });
     },
+    moveToMyReview: function (userId) {
+      this.$router.push({ name: "MyReview", params: { userId: userId } });
+    }
   },
   computed: {
     ...mapState(["userId"]),
   },
-};
+}
 </script>
 
 <style>
@@ -269,5 +305,10 @@ export default {
 
 .dropdown-menu {
   text-align: center;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(223, 223, 223, 0.904);
+  transition: 0.3s;
 }
 </style>

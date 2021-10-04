@@ -1,29 +1,13 @@
 <template>
-  <div>
-    <div id="bar-container" class="progress">
-      <div
-        class="progress-bar progress-bar-animated"
-        id="bar-negative"
-        role="progressbar"
-        aria-valuenow="75"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        :style="negativeStyle"
-      >
-        {{ negative }}
-      </div>
-      <div
-        class="progress-bar progress-bar-animated"
-        id="bar-positive"
-        role="progressbar"
-        aria-valuenow="75"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        :style="positiveStyle"
-      >
-        {{ positive }}
-      </div>
-    </div>
+  <div 
+  v-if="isSentimentRendered"
+  >
+    <charts :options="reviewChartOptions" />
+  </div>
+  <div
+  v-else
+  style="height: 700px;"
+  >
   </div>
 </template>
 
@@ -38,11 +22,10 @@ export default {
   },
   data() {
     return {
-      positiveStyle: null,
-      negativeStyle: null,
       positive: 0,
       negative: 0,
-    };
+      isSentimentRendered: false,
+    }
   },
   methods: {
     getSentiment: function () {
@@ -51,10 +34,9 @@ export default {
         method: "get",
       })
         .then((res) => {
-          this.positiveStyle = { width: res.data["positive"] + "%" };
-          this.negativeStyle = { width: res.data["negative"] + "%" };
-          this.positive = res.data["positive"] + "%"
-          this.negative = res.data["negative"] + "%"
+          this.positive = res.data['positive']
+          this.negative = res.data['negative']
+          this.isSentimentRendered = true
         })
         .catch((err) => {
           console.log(err);
@@ -64,17 +46,56 @@ export default {
   created() {
     this.getSentiment();
   },
+  computed: {
+      reviewChartOptions: function () {
+        return {
+          chart: {
+              type: 'bar',
+              height: 150,
+              width: 1000,
+          },
+          colors: ['rgba(13, 110, 253, 0.75)', 'rgba(220, 53, 69, 0.75)'],
+          credits: {
+              enabled: false
+          },
+          exporting: {
+              enabled: false
+          },
+          title: {
+            text: null,
+          },
+          legend: {
+            enabled: true,
+          },
+          xAxis: {
+            visible: false,
+            categories: ['리뷰 감성분석']
+          },
+          yAxis: {
+            visible: false,
+            reversedStacks: false,
+          },
+          tooltip: {
+              pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}%</b><br/>',
+              shared: false
+          },
+          plotOptions: {
+              bar: {
+                  stacking: 'percent',
+              },
+          },
+          series: [{
+              name: '긍정',
+              data: [this.positive]
+          }, {
+              name: '부정',
+              data: [this.negative]
+          }],
+        }
+      },
+  }
 };
 </script>
 
 <style>
-#bar-container {
-  height: 25px;
-}
-#bar-negative {
-  background-color: #f7cac9;
-}
-#bar-positive {
-  background-color: #92a8d1;
-}
 </style>

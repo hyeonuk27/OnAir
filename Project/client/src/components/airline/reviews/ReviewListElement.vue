@@ -111,9 +111,10 @@
 </template>
 
 <script>
-import axios from "axios";
-import API from "@/common/drf.js";
-import { mapState } from "vuex";
+import axios from "axios"
+import swal from 'sweetalert'
+import API from "@/common/drf.js"
+import { mapState } from "vuex"
 
 export default {
   name: "ReviewListElement",
@@ -127,37 +128,63 @@ export default {
   },
   methods: {
     setToken: function () {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token")
       const config = {
         Authorization: token,
-      };
-      return config;
+      }
+      return config
     },
     deleteReview: function (reviewId) {
-      const headers = this.setToken();
-      axios({
-        url: API.URL + API.ROUTES.reviewDetail + reviewId,
-        method: "delete",
-        headers,
+      swal({
+        title: "게시글을 삭제하시겠습니까?",
+        icon: "warning",
+        buttons: {
+          cancel: "취소",
+          confirm: {
+            text: "확인",
+            className: "confirm-btn"
+          },
+        },
       })
-      .then(() => {
-        this.$emit("reviewListUpdate");
+      .then((isDelete) => {
+        if (isDelete) {
+          const headers = this.setToken()
+          axios({
+            url: API.URL + API.ROUTES.reviewDetail + reviewId,
+            method: "delete",
+            headers,
+          })
+          .then(() => {
+            this.$emit("reviewListUpdate")
+            swal({
+              title: "게시글이 삭제되었습니다.",
+              icon: "success",
+              buttons: {
+                confirm: {
+                  text: "확인",
+                  className: "confirm-btn"
+                },
+              },
+            })
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+        }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      
     },
     moveToReviewForm: function (reviewId) {
       this.$router.push({ name: "Update", params: { reviewId: reviewId, flag: this.flag } });
     },
     moveToMyReview: function (userId) {
       this.$router.push({ name: "MyReview", params: { userId: userId } });
-    },
+    }
   },
   computed: {
     ...mapState(["userId"]),
   },
-};
+}
 </script>
 
 <style>
@@ -282,6 +309,6 @@ export default {
 
 .dropdown-item:hover {
   background-color: rgba(223, 223, 223, 0.904);
-  transition: 0.3s
+  transition: 0.3s;
 }
 </style>

@@ -30,6 +30,7 @@
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script>
+import swal from 'sweetalert'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -63,13 +64,26 @@ export default {
     },
     logOut: function() {
       const auth2 = gapi.auth2.getAuthInstance()
-      if (confirm("로그아웃 하시겠습니까?")) {
-        auth2.signOut().then(function () {
-          localStorage.clear()
-          window.location.reload()
-        })
-        auth2.disconnect()
-      }
+      swal({
+        title: "로그아웃 하시겠습니까?",
+        icon: "warning",
+        buttons: {
+          cancel: "취소",
+          confirm: {
+            text: "확인",
+            className: "confirm-btn"
+          },
+        },
+      })
+      .then((isLogout) => {
+        if (isLogout) {
+          auth2.signOut().then(function () {
+            localStorage.clear()
+            window.location.reload()
+          })
+          auth2.disconnect()
+        }
+      })
     },
   },
   mounted() {
@@ -126,5 +140,14 @@ export default {
 
   .login .logout {
     cursor: pointer;
+  }
+
+  .confirm-btn {
+    background-color: #D4C6E2;
+    color: #555;
+  }
+
+  .swal-button:not([disabled]):hover {
+    background-color: #B9A6C9;
   }
 </style>

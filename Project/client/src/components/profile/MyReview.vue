@@ -11,6 +11,7 @@
           :key="idx"
           :review="review"
           :name="name"
+          @myReviewsUpdate="getMyReviews"
           />
         </div>
         <vs-pagination v-if="reviews.length != 1" class="my-review-pagination" :total="pageTotal" v-model="pageNum" color="#B9A6C9" @change="getMyReviews"></vs-pagination>
@@ -25,7 +26,6 @@
 <script>
 import axios from "axios"
 import API from "@/common/drf.js"
-import {mapState} from 'vuex'
 import MyReviewElement from '@/components/profile/MyReviewElement'
 
 export default {
@@ -37,6 +37,7 @@ export default {
       pageNum: 1,
       pageTotal: 2,
       reviews: [],
+      userId: '',
     }
   },
   components: {
@@ -63,13 +64,9 @@ export default {
     },
   },
   created() {
+    this.userId = this.$route.params.userId
     this.getMyReviews()
   },
-  computed: {
-    ...mapState([
-      'userId'
-    ])
-  }
 }
 </script>
 

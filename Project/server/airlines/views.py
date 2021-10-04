@@ -241,7 +241,6 @@ def airline_report(request, arrival_id, airline_id):
         predicted_by_passengers.append(round(passengers_model.predict_proba(input_data)[0, 1] * 100, 2))
     
 # 통계
-
     df = pd.read_csv('./statistics/delaydatas/statistics_data.csv', index_col=0)
     df = df.drop(columns=['passengers'])
 
@@ -257,7 +256,7 @@ def airline_report(request, arrival_id, airline_id):
     total_delay_cnt = total_delay['state'].values.tolist()[:6]
 
 # 월별 평균 지연시간
-    monthly_delay = delaydata
+    monthly_delay = airlinedata
     monthly_delay['date'] = monthly_delay['date'].str[:7]
     monthly_delay = monthly_delay.groupby(['date'], as_index=False).mean().groupby('date')['delayed_time'].mean().round(2).reset_index()
     delay_month_list = monthly_delay['date'].values.tolist()
@@ -358,7 +357,7 @@ def review_list(request, airline_id):
         return Response(data)
     
 
-@api_view(['GET', 'DELETE', 'PUT'])
+@api_view(['GET', 'DELETE'])
 @check_login
 def review_detail(request, review_id):
     print('test')
@@ -370,11 +369,6 @@ def review_detail(request, review_id):
         elif request.method == 'DELETE':
             review.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        elif request.method == 'PUT':
-            serializer = ReviewSerializer(review, data=request.data, partial=True)
-            if serializer.is_valid(raise_exception=True):
-                serializer.save()
-                return Response(serializer.data)
 
 
 @api_view(['GET'])

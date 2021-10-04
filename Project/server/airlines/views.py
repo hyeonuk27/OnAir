@@ -31,8 +31,10 @@ import joblib
 from decouple import config
 
 import requests
+import ssl
 import json
 import jwt
+from urllib.request import urlopen
 
 import time
 # import datetime as dt
@@ -416,40 +418,56 @@ def review_sentiment(request, airline_id):
 
     return Response(data)
 
+
 @api_view(['GET'])
 def review_keyword(request, airline_id):
-    # file = open('https://j5a203.p.ssafy.io/static/airlines/npl/stopwords.txt', 'r')
-    # stopwords = file.read()
-    # stopwords = stopwords.split('\n')
+    context = ssl._create_unverified_context()
+    req = urlopen('https://j5a203.p.ssafy.io/static/airlines/npl/stopwords.txt', context=context)
+    stopwords=req.read().decode('utf8')
+    stopwords = stopwords.split('\n')
     reviews = get_list_or_404(Review, airline=airline_id)
-
     airline_review = ""
     for review in reviews:
         airline_review += review.content.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
         airline_review += review.title.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
 
-    # # konlpy ver. =============================================================
-    # # 말뭉치 (형태소랑 품사 짝)
-    # from konlpy.tag import Okt
-    # reviews = Okt()
-    # morphs = reviews.pos(airline_review)
-    
-    # noun_adj_list = []
-    # for word, tag in morphs:
-    #     if (tag in['Noun'] or tag in['Adjective']) and word:
-    #         noun_adj_list.append(word)
+    from PyKomoran import Komoran, DEFAULT_MODEL
+    komoran = Komoran(DEFAULT_MODEL['LIGHT'])
+    target_tags = ['NNG']
+    noun_adj_list = komoran.get_morphes_by_tags(airline_review, tag_list=target_tags)
+    final_list = []
+    for noun_adj in noun_adj_list:
+        if noun_adj not in stopwords:
+            final_list.append(noun_adj)
 
-    # komoran ver. =============================================================
+    count = Counter(final_list)
+    words = dict(count.most_common())
+    words = sorted(words.items(), key=lambda x: x[1], reverse=True)
+
+    return HttpResponse(json.dumps(words, ensure_ascii = False), content_type = 'application/json; charset=utf8')
+
+
+@api_view(['GET'])
+def review_wordcloud(request, airline_id):
+    context = ssl._create_unverified_context()
+    req = urlopen('https://j5a203.p.ssafy.io/static/airlines/npl/stopwords.txt', context=context)
+    stopwords=req.read().decode('utf8')
+    stopwords = stopwords.split('\n')
+    reviews = get_list_or_404(Review, airline=airline_id)
+    airline_review = ""
+    for review in reviews:
+        airline_review += review.content.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
+        airline_review += review.title.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
+
     from PyKomoran import Komoran, DEFAULT_MODEL
     komoran = Komoran(DEFAULT_MODEL['LIGHT'])
     target_tags = ['NNG', 'VA']
     noun_adj_list = komoran.get_morphes_by_tags(airline_review, tag_list=target_tags)
+    final_list = []
+    for noun_adj in noun_adj_list:
+        if noun_adj not in stopwords:
+            final_list.append(noun_adj)
 
-    #빈도수로 정렬하고 단어와 빈도수를 딕셔너리로 전달
-    count = Counter(noun_adj_list)
+    count = Counter(final_list)
     words = dict(count.most_common())
-
-    # 딕셔너리를 제이슨으로 변환하여 전달
     return HttpResponse(json.dumps(words, ensure_ascii = False), content_type = 'application/json; charset=utf8')
-    # return HttpResponse(json.dumps(words), content_type = 'application/json; charset=utf8')
-

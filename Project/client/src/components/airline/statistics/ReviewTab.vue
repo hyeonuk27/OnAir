@@ -2,7 +2,7 @@
   <div class="review-container">
     <div class="review-preview">
       <h5 class="text-start">
-        <ReviewKeyword />
+        <ReviewKeyword :airlineId="airlineId"/>
       </h5>
       <div class="review-head">
         <p class="review-head-total">
@@ -25,7 +25,7 @@
       </div>
       <!-- 리뷰 워드클라우드 -->
       <div>
-        <ReviewWordcloud />
+        <ReviewWordcloud :airlineId="airlineId"/>
       </div>
       <!-- 리뷰 긍부정 비율 -->
       <div>

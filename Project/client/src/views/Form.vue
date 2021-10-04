@@ -9,12 +9,12 @@
           남겨주신 리뷰는 On: Air의 리포트와 항공사의 더 나은 서비스 제공을 위해
           활용될 수 있습니다.
         </p>
-        <div>도착지: {{arrivalName}}</div>
+        <div style="color: #656F8C;">도착지 ✈ {{arrivalName}}</div>
         <div id="circles" class="d-flex justify-content-center">
           <div
             style="
-              width: 15px;
-              height: 15px;
+              width: 13px;
+              height: 13px;
               border-radius: 50%;
               background-color: #656f8c;
             "
@@ -22,16 +22,16 @@
           <div
             class="mx-4"
             style="
-              width: 15px;
-              height: 15px;
+              width: 13px;
+              height: 13px;
               border-radius: 50%;
               background-color: #656f8c;
             "
           ></div>
           <div
             style="
-              width: 15px;
-              height: 15px;
+              width: 13px;
+              height: 13px;
               border-radius: 50%;
               background-color: #656f8c;
             "

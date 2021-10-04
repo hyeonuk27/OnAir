@@ -10,6 +10,9 @@
   "dependencies": {
     "axios": "^0.21.4",
     "core-js": "^3.6.5",
+    "d3": "^3.5.17",
+    "d3-cloud": "^1.2.5",
+    "d3.layout.cloud": "^1.2.0",
     "highcharts": "^9.2.2",
     "highcharts-vue": "^1.4.0",
     "material-icons": "^1.5.1",
@@ -17,6 +20,7 @@
     "sass-loader": "^10.2.0",
     "sweetalert": "^2.1.2",
     "vue": "^2.6.11",
+    "vue-d3-cloud": "^0.2.0",
     "vue-moment": "^4.1.0",
     "vue-router": "^3.5.2",
     "vue2-highcharts": "^1.2.5",

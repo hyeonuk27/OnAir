@@ -1,6 +1,5 @@
 <template>
-  <div class="mx-2" style="border: 1px solid #3D2F6B;">
-    <!-- <img src="@/assets/test.png" style="width:100%" alt=""> -->
+  <div class="mx-2">
     <figure class="highcharts-figure">
       <charts :options="wordCloud" />
     </figure>
@@ -44,8 +43,14 @@ export default {
             data: this.data,
             name: '빈도수'
         }],
+        credits: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
+        },
         title: {
-            text: ''
+            text: null
         }
       }
     }
@@ -76,7 +81,7 @@ export default {
 .highcharts-data-table table {
 	font-family: Verdana, sans-serif;
 	border-collapse: collapse;
-	border: 1px solid #EBEBEB;
+	border: 1px solid rgba(180, 180, 180, 0.658);
 	margin: 10px auto;
 	text-align: center;
 	width: 100%;

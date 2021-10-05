@@ -26,17 +26,22 @@
       <div>
         <ReviewWordcloud :airlineId="airlineId"/>
       </div>
-      <div>
-        <ReviewSentiment :airlineId="airlineId"/>
-      </div>
+
       <div class="review-rate-container">
-        <div>
-          <ReviewScore :airlineId="airlineId"/>
+        <div class="review-rate-left">
+          <div class="review-sentiment">
+            <ReviewSentiment :airlineId="airlineId"/>
+          </div>
+          <div class="review-rate-detail">
+            <ReviewScore :airlineId="airlineId"/>
+          </div>
         </div>
-        <div>
-          <ReviewScoreChart 
-          :chartData="chartData"
-          />
+        <div class="review-rate-right">
+          <div class="review-rate-chart">
+            <ReviewScoreChart 
+            :chartData="chartData"
+            />
+          </div>
         </div>
       </div>
       <div>
@@ -82,7 +87,7 @@ export default {
         chart: {
           type: "bar",
           height: 120,
-          width: 1000,
+          width: 1000
         },
         colors: [
           '#3D2F6B', '#B9A6C9', '#B81F5A'
@@ -186,18 +191,36 @@ export default {
 
 .review-rate-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 30px;
-  grid-auto-rows: min-content;
+  grid-template-columns: 450px 450px;
+  grid-template-rows: 1fr 2fr;
+  grid-gap: 20px;
+  padding: 20px;
+  border: 1px solid rgba(180, 180, 180, 0.658);
+  margin-bottom: 25px;
 }
 
-.review-rate-details {
+.review-rate-left {
   grid-column: 1;
-  grid-row: 1;
+  grid-row: 1 / 3;
 }
 
-.review-rate-chart {
+.review-rate-right {
   grid-column: 2;
-  grid-row: 1;
+  grid-row: 1 / 3;
 }
+
+.review-rate-detail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 340px;
+}
+
+.review-sentiment {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 </style>

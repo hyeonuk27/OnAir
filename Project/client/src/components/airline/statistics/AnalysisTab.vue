@@ -1,9 +1,9 @@
 <template>
   <div class="analysis-container">
     <div class="anaylsis-preview">
-      <h5 class="text-start">
-        <ReviewKeyword />
-      </h5>
+      <div class="analysis-arrival">
+        <span>ICN <span style="transform: rotate(90deg);" class="material-icons">flight</span> {{ this.report.arrival_name.substring(0, 3)}}</span>
+      </div>
       <div class="analysis-head">
         <p class="analysis-head-total"> 
           총 운항횟수 
@@ -59,14 +59,10 @@
 </template>
 
 <script>
-import ReviewKeyword from "@/components/airline/reviews/ReviewKeyword";
 
 export default {
   name: 'AnalysisTab',
   props: ['report'],
-  components: {
-  ReviewKeyword
-  },
   data() {
     return {
         analysisChartOptions: {
@@ -89,7 +85,7 @@ export default {
           },
           xAxis: {
             visible: false,
-            categories: ['지연건수']
+            categories: [this.report.arrival_name + '행 지연 데이터']
           },
           yAxis: {
             visible: false,
@@ -101,7 +97,7 @@ export default {
           },
           plotOptions: {
               bar: {
-                  stacking: 'percent'
+                stacking: 'percent',
               }
           },
           series: [{
@@ -145,6 +141,7 @@ export default {
           },
           title: {
             text: this.report.airline_name + '의 월별 평균 출발 지연 시간',
+            style: {"color": '#3D2F6B', "font-weight": 'bold'}
           },
           xAxis: {
             type: 'datetime',
@@ -227,7 +224,8 @@ export default {
             enabled: false
           },
           title: {
-            text: '지연사유별 평균지연시간'
+            text: '지연사유별 평균지연시간',
+            style: {"color": '#3D2F6B', "font-weight": 'bold'}
           },
           xAxis: {
             categories: this.report.arrival_reason_list,
@@ -267,7 +265,8 @@ export default {
             '#B9A6C9'
           ], 
           title: {
-              text: '월별 이용객 추이'
+              text: '월별 이용객 추이',
+              style: {"color": '#3D2F6B', "font-weight": 'bold'}
           },
           credits: {
               enabled: false
@@ -336,7 +335,8 @@ export default {
             enabled: false
           },
           title: {
-            text: '월별 이용객 에 따른 지연률 예측'
+            text: '월별 이용객 에 따른 지연률 예측',
+            style: {"color": '#3D2F6B', "font-weight": 'bold'}
           },
           xAxis: {
             categories: this.report.month_list,
@@ -383,7 +383,8 @@ export default {
             enabled: false
           },
           title: {
-            text: '날씨에 따른 지연률 예측'
+            text: '날씨에 따른 지연률 예측',
+            style: {"color": '#3D2F6B', "font-weight": 'bold'}
           },
           xAxis: {
             categories: ['맑음', '구름', '박무(Mist)', '연무(Haze)', '비', '안개', '눈', '먼지', '이슬비', '천둥', '태풍', '대기오염'],
@@ -430,7 +431,8 @@ export default {
               enabled: false
           },
           title: {
-            text: this.report.arrival_name + '행 지연 사유 분포'
+            text: this.report.arrival_name + '행 지연 사유 분포',
+            style: {"color": '#3D2F6B', "font-weight": 'bold'}
           },
           tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -479,7 +481,8 @@ export default {
             enabled: false
           },
           title: {
-            text: '지연사유별 평균지연시간'
+            text: '지연사유별 평균지연시간',
+            style: {"color": '#3D2F6B', "font-weight": 'bold'}
           },
           xAxis: {
             categories: ['지연 기록 없음'],
@@ -525,19 +528,23 @@ export default {
           '#fff6ef', '#eb488a', '#B81F5A'
         ], 
         credits: {
-            enabled: false
+            enabled: false,
         },
         exporting: {
-            enabled: false
+            enabled: false,
         },
         title: {
             text: this.report.airline_name + '의 전체 지연 사유 분포',
             align: 'center',
             verticalAlign: 'top',
-            y: 10
+            y: 10,
+            style: {"color": '#3D2F6B', "font-weight": 'bold'}
+        },
+        legend: {
+          enabled: true,
         },
         tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
         },
         accessibility: {
             point: {
@@ -548,7 +555,7 @@ export default {
             pie: {
                 dataLabels: {
                     enabled: true,
-                    distance: 50,
+                    distance: 10,
                     style: {
                         fontWeight: 'normal',
                     }
@@ -561,8 +568,8 @@ export default {
         },
         series: [{
             type: 'pie',
-            name: '지연 사유',
-            innerSize: '50%',
+            name: '비율',
+            innerSize: '30%',
             data: [
                 this.report.total_delay_list[0] ? [this.report.total_delay_list[0], this.report.total_delay_cnt[0]] : null,
                 this.report.total_delay_list[1] ? [this.report.total_delay_list[1], this.report.total_delay_cnt[1]] : null,
@@ -603,7 +610,8 @@ export default {
             enabled: false
         },
         title: {
-          text: this.report.arrival_name + '행 지연 사유 분포'
+          text: this.report.arrival_name + '행 지연 사유 분포',
+          style: {"color": '#3D2F6B', "font-weight": 'bold'}
         },
         tooltip: {
           pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -638,7 +646,7 @@ export default {
   .analysis-container {
     height: auto;
     min-height: 1000px;
-    padding-bottom: 50px;
+    padding-bottom: 150px;
   }
 
   .analysis-preview {
@@ -657,6 +665,14 @@ export default {
     top: -10px;
   }
 
+  .analysis-arrival {
+    text-align: start;
+    margin-left: 12px;
+    padding-bottom: 15px;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
   .analysis-head {
     display: grid;
     padding: 10px;
@@ -664,6 +680,8 @@ export default {
     grid-gap: 5px 10px;
     width: 1000px;
     font-size: 14px;
+    font-weight: bold;
+    margin-top: 15px;
     text-align: center;
   }
 
@@ -693,11 +711,15 @@ export default {
     grid-row: 1;
     width: 175px;
   }
+  /* .analysis-body {
+    margin-top: 50px;
+  } */
 
   .analysis-charts {
     display: inline-grid;
+    margin-top: 50px;
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: 30px;
+    grid-gap: 45px 40px;
     grid-auto-rows: min-content;
   }
 

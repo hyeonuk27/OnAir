@@ -74,11 +74,13 @@ export default {
   .profile {
     display: flex;
     justify-content: center;
+    align-items: center;
     margin-top: 150px;
   }
 
   .profile-container {
     width: 1190px;
+    min-height: 650px;
   }
 
   .profile-image {

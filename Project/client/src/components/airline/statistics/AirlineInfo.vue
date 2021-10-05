@@ -24,6 +24,11 @@
         src="@/assets/team_logo/oneworld.png"
         class="img-fluid"
         >
+        <div
+        v-else
+        style="width: 30px"
+        >
+        </div>
       </div>
       <div class="line-intro text-start">
         <p>{{ airlineInfo.detail }}</p>
@@ -54,15 +59,15 @@ export default {
 
   .airline-info-wrapper {
     display: grid;
-    grid-template-columns: 150px 20px 40px 1fr;
+    grid-template-columns: 200px 35px 45px 1fr;
     grid-gap: 0px 20px;
-    grid-auto-rows: min-content;
+    width: 1000px;
   }
 
   .profile-logo {
     grid-column: 1;
     grid-row: 1;
-    width: 150px;
+    width: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -71,7 +76,7 @@ export default {
   .team-logo {
     grid-column: 2 / 3;
     grid-row: 1;
-    width: 20px;
+    width: 35px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -81,8 +86,8 @@ export default {
     grid-column: 4;
     grid-row: 1;
     width: 100%;
-    line-height: 120%;
-    font-size: 12px;
+    line-height: 160%;
+    font-size: 14px;
     display: flex;
     align-items: center;
     color: #656F8C;

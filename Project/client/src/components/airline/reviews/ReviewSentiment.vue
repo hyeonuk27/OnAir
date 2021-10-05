@@ -1,6 +1,7 @@
 <template>
   <div 
   v-if="isSentimentRendered"
+  class="review-sentiment-chart"
   >
     <charts :options="reviewChartOptions" />
   </div>
@@ -62,7 +63,8 @@ export default {
               enabled: false
           },
           title: {
-            text: null,
+            text: '리뷰 긍/부정 비율',
+            style: {"color": '#3D2F6B', "font-weight": 'bold'}
           },
           legend: {
             enabled: true,
@@ -81,7 +83,8 @@ export default {
           },
           plotOptions: {
               bar: {
-                  stacking: 'percent',
+                stacking: 'percent',
+                borderRadius: 12.5,
               },
           },
           series: [{
@@ -98,4 +101,7 @@ export default {
 </script>
 
 <style>
+  .review-sentiment-chart {
+    margin-top: 30px;
+  }
 </style>

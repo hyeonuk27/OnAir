@@ -14,7 +14,7 @@
         <input class="airline-tabradio" id="tab-analysis" type="radio" name="tab-check" checked>
         <label class="airline-tablabel" for="tab-analysis">분석 리포트</label>
         <input class="airline-tabradio" id="tab-review" type="radio" name="tab-check">
-        <label class="airline-tablabel" for="tab-review">리뷰 리포트</label>
+        <label class="airline-tablabel" for="tab-review">항공사 리뷰</label>
         <section class="airline-tab" id="content-analysis">
           <AnalysisTab
           v-if="isStatisticsRendered"
@@ -29,11 +29,12 @@
         </section>
         <section class="airline-tab" id="content-review">
           <ReviewTab 
-          v-if="isInfoRendered"
+          v-if="isInfoRendered & isChartRendered"
           :airlineInfo="airlineInfo"
           :airlineId="airlineId"
           :arrivalId="arrivalId"
           :arrivalName="arrivalName"
+          :chartData="reviewTotalRateChartData"
           />
           <div
           v-else
@@ -67,11 +68,13 @@ export default {
     return {
       isStatisticsRendered: false,
       isInfoRendered: false,
+      isChartRendered: false,
       arrivalName: '',
       arrivalId: '',
       airlineId: '',
       airlineInfo: {},
       report: {},
+      reviewTotalRateChartData: {},
     }
   },
   methods: {
@@ -91,6 +94,7 @@ export default {
           this.arrivalName = report.arrival_name
         })
         .catch((err) => {
+          this.$vs.loading.close()
           console.log(err)
         })
     },
@@ -108,12 +112,27 @@ export default {
           console.log(err)
         })
     },
+    getAirlineTotalRates: function () {
+      axios({
+        url: API.URL + API.ROUTES.reviewDetail + 'score/'  + this.airlineId + '/',
+        method: "get",
+      })
+        .then((res) => {
+          const chartData = res.data
+          this.reviewTotalRateChartData = chartData
+          this.isChartRendered = true
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   },
   created() {
     this.arrivalId = this.$route.params.arrivalId
     this.airlineId = this.$route.params.airlineId
     this.getAirlineInfo()
     this.getAirlineStatistics()
+    this.getAirlineTotalRates()
   }
 }
 </script>
@@ -141,7 +160,7 @@ export default {
   .airline-tab {
     display: none;
     padding: 20px 0 0;
-    border-top: 4px solid #3D2F6B;
+    border-top: 2px solid #3D2F6B;
     text-align: center;
   }
 
@@ -168,7 +187,7 @@ export default {
     color: #555;
     border: 1px solid #ddd;
     border-top: 2px solid #3D2F6B;
-    border-bottom: 1px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
   }
 
   #tab-analysis:checked ~ #content-analysis,

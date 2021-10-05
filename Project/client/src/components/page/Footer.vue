@@ -74,6 +74,11 @@ export default {
     width: 1100px;
   }
 
+  .footer-content {
+    display: flex;
+    margin-bottom: 20px;
+  }
+
   .footer-onair {
     font-weight: 600;
     font-size: 14px;
@@ -81,10 +86,6 @@ export default {
     margin-left: 220px;
   }
 
-  .footer-content {
-    display: flex;
-    margin-bottom: 20px;
-  }
 
   .footer-router {
     margin-left: 50px;

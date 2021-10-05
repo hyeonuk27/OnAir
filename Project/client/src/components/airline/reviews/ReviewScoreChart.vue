@@ -29,7 +29,7 @@ export default {
             enabled: false
         },
         title: {
-          text: '별점 분포',
+          text: '평점 분포',
           style: {"color": '#3D2F6B', "font-weight": 'bold'}
         },
         tooltip: {
@@ -54,19 +54,19 @@ export default {
           name: '비율',
           colorByPoint: true,
           data: [{
-            name: '★',
+            name: '1점',
             y: this.chartData['1'],
           },{
-            name: '★★',
+            name: '2점',
             y: this.chartData['2'],
           },{
-            name: '★★★',
+            name: '3점',
             y: this.chartData['3'],
           },{
-            name: '★★★★',
+            name: '4점',
             y: this.chartData['4'],
           },{
-            name: '★★★★★',
+            name: '5점',
             y: this.chartData['5'],
           }
           ]

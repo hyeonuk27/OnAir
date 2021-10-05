@@ -5,6 +5,7 @@ import Main from '@/views/Main.vue'
 import Login from '@/views/Login.vue'
 import Airline from '@/views/Airline.vue'
 import Profile from '@/views/Profile.vue'
+import NotFound from '@/views/NotFound.vue'
 import ProfileUpdate from '@/components/profile/ProfileUpdate.vue'
 import MyReview from '@/components/profile/MyReview.vue'
 import Form from '@/views/Form.vue'
@@ -57,6 +58,11 @@ const routes = [
     path: '/:userId/logs',
     name: 'SearchLog',
     component: SearchLog
+  },
+  {
+    path: '/notfound',
+    name: 'NotFound',
+    component: NotFound
   },
 ]
 

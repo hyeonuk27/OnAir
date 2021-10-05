@@ -40,7 +40,7 @@ export default {
       width: 500,
       height: 50,
       longtitle: true,
-      theme: 'dark',
+      theme: 'light',
       onsuccess: this.onSuccess,
       onfailure: this.onFailure,
     })

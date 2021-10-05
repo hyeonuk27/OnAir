@@ -1,22 +1,10 @@
 <template>
   <div class='footer'>
     <div class='footer-container'>
-      <div class="footer-onair">
-        <span>알고 타자! 믿고 타자! 같이 타자!</span>
-      </div>
-      <div class="footer-content">
-        <div class="onair-logo">
-          <img style="width: 240px;" src="@/assets/onair_logo.png" alt="onair-logo">
-        </div>
-        <div class="onair-info">
-          <span class="info">
-            On-Air(온에어)는 빅데이터를 활용하여 소비자가 항공사 별 서비스 품질을 시각화한 통합 웹 서비스입니다. 
-            데이터를 가공, 분석하여 지연률, 결항률 통계를 시각화하여 제공하며 현재 운행중인 비행기의 지연 시간을 다각도로 예측하여 예비 이용객이 참고할 수 있도록 했습니다. 
-            또한 항공사에 대한 리뷰를 남기고 리뷰를 기반으로 한 실사용자의 항공사 별 평가를 감정 분석하여 제공합니다.
-          </span>
-        </div>
-      </div>
       <div style="display: flex;">
+        <div class="onair-logo">
+          <img style="width: 130px;" src="@/assets/onair_logo.png" alt="onair-logo">
+        </div>
         <div class="footer-router">
           <span @click="moveToMain">HOME</span>
           <span onclick="window.open('https://www.notion.so/jiu-park/Data-Set-80694d9e510240ef83c5e34fc55e838a')">데이터</span>
@@ -27,6 +15,19 @@
           <p class="notion-link">
             <span style="cursor: pointer;" onclick="window.open('https://www.notion.so/jiu-park/8d8a98436ed448d38bc4381f707df3b5')">CONTACT US</span>
           </p>
+        </div>
+      </div>
+      <div class="footer-onair">
+        <span>알고 타자! 믿고 타자! 같이 타자!</span>
+      </div>
+      <div class="footer-content">
+        <img style="width: 72px; object-fit: cover; margin-left: 25px;" src="@/assets/favicon.png" alt="">
+        <div class="onair-info">
+          <span class="info">
+            On-Air(온에어)는 빅데이터를 활용하여 소비자가 항공사 별 서비스 품질을 시각화한 통합 웹 서비스입니다. 
+            데이터를 가공, 분석하여 지연률, 결항률 통계를 시각화하여 제공하며 현재 운행중인 비행기의 지연 시간을 다각도로 예측하여 예비 이용객이 참고할 수 있도록 했습니다. 
+            또한 항공사에 대한 리뷰를 남기고 리뷰를 기반으로 한 실사용자의 항공사 별 평가를 감정 분석하여 제공합니다.
+          </span>
         </div>
       </div>
       <p class="copyright">Copyright ⓒ 2021<br>On:Air All rights reserved.</p>
@@ -65,7 +66,7 @@ export default {
     background-color: #EFEDF2;
     display: flex;
     justify-content: center;
-    padding: 40px 0px 30px 0px;
+    padding: 30px 0px 30px 0px;
   }
 
   .footer-container {
@@ -73,19 +74,23 @@ export default {
     width: 1100px;
   }
 
-  .footer-onair {
-    font-weight: 600;
-    color: #3D2F6B;
-  }
-
   .footer-content {
     display: flex;
     margin-bottom: 20px;
   }
 
+  .footer-onair {
+    font-weight: 600;
+    font-size: 14px;
+    color: #3D2F6B;
+    margin-left: 220px;
+  }
+
+
   .footer-router {
-    margin-left: 120px;
-    padding-top: 5px;
+    margin-left: 50px;
+    padding-top: 23px;
+    margin-bottom: 30px;
   }
 
   .footer-router span {
@@ -101,6 +106,7 @@ export default {
   .onair-info {
     text-align: justify;
     color: #656F8C;
+    margin-left: 123px;
   }
 
   .info {
@@ -109,7 +115,7 @@ export default {
 
   .onair-plus {
     color: #3D2F6B;
-    padding-top: 5px;
+    padding-top: 23px;
     text-align: right;
   }
 
@@ -120,7 +126,7 @@ export default {
   .copyright {
     font-size: 10px;
     color: #656F8C;
-    margin-top: 40px;
+    margin-top: 10px;
     text-align: right;
   }
 </style>

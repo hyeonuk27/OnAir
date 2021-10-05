@@ -79,6 +79,7 @@ export default {
 
   .profile-container {
     width: 1190px;
+    min-height: 650px;
   }
 
   .profile-image {

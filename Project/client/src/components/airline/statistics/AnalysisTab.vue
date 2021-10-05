@@ -1,9 +1,9 @@
 <template>
   <div class="analysis-container">
     <div class="anaylsis-preview">
-      <h5 class="text-start">
-        <ReviewKeyword />
-      </h5>
+      <div class="analysis-arrival">
+        <span>ICN <span style="transform: rotate(90deg);" class="material-icons">flight</span> {{ this.report.arrival_name.substring(0, 3)}}</span>
+      </div>
       <div class="analysis-head">
         <p class="analysis-head-total"> 
           총 운항횟수 
@@ -59,14 +59,10 @@
 </template>
 
 <script>
-import ReviewKeyword from "@/components/airline/reviews/ReviewKeyword";
 
 export default {
   name: 'AnalysisTab',
   props: ['report'],
-  components: {
-  ReviewKeyword
-  },
   data() {
     return {
         analysisChartOptions: {
@@ -532,10 +528,10 @@ export default {
           '#fff6ef', '#eb488a', '#B81F5A'
         ], 
         credits: {
-            enabled: false
+            enabled: false,
         },
         exporting: {
-            enabled: false
+            enabled: false,
         },
         title: {
             text: this.report.airline_name + '의 전체 지연 사유 분포',
@@ -669,6 +665,14 @@ export default {
     top: -10px;
   }
 
+  .analysis-arrival {
+    text-align: start;
+    margin-left: 12px;
+    padding-bottom: 15px;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
   .analysis-head {
     display: grid;
     padding: 10px;
@@ -677,6 +681,7 @@ export default {
     width: 1000px;
     font-size: 14px;
     font-weight: bold;
+    margin-top: 15px;
     text-align: center;
   }
 

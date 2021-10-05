@@ -30,7 +30,9 @@
     </div>
     <div class="review-list-el-arrival">
       <div>ARRIVAL</div>
-      ✈ {{ review.arrivalname }}
+      <div style="display: inline-flex; align-items: center;">
+        <span style="font-size: 16px; transform: rotate(90deg); margin-right: 3px;" class="material-icons">flight</span> {{ review.arrivalname }}
+      </div>
     </div>
     <img
       class="review-list-el-profile"

@@ -4,10 +4,10 @@
     <div class="main-container">
       <div class="arrival-info">
         <span>
-          {{departure}}
+          {{departure}}<span style="font-size: 130px; vertical-align: -20px; transform: rotate(90deg);" class="material-icons">flight</span>
         </span>
         <span style="margin-top: 250px; margin-left: 350px;">
-          {{arrival}}
+          <span style="font-size: 130px; vertical-align: -20px; transform: rotate(90deg);" class="material-icons">flight</span>{{arrival}}
         </span>
       </div>
       <div class="search-box">
@@ -59,8 +59,8 @@ export default {
       arrivalList: [],
       departureList: [{text: 'ICN(인천)', value: 1}],
       bgImg: require('@/assets/main.jpg'),
-      departure: 'On✈',
-      arrival: '✈Air',
+      departure: 'On',
+      arrival: 'Air',
       arrivalId: '',
       isSearched: false,
       isRendered: false,
@@ -133,10 +133,10 @@ export default {
         })
     },
     setDeparture: function (name) {
-      this.departure = name + '✈'
+      this.departure = name
     },
     setArrival: function (name) {
-      this.arrival = '✈' + name
+      this.arrival = name
     }
   },
   mounted() {

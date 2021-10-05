@@ -86,60 +86,68 @@ export default {
   }
 
   .form__field {
-  font-family: inherit;
-  width: 100%;
-  border: 0;
-  border-bottom: 2px solid #656F8C;
-  outline: 0;
-  font-size: 18px;
-  color: #84898C;
-  padding: 1px;
-  background: transparent;
-  transition: border-color 0.2s;
-}
-.form__field::placeholder {
-  color: transparent;
-}
-.form__field:placeholder-shown ~ .form__label {
-  font-size: 12px;
-  cursor: text;
-  top: 20px;
-}
+    font-family: inherit;
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid #656F8C;
+    outline: 0;
+    font-size: 18px;
+    color: #84898C;
+    padding: 1px;
+    background: transparent;
+    transition: border-color 0.2s;
+  }
 
-.form__label {
-  position: absolute;
-  top: 0;
-  display: block;
-  transition: 0.2s;
-  font-size: 12px;
-  color: #9b9b9b;
-}
+  .form__field::placeholder {
+    color: transparent;
+  }
 
-.form__field:focus {
-  font-weight: 400;
-  border-width: 3px;
-  border-image: linear-gradient(to right, #3D2F6B, #D4C6E2);
-  border-image-slice: 1;
-}
-.form__field:focus ~ .form__label {
-  position: absolute;
-  top: 0;
-  display: block;
-  transition: 0.2s;
-  font-size: 12px;
-  color: #B9A6C9;
-  font-weight: 700;
-}
+  .form__field:placeholder-shown ~ .form__label {
+    font-size: 12px;
+    cursor: text;
+    top: 20px;
+  }
 
-/* reset input */
-.form__field:required, .form__field:invalid {
-  box-shadow: none;
-}
+  .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 12px;
+    color: #9b9b9b;
+  }
+
+  .form__field:focus {
+    font-weight: 400;
+    border-width: 3px;
+    border-image: linear-gradient(to right, #3D2F6B, #D4C6E2);
+    border-image-slice: 1;
+  }
+
+  .form__field:focus ~ .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 12px;
+    color: #B9A6C9;
+    font-weight: 700;
+  }
+
+  /* reset input */
+  .form__field:required, .form__field:invalid {
+    box-shadow: none;
+  }
 
   .profile-update {
     display: flex;
     justify-content: center;
     margin-top: 150px;
+  }
+
+  .profile-update-container {
+    width: 1190px;
+    min-height: 650px;
   }
 
   .profile-update-button {

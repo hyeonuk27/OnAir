@@ -8,9 +8,6 @@
         <h1><i class="fas fa-exclamation-circle"></i> 잘못된 접근입니다!</h1>
         <h5>찾으시는 항공사 - 목적지 분석 결과가 아직 없어요. 곧 추가할게요!</h5>
       </div>
-      <div class="not-found-link">
-        <span>메인 페이지로</span>
-      </div>
     </div>
   </div>
 </template>
@@ -46,9 +43,5 @@ export default {
 
   .not-found-text {
     text-align: center;
-  }
-
-  .not-found-link {
-    margin-top: 40px;
   }
 </style>

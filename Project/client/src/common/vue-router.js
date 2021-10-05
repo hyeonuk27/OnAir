@@ -60,7 +60,11 @@ const routes = [
     component: SearchLog
   },
   {
-    path: '/notfound',
+    path: '/404',
+    name: 'NotFound',
+    component: NotFound
+  },
+  { path: '*',
     name: 'NotFound',
     component: NotFound
   },

@@ -26,8 +26,9 @@ SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+# DEBUG = True
 
-ALLOWED_HOSTS = ['j5a203.p.ssafy.io', 'localhost', '127.0.0.1', '0.0.0.0:8000']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -61,7 +62,9 @@ MIDDLEWARE = [
 # CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8080',
+    'http://localhost:8081',
     'http://127.0.0.1:8080',
+    'http://127.0.0.1:8081',
     'https://j5a203.p.ssafy.io',
 )
 

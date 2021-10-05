@@ -12,19 +12,25 @@ import API from '@/common/drf.js'
 export default {
   name: 'LoginButton',
   methods: {
-    onSuccess(googleUser) {
+    onSuccess: function(googleUser) {
       const accessToken = googleUser.getAuthResponse().id_token
-      axios.get("https://j5a203.p.ssafy.io/api/v1/auth/login/", {
+      axios({
+        url: API.URL + API.ROUTES.login,
+        method: 'get',
         headers: {
-            Authorization: accessToken
+          Authorization: accessToken
         }
       })
       .then((res) => {
         localStorage.setItem('token', res.data.access_token)
+        localStorage.setItem('userId', res.data.info.id)
+        localStorage.setItem('name', res.data.info.name)
+        localStorage.setItem('profileUrl', res.data.info.profile_url)
         this.$router.push({ name: "Main" })
+        window.location.reload()
       })
     },
-    onFailure(error) {
+    onFailure: function(error) {
       console.log(error);
     },
   },
@@ -34,10 +40,10 @@ export default {
       width: 500,
       height: 50,
       longtitle: true,
-      theme: 'dark',
+      theme: 'light',
       onsuccess: this.onSuccess,
       onfailure: this.onFailure,
-    });
+    })
   },
 }
 </script>

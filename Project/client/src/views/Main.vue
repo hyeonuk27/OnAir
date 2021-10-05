@@ -1,29 +1,40 @@
 <template>
-  <div class='main' :style="{backgroundImage: 'linear-gradient( rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08) ), url('+ bg_img +')'}">
+  <div class='main' :style="{backgroundImage: 'linear-gradient( rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08) ), url('+ bgImg +')'}">
     <!-- <img class="main-img" src="@/assets/main.jpg" alt=""> -->
     <div class="main-container">
       <div class="arrival-info">
         <span>
-          {{departure}}
+          {{departure}}<span style="font-size: 130px; vertical-align: -20px; transform: rotate(90deg);" class="material-icons">flight</span>
         </span>
         <span style="margin-top: 250px; margin-left: 350px;">
-          {{arrival}}
+          <span style="font-size: 130px; vertical-align: -20px; transform: rotate(90deg);" class="material-icons">flight</span>{{arrival}}
         </span>
       </div>
       <div class="search-box">
         <Search
-        :arrival_list="arrival_list"
-        :departure_list="departure_list"
+        v-if="isRendered"
+        :arrivalList="arrivalList"
+        :departureList="departureList"
         @search="getAirlines"
         />
       </div>
       <div class="airline-list">
-        <div>
-          <Airline
-          v-for="(airline, idx) in airline_list"
+        <div v-if="isSearched">
+          <AirlineElement
+          v-for="(airline, idx) in airlineList"
           :key="idx"
           :airline="airline"
+          :arrivalId="arrivalId"
           />
+        </div>
+        <div class="main-intro" v-else>
+          <span style="font-size: 17px; font-weight: bold;">On:Air는 당신의 편안한 비행을 위해 항공사의 지연률 통계 및 예측, 리뷰 감성분석 서비스를 제공합니다.</span><br><br><br>
+          <span style="margin-left: 20px; margin-right: 150px;">항공사 출발 데이터 통계</span>
+          <span style="margin-right: 140px;">빅데이터 기반 출발 지연 예측</span>
+          <span>리뷰 키워드 도출 및 감성분석</span><br>
+          <img style="border-radius: 5px; width: 300px; object-fit: cover; margin-right: 30px; margin-top: 10px;" src="@/assets/intro1.png" alt="">
+          <img style="border-radius: 5px; width: 306px; object-fit: cover; margin-right: 30px; margin-top: 10px;" src="@/assets/intro2.png" alt="">
+          <img style="border-radius: 5px; width: 296px; object-fit: cover; margin-top: 10px;" src="@/assets/intro3.png" alt="">
         </div>
       </div>
     </div>
@@ -31,7 +42,7 @@
 </template>
 
 <script>
-import Airline from "@/components/main/Airline"
+import AirlineElement from "@/components/main/AirlineElement"
 import Search from "@/components/main/Search"
 import axios from "axios"
 import API from "@/common/drf.js"
@@ -40,23 +51,25 @@ export default {
   name: 'Main',
   components: {
     Search,
-    Airline,
+    AirlineElement,
   },
   data() {
     return {
-      airline_list: [],
-      arrival_list: [],
-      departure_list: [{text: 'ICN(인천)', value: 1}],
-      bg_img: require('@/assets/main.jpg'),
-      departure: 'On✈',
-      arrival: '✈Air',
-      is_searched: false,
+      airlineList: [],
+      arrivalList: [],
+      departureList: [{text: 'ICN(인천)', value: 1}],
+      bgImg: require('@/assets/main.jpg'),
+      departure: 'On',
+      arrival: 'Air',
+      arrivalId: '',
+      isSearched: false,
+      isRendered: false,
     }
   },
   methods: {
     getArrivals: function() {
       axios({
-        url: API.URL + API.ROUTES.get_arrivals,
+        url: API.URL + API.ROUTES.getArrivals,
         method: "get",
       })
         .then((res) => {
@@ -71,55 +84,65 @@ export default {
             return 0
           })
           for (let i = 0; i < arrivals.length; i++) {
-            this.arrival_list.push(
+            this.arrivalList.push(
               {id: arrivals[i].id, text: arrivals[i].name, value: i+1}
             )
           }
+          this.isRendered = true
         })
         .catch((err) => {
           console.log(err)
         })
     },
-    getAirlines: function (arrival_id, departure_code, arrival_code) {
-      this.airline_list = []
-      this.setDeparture(departure_code)
-      this.setArrival(arrival_code)
-      this.bg_img = `https://j5a203.p.ssafy.io/static/airlines/images/city_bg/${arrival_code.toLowerCase()}.jpeg`
+    getAirlines: function (arrivalId, departureCode, arrivalCode) {
+      this.$vs.loading({
+        type: 'material'
+      })
+      this.airlineList = []
+      this.arrivalId = arrivalId
+      this.setDeparture(departureCode)
+      this.setArrival(arrivalCode)
+      this.bgImg = `https://j5a203.p.ssafy.io/static/airlines/images/city_bg/${arrivalCode.toLowerCase()}.jpeg`
       axios({
-        url: API.URL + API.ROUTES.get_airlines + arrival_id + '/',
+        url: API.URL + API.ROUTES.getAirlines + arrivalId + '/',
         method: "get",
       })
         .then((res) => {
-          const airlines = res.data.Airlines
-          airlines.sort(function (a, b) {
-            if (a.total > b.total) {
-              return -1
-            } 
-            else if (a.total < b.total) {
-              return 1
+          if (this.airlineList.length == 0) {
+            const airlines = res.data.Airlines
+            airlines.sort(function (a, b) {
+              if (a.total > b.total) {
+                return -1
+              } 
+              else if (a.total < b.total) {
+                return 1
+              }
+              return 0
+            })
+            for (const airline of airlines) {
+              if (airline.total != 0) {
+                this.airlineList.push(airline)
+              }
             }
-            return 0
-          })
-          for (const airline of airlines) {
-            if (airline.total != 0) {
-              this.airline_list.push(airline)
-            }
+            this.isSearched = true
+            this.$vs.loading.close()
           }
-          this.is_searched = true
         })
         .catch((err) => {
           console.log(err)
         })
     },
     setDeparture: function (name) {
-      this.departure = name + '✈'
+      this.departure = name
     },
     setArrival: function (name) {
-      this.arrival = '✈' + name
+      this.arrival = name
     }
   },
-  created() {
+  mounted() {
     this.getArrivals()
+  },
+  created() {
   }
 }
 </script>
@@ -128,7 +151,7 @@ export default {
   .airline-list {
     display: flex;
     justify-content: center;
-    margin-bottom: 150px;
+    padding-bottom: 150px;
   }
 
   .arrival-info {
@@ -149,6 +172,14 @@ export default {
   .main-container {
     height: auto;
     min-height: 1000px;
+  }
+
+  .main-intro {
+    background-color: rgba(239, 237, 242, 0.5);
+    border-radius: 5px;
+    color: #555555;
+    padding: 60px 40px 60px 40px;
+    width: 1050px;
   }
 
   .search-box {

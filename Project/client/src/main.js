@@ -6,9 +6,19 @@ import router from './common/vue-router.js'
 import Vuesax from 'vuesax'
 import 'vuesax/dist/vuesax.css'
 import 'material-icons/iconfont/material-icons.css'
+import Highcharts from "highcharts"
+import HighchartsVue from 'highcharts-vue'
+import ExportingHighcharts from "highcharts/modules/exporting";
+import VueMoment from 'vue-moment'
+import loadWordcloud from 'highcharts/modules/wordcloud'
+
+loadWordcloud(Highcharts)
 
 Vue.use(VueRouter)
 Vue.use(Vuesax)
+ExportingHighcharts(Highcharts)
+Vue.use(HighchartsVue, {tagName: 'charts'})
+Vue.use(VueMoment)
 Vue.config.productionTip = false
 
 new Vue({

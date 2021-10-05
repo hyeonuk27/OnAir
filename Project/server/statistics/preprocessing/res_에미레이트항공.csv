@@ -1,3 +1,3 @@
-,arrival,total,delayed_time,delayrate,cancelrate,rateu30,rateu60,rateo60,airline,id
-0,DXB(두바이),1572,103.0,0.89,0.06,99.05,0.0,0.89,에미레이트항공,DZveRynwbtQzT
-1,PEK(베이징),1,80.0,100.0,0.0,0.0,0.0,100.0,에미레이트항공,8FXz53ZQCI8XF
+,arrival,total,under_30,under_60,over_60,delay_time,delay_rate,cancel_rate,airline,id
+0,DXB(두바이),1572,99.11,0.0,0.89,1.0,0.89,0.06,에미레이트항공,pIE78P7KO1gwV
+1,PEK(베이징),1,0.0,0.0,100.0,80.0,100.0,0.0,에미레이트항공,cDxV65LPs3h6H

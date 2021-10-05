@@ -2,6 +2,11 @@ from rest_framework import serializers
 from .models import Airline, Arrival, Review, Log, StatisticsResult
 
 class ReviewListSerializer(serializers.ModelSerializer):
+    username = serializers.ReadOnlyField()
+    userid = serializers.ReadOnlyField()
+    userpic = serializers.ReadOnlyField()
+    arrivalname = serializers.ReadOnlyField()
+
 
     class Meta:
         model = Review
@@ -19,7 +24,7 @@ class LogListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Log
-        fields = ('user', 'airline', 'arrival')        
+        fields = '__all__'       
 
 class ArrivalListSerializer(serializers.ModelSerializer):
 
@@ -38,10 +43,12 @@ class AirlineDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Airline
-        exclude = ('id',)
+        fields = '__all__'
 
 class AirlineReportSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StatisticsResult
         fields = ('arrival', 'total', 'under_30', 'under_60', 'over_60', 'delay_rate', 'delay_time')
+
+

@@ -36,7 +36,6 @@ export default {
   },
   methods: {
     getSearchLogs: function () {
-      console.log(API.URL + API.ROUTES.getSearchLogs)
       axios({
         url: API.URL + API.ROUTES.getSearchLogs,
         method: "get",
@@ -46,7 +45,6 @@ export default {
       })
         .then((res) => {
           this.logs = res.data
-          console.log(this.logs)
         })
         .catch((err) => {
           console.log(err)

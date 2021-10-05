@@ -95,6 +95,7 @@ export default {
         })
         .catch((err) => {
           this.$vs.loading.close()
+          this.$router.replace({name: 'NotFound'})
           console.log(err)
         })
     },

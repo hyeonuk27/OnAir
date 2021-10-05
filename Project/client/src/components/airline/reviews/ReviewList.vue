@@ -8,7 +8,7 @@
         @reviewListUpdate="getReviewList"
       />
       <vs-pagination
-        class="review-list-pagination justify-self-center"
+        class="review-list-pagination"
         :total="pageTotal"
         v-model="pageNum"
         color="#B9A6C9"
@@ -62,17 +62,20 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 #review-list-container {
   height: 100%;
 }
 
 .review-list-pagination {
   margin: 40px 100px 50px 0px;
+  display: flex;
+  justify-content: center;
 }
 
 .vs-pagination--mb {
-  justify-content: center;
+  display: flex;
+  justify-content: center !important;
 }
 </style>
 

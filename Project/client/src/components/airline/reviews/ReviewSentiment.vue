@@ -52,8 +52,8 @@ export default {
         return {
           chart: {
               type: 'bar',
-              height: 150,
-              width: 1000,
+              height: 100,
+              width: 450,
           },
           colors: ['rgba(13, 110, 253, 0.75)', 'rgba(220, 53, 69, 0.75)'],
           credits: {
@@ -67,7 +67,7 @@ export default {
             style: {"color": '#3D2F6B', "font-weight": 'bold'}
           },
           legend: {
-            enabled: true,
+            enabled: false,
           },
           xAxis: {
             visible: false,
@@ -84,7 +84,7 @@ export default {
           plotOptions: {
               bar: {
                 stacking: 'percent',
-                borderRadius: 12.5,
+                borderRadius: 10,
               },
           },
           series: [{

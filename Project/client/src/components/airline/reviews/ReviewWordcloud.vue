@@ -5,10 +5,13 @@
     <!-- </div> -->
   </div>
 </template>
+
 <script>
 export default {
   name: "ReviewWordcloud",
 }
+</script>
+
 // import axios from "axios";
 // import API from "@/common/drf.js"
 // import * as d3 from "d3";
@@ -90,5 +93,3 @@ export default {
 //     },
 //   }
 // };
-// </script>
-</script>

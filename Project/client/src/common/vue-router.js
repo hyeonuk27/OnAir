@@ -87,7 +87,7 @@ router.beforeEach((to, from, next) => {
 
   const authRequired = authPages.includes(to.name)
   const isLoggedIn = localStorage.getItem('token') ? true : false
-
+  
   if (authRequired && !isLoggedIn) {
     swal({
       title: "로그인이 필요한 페이지입니다.",
@@ -101,6 +101,8 @@ router.beforeEach((to, from, next) => {
     })
     .then(() => {
       next({ name: 'Login' })
-    })    
+    })
+  } else {
+    next()
   }
 })

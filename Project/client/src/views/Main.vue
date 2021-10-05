@@ -19,13 +19,17 @@
         />
       </div>
       <div class="airline-list">
-        <div>
+        <div v-if="isSearched">
           <AirlineElement
           v-for="(airline, idx) in airlineList"
           :key="idx"
           :airline="airline"
           :arrivalId="arrivalId"
           />
+        </div>
+        <div v-else>
+          오늘의 항공 분석 예측 서비스<br><br>
+          On:Air는 당신의 편안한 비행을 위해 항공사의 지연률 통계 및 예측 서비스를 제공합니다.
         </div>
       </div>
     </div>
@@ -112,13 +116,11 @@ export default {
             })
             for (const airline of airlines) {
               if (airline.total != 0) {
-                console.log(airline)
                 this.airlineList.push(airline)
               }
             }
             this.isSearched = true
             this.$vs.loading.close()
-            console.log(this.airlineList)
           }
         })
         .catch((err) => {

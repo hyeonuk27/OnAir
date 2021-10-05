@@ -421,10 +421,8 @@ def review_sentiment(request, airline_id):
 
 @api_view(['GET'])
 def review_keyword(request, airline_id):
-    context = ssl._create_unverified_context()
-    req = urlopen('https://j5a203.p.ssafy.io/static/airlines/npl/stopwords.txt', context=context)
-    stopwords=req.read().decode('utf8')
-    stopwords = stopwords.split('\n')
+    words = pd.read_csv('npl/stopwords.csv', header=None)
+    stopwords = list(words[0])
     reviews = get_list_or_404(Review, airline=airline_id)
     airline_review = ""
     for review in reviews:
@@ -449,10 +447,8 @@ def review_keyword(request, airline_id):
 
 @api_view(['GET'])
 def review_wordcloud(request, airline_id):
-    context = ssl._create_unverified_context()
-    req = urlopen('https://j5a203.p.ssafy.io/static/airlines/npl/stopwords.txt', context=context)
-    stopwords=req.read().decode('utf8')
-    stopwords = stopwords.split('\n')
+    words = pd.read_csv('npl/stopwords.csv', header=None)
+    stopwords = list(words[0])
     reviews = get_list_or_404(Review, airline=airline_id)
     airline_review = ""
     for review in reviews:
@@ -469,5 +465,13 @@ def review_wordcloud(request, airline_id):
             final_list.append(noun_adj)
 
     count = Counter(final_list)
-    words = dict(count.most_common())
-    return HttpResponse(json.dumps(words, ensure_ascii = False), content_type = 'application/json; charset=utf8')
+    word_dict = []
+    for word, cnt in count.most_common()[:100]:
+        if len(word) >= 2:
+            obj = {
+                "name": word,
+                "weight": cnt,
+            }
+            word_dict.append(obj)
+    
+    return HttpResponse(json.dumps(word_dict, ensure_ascii = False), content_type = 'application/json; charset=utf8')

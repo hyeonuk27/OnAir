@@ -8,7 +8,10 @@ import 'vuesax/dist/vuesax.css'
 import 'material-icons/iconfont/material-icons.css'
 import HighchartsVue from 'highcharts-vue'
 import VueMoment from 'vue-moment'
+import Highcharts from 'highcharts'
+import loadWordcloud from 'highcharts/modules/wordcloud'
 
+loadWordcloud(Highcharts)
 
 Vue.use(VueRouter)
 Vue.use(Vuesax)

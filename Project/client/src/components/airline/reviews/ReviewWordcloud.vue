@@ -1,94 +1,112 @@
 <template>
   <div>
-    <img src="@/assets/test.png" style="width:100%" alt="">
-    <!-- <div id="word-cloud"> -->
-    <!-- </div> -->
+    <!-- <img src="@/assets/test.png" style="width:100%" alt=""> -->
+    <figure class="highcharts-figure">
+      <charts :options="wordCloud" />
+    </figure>
   </div>
 </template>
+
 <script>
+import axios from "axios"
+import API from "@/common/drf.js"
+
 export default {
   name: "ReviewWordcloud",
+  props: {
+    airlineId: String,
+  },
+  created() {
+    this.getKeyword()
+  },
+  data() {
+    return {
+      data: [],
+    };
+  },
+  computed: {
+    wordCloud: function() {
+      return {
+        accessibility: {
+            screenReaderSection: {
+                beforeChartFormat: 
+                    '<h5>{chartTitle}</h5>' +
+                    '<div>{chartLongdesc}</div>' +
+                    '<div>{viewTableButton}</div>'
+            }
+        },
+        series: [{
+            colors: [
+              '#3D2F6B', '#B9A6C9', '#85456B'], 
+              // '#3D2F6B', '#632A6D', '#85456B'], 
+            rotation: {
+                from: 0,
+                to: 0,
+            },
+            // maxfontsize: 1000,
+            minFontSize: 8,
+            duration: 0,
+            placementStrategy: 'random',
+            spiral: 'archimedean',
+            style: {"fontFamily":"sans-serif"},
+            type: 'wordcloud',
+            data: this.data,
+            name: '빈도수'
+        }],
+        title: {
+            text: ''
+        }
+      }
+    }
+  },
+  methods: {
+    getKeyword: function () {
+      axios({
+        url: `${API.URL}${API.ROUTES.reviewDetail}wordcloud/${this.airlineId}/`,
+        method: "get",
+      })
+      .then((res) => {
+        this.data = res.data
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    },
+  }
 }
-// import axios from "axios";
-// import API from "@/common/drf.js"
-// import * as d3 from "d3";
-// export default {
-//   name: "ReviewWordcloud",
-//   props: {
-//     airlineId: String,
-//   },
-//   data() {
-//     return {
-//       keywordList: [],
-//     };
-//   },
-//   mounted() {
-//     this.getKeyword();
-//   },
-//   methods: {
-//     getKeyword: function () {
-//       axios({
-//         url: `${API.URL}${API.ROUTES.reviewDetail}wordcloud/${this.airlineId}/`,
-//         method: "get",
-//       })
-//       .then((res) => {
-//         this.keywordList = res.data
-//         for (var keyword in this.keywordList) {
-//           this.showCloud(keyword)
-//           setInterval(function(){
-//             this.showCloud(keyword)
-//           }, 2000)
-//         }
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//     },
-//     showCloud: function(keyword) {
-//       d3.layout.cloud().size([960, 500])
-//         .words(keyword)
-//         .rotate(function (d) {
-//           return d[0].length > 3 ? 0 : 90;
-//           })
-//         .fontSize(function (d) {
-//           return d[1];
-//         })
-//         .on("end", this.draw)
-//         .start();
-//     },
-//     draw: function(words) {
-//       d3.select("#word-cloud")    
-//         .append("svg")
-//         .attr("width", 960)
-//         .attr("height", 500)
-//         .append("g")
-//         .attr("transform", "translate(" + 960 / 2 + "," + 500 / 2 + ")")
-//         .selectAll("text")
-//         .data(words)
-//         .enter()
-//         .append("text")
-//         .style("font-family", "overwatch")
-//         .style("fill", function (d) {
-//           var keywords = ["자리야", "트레이서", "한조"];
-//           return (keywords.indexOf(d.text) > -1 ? "#fbc280" : "#405275");
-//         })
-//         .style("fill-opacity", .5)
-//         .attr("text-anchor", "middle") 
-//         .attr('font-size', 1)
-//         .text(function (d) {
-//           return d.text;
-//         })
-//         .transition()
-//         .duration(600)
-//         .style("font-size", function (d) {
-//           return d[1] + "px";
-//         })
-//         .attr("transform", function (d) {
-//           return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-//         })
-//         .style("fill-opacity", 1); 
-//     },
-//   }
-// };
-// </script>
+
 </script>
+<style>
+.highcharts-figure, .highcharts-data-table table {
+  width: 100%; 
+  margin: 1em auto;
+}
+
+.highcharts-data-table table {
+	font-family: Verdana, sans-serif;
+	border-collapse: collapse;
+	border: 1px solid #EBEBEB;
+	margin: 10px auto;
+	text-align: center;
+	width: 100%;
+	max-width: 500px;
+}
+.highcharts-data-table caption {
+  padding: 1em 0;
+  font-size: 1.2em;
+  color: #555;
+}
+.highcharts-data-table th {
+	font-weight: 600;
+  padding: 0.5em;
+}
+.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+  padding: 0.5em;
+}
+.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+  background: #f8f8f8;
+}
+.highcharts-data-table tr:hover {
+  background: #f1f7ff;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-4">
+  <div class="mt-2 mb-5">
     <div class="keyword">
       <span
         v-for="keyword in keywordList"

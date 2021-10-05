@@ -45,16 +45,17 @@ export default {
     width: 1100px;
   }
 
+  .footer-content {
+    display: flex;
+    margin-bottom: 20px;
+  }
+
   .footer-onair {
     font-weight: 600;
     margin-top: 30px;
     color: #3D2F6B;
   }
 
-  .footer-content {
-    display: flex;
-    margin-bottom: 20px;
-  }
 
   .onair-logo {
     margin-top: 10px;

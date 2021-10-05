@@ -14,7 +14,7 @@
         <input class="airline-tabradio" id="tab-analysis" type="radio" name="tab-check" checked>
         <label class="airline-tablabel" for="tab-analysis">분석 리포트</label>
         <input class="airline-tabradio" id="tab-review" type="radio" name="tab-check">
-        <label class="airline-tablabel" for="tab-review">리뷰 리포트</label>
+        <label class="airline-tablabel" for="tab-review">항공사 리뷰</label>
         <section class="airline-tab" id="content-analysis">
           <AnalysisTab
           v-if="isStatisticsRendered"
@@ -159,7 +159,7 @@ export default {
   .airline-tab {
     display: none;
     padding: 20px 0 0;
-    border-top: 4px solid #3D2F6B;
+    border-top: 2px solid #3D2F6B;
     text-align: center;
   }
 
@@ -186,7 +186,7 @@ export default {
     color: #555;
     border: 1px solid #ddd;
     border-top: 2px solid #3D2F6B;
-    border-bottom: 1px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
   }
 
   #tab-analysis:checked ~ #content-analysis,

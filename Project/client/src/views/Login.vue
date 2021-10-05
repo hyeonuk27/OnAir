@@ -2,7 +2,7 @@
   <div>
     <div class="login-container">
       <div>
-        <img src="@/assets/login.jpg" style="width: 500px;" alt="login-image">
+        <img src="@/assets/login.png" style="width: 500px;" alt="login-image">
       </div>
       <div class="d-flex justify-content-center m-2">
         <LoginButton />

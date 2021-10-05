@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mx-2" style="border: 1px solid #3D2F6B;">
     <!-- <img src="@/assets/test.png" style="width:100%" alt=""> -->
     <figure class="highcharts-figure">
       <charts :options="wordCloud" />
@@ -27,14 +27,6 @@ export default {
   computed: {
     wordCloud: function() {
       return {
-        accessibility: {
-            screenReaderSection: {
-                beforeChartFormat: 
-                    '<h5>{chartTitle}</h5>' +
-                    '<div>{chartLongdesc}</div>' +
-                    '<div>{viewTableButton}</div>'
-            }
-        },
         series: [{
             colors: [
               '#3D2F6B', '#B9A6C9', '#85456B'], 
@@ -43,7 +35,6 @@ export default {
                 from: 0,
                 to: 0,
             },
-            // maxfontsize: 1000,
             minFontSize: 8,
             duration: 0,
             placementStrategy: 'random',
@@ -79,7 +70,7 @@ export default {
 <style>
 .highcharts-figure, .highcharts-data-table table {
   width: 100%; 
-  margin: 1em auto;
+  margin: 1rem auto;
 }
 
 .highcharts-data-table table {

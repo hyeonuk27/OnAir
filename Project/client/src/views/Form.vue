@@ -79,9 +79,10 @@
         <vs-select
           color="#B9A6C9"
           class="select-box review-form-select"
-          placeholder="Class"
+          placeholder="선택해주세요."
           width="200px"
           v-model="seat"
+          label="클래스"
         >
           <vs-select-item
             :key="index"
@@ -95,9 +96,10 @@
         <vs-select
           color="#B9A6C9"
           class="select-box review-form-select mb-5"
-          placeholder="총 평점"
+          placeholder="선택해주세요."
           width="200px"
           v-model="score"
+          label="총 평점"
         >
           <vs-select-item
             :key="index"
@@ -111,9 +113,10 @@
         <vs-select
           color="#B9A6C9"
           class="select-box review-form-select"
-          placeholder="좌석 평점"
+          placeholder="선택해주세요."
           width="200px"
           v-model="seatScore"
+          label="레그룸 평점"
         >
           <vs-select-item
             :key="index"
@@ -127,9 +130,10 @@
         <vs-select
           color="#B9A6C9"
           class="select-box review-form-select"
-          placeholder="서비스 평점"
+          placeholder="선택해주세요."
           width="200px"
           v-model="serviceScore"
+          label="서비스 평점"
         >
           <vs-select-item
             :key="index"
@@ -143,9 +147,10 @@
         <vs-select
           color="#B9A6C9"
           class="select-box review-form-select"
-          placeholder="체크인 평점"
+          placeholder="선택해주세요."
           width="200px"
           v-model="checkinScore"
+          label="체크인 평점"
         >
           <vs-select-item
             :key="index"
@@ -158,9 +163,10 @@
         <vs-select
           color="#B9A6C9"
           class="select-box review-form-select"
-          placeholder="기내식 평점"
+          placeholder="선택해주세요."
           width="200px"
           v-model="foodScore"
+          label="기내식 평점"
         >
           <vs-select-item
             :key="index"
@@ -369,7 +375,7 @@ export default {
   justify-content: center;
   width: 200px;
   margin-left: 47px;
-  margin-bottom: 1rem;
+  margin-bottom: 10px;
 }
 
 .review-form {
@@ -394,7 +400,8 @@ export default {
   background-color: #dad6dd;
   width: 300px;
   height: 800px;
-  padding-top: 330px;
+  padding-top: 230px;
+  text-align: left;
 }
 
 #circles {
@@ -405,7 +412,8 @@ export default {
 .submit {
   background-color: #3d2f6b;
   color: white;
-  margin-top: 35px;
+  margin-top: 20px;
+  margin-left: 47px;
   width: 200px;
   height: 40px;
 }
@@ -413,7 +421,8 @@ export default {
 .disable {
   background-color: #585858;
   color: rgb(128, 128, 128);
-  margin-top: 35px;
+  margin-top: 20px;
+  margin-left: 47px;
   width: 200px;
   height: 40px;
 }

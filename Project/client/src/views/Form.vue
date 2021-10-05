@@ -78,7 +78,7 @@
         <!-- CLASS -->
         <vs-select
           color="#B9A6C9"
-          class="select-box"
+          class="select-box review-form-select"
           placeholder="Class"
           width="200px"
           v-model="seat"
@@ -94,7 +94,7 @@
         <!-- 전체 평점 -->
         <vs-select
           color="#B9A6C9"
-          class="select-box mb-5"
+          class="select-box review-form-select mb-5"
           placeholder="총 평점"
           width="200px"
           v-model="score"
@@ -110,7 +110,7 @@
         <!-- 좌석 평점 -->
         <vs-select
           color="#B9A6C9"
-          class="select-box"
+          class="select-box review-form-select"
           placeholder="좌석 평점"
           width="200px"
           v-model="seatScore"
@@ -126,7 +126,7 @@
         <!-- 서비스 평점 -->
         <vs-select
           color="#B9A6C9"
-          class="select-box"
+          class="select-box review-form-select"
           placeholder="서비스 평점"
           width="200px"
           v-model="serviceScore"
@@ -142,7 +142,7 @@
         <!-- 체크인 평점 -->
         <vs-select
           color="#B9A6C9"
-          class="select-box"
+          class="select-box review-form-select"
           placeholder="체크인 평점"
           width="200px"
           v-model="checkinScore"
@@ -157,7 +157,7 @@
 
         <vs-select
           color="#B9A6C9"
-          class="select-box"
+          class="select-box review-form-select"
           placeholder="기내식 평점"
           width="200px"
           v-model="foodScore"
@@ -365,8 +365,11 @@ export default {
 </script>
 
 <style>
-.select-box {
+.review-form-select {
   justify-content: center;
+  width: 200px;
+  margin-left: 47px;
+  margin-bottom: 1rem;
 }
 
 .review-form {
@@ -385,12 +388,6 @@ export default {
 #info {
   margin-left: 40px;
   margin-right: 40px;
-}
-
-.select-box {
-  width: 200px;
-  margin-left: 47px;
-  margin-bottom: 1rem;
 }
 
 #select-box {

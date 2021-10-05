@@ -94,6 +94,7 @@ export default {
           this.arrivalName = report.arrival_name
         })
         .catch((err) => {
+          this.$vs.loading.close()
           console.log(err)
         })
     },

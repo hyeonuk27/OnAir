@@ -27,9 +27,14 @@
           :arrivalId="arrivalId"
           />
         </div>
-        <div v-else>
-          오늘의 항공 분석 예측 서비스<br><br>
-          On:Air는 당신의 편안한 비행을 위해 항공사의 지연률 통계 및 예측 서비스를 제공합니다.
+        <div class="main-intro" v-else>
+          <span style="font-size: 17px; font-weight: bold;">On:Air는 당신의 편안한 비행을 위해 항공사의 지연률 통계 및 예측, 리뷰 감성분석 서비스를 제공합니다.</span><br><br><br>
+          <span style="margin-left: 20px; margin-right: 150px;">항공사 출발 데이터 통계</span>
+          <span style="margin-right: 140px;">빅데이터 기반 출발 지연 예측</span>
+          <span>리뷰 키워드 도출 및 감성분석</span><br>
+          <img style="border-radius: 5px; width: 300px; object-fit: cover; margin-right: 30px; margin-top: 10px;" src="@/assets/intro1.png" alt="">
+          <img style="border-radius: 5px; width: 306px; object-fit: cover; margin-right: 30px; margin-top: 10px;" src="@/assets/intro2.png" alt="">
+          <img style="border-radius: 5px; width: 296px; object-fit: cover; margin-top: 10px;" src="@/assets/intro3.png" alt="">
         </div>
       </div>
     </div>
@@ -167,6 +172,14 @@ export default {
   .main-container {
     height: auto;
     min-height: 1000px;
+  }
+
+  .main-intro {
+    background-color: rgba(239, 237, 242, 0.5);
+    border-radius: 5px;
+    color: #555555;
+    padding: 60px 40px 60px 40px;
+    width: 1050px;
   }
 
   .search-box {

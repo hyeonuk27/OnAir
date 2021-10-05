@@ -2,8 +2,8 @@
   <div class="mb-4">
     <div class="keyword">
       <span
-        v-for="keyword in keywordList"
-        :key="keyword"
+        v-for="(keyword, idx) in keywordList"
+        :key="idx"
         class="badge rounded-pill keyword-tag"
       >
         {{ '# ' + keyword[0] + ' ' }}
@@ -27,16 +27,18 @@ export default {
   },
   methods: {
     getKeyword: function () {
-      axios({
-        url: `${API.URL}${API.ROUTES.reviewDetail}keyword/${this.airlineId}/`,
-        method: "get",
-      })
-      .then((res) => {
-        this.keywordList = res.data.slice(0, 5);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        if (this.airlineId != undefined) {
+        axios({
+          url: `${API.URL}${API.ROUTES.reviewDetail}keyword/${this.airlineId}/`,
+          method: "get",
+        })
+        .then((res) => {
+          this.keywordList = res.data.slice(0, 5);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      }
     },
   },
   created() {

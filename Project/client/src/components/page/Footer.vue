@@ -6,7 +6,7 @@
       </div>
       <div class="footer-content">
         <div class="onair-logo">
-          <img src="@/assets/onair_logo.png" alt="onair-logo">
+          <img style="width: 240px;" src="@/assets/onair_logo.png" alt="onair-logo">
         </div>
         <div class="onair-info">
           <span class="info">
@@ -15,21 +15,48 @@
             또한 항공사에 대한 리뷰를 남기고 리뷰를 기반으로 한 실사용자의 항공사 별 평가를 감정 분석하여 제공합니다.
           </span>
         </div>
+      </div>
+      <div style="display: flex;">
+        <div class="footer-router">
+          <span @click="moveToMain">HOME</span>
+          <span onclick="window.open('https://www.notion.so/jiu-park/Data-Set-80694d9e510240ef83c5e34fc55e838a')">데이터</span>
+          <span onclick="window.open('https://www.notion.so/jiu-park/980d4c75b284483381cf7999f966879c')">분석도구</span>
+          <span onclick="window.open('https://www.notion.so/jiu-park/1-1-a743d46205e643a88856cf847c644078')">고객센터</span>
+        </div>
         <div class="onair-plus">
-          <p class="notion-link" 
-            onclick="window.open('https://www.notion.so/jiu-park/4a14719b6de04f31bcbd932e8d2032b5')">
-            CONTACT
+          <p class="notion-link">
+            <span style="cursor: pointer;" onclick="window.open('https://www.notion.so/jiu-park/8d8a98436ed448d38bc4381f707df3b5')">CONTACT US</span>
           </p>
-          <p class="copyright">Copyright ⓒ 2021<br>On:Air All rights reserved.</p>
         </div>
       </div>
+      <p class="copyright">Copyright ⓒ 2021<br>On:Air All rights reserved.</p>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+import { mapActions } from 'vuex'
 
+export default {
+  name: 'Footer',
+  data() {
+    return {
+
+    }
+  },
+  methods: {
+    ...mapActions([
+      'setDeparture',
+      'setArrival'
+    ]),
+    moveToMain: function() {
+      this.setDeparture([])
+      this.setArrival([])
+      if (this.$route.path !== "/") {
+        this.$router.push({ name: "Main" })
+      }
+    },
+  }
 }
 </script>
 
@@ -38,6 +65,7 @@ export default {
     background-color: #EFEDF2;
     display: flex;
     justify-content: center;
+    padding: 40px 0px 30px 0px;
   }
 
   .footer-container {
@@ -47,7 +75,6 @@ export default {
 
   .footer-onair {
     font-weight: 600;
-    margin-top: 30px;
     color: #3D2F6B;
   }
 
@@ -56,14 +83,22 @@ export default {
     margin-bottom: 20px;
   }
 
+  .footer-router {
+    margin-left: 120px;
+    padding-top: 5px;
+  }
+
+  .footer-router span {
+    cursor: pointer;
+    margin-right: 143px;
+  }
+
   .onair-logo {
     margin-top: 10px;
     margin-right: 40px;
   }
 
   .onair-info {
-    width: 600px;
-    margin-right: 40px;
     text-align: justify;
     color: #656F8C;
   }
@@ -74,7 +109,7 @@ export default {
 
   .onair-plus {
     color: #3D2F6B;
-    padding-top: 30px;
+    padding-top: 5px;
     text-align: right;
   }
 
@@ -85,5 +120,7 @@ export default {
   .copyright {
     font-size: 10px;
     color: #656F8C;
+    margin-top: 40px;
+    text-align: right;
   }
 </style>

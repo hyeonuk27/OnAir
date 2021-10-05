@@ -10,7 +10,10 @@ import Highcharts from "highcharts"
 import HighchartsVue from 'highcharts-vue'
 import ExportingHighcharts from "highcharts/modules/exporting";
 import VueMoment from 'vue-moment'
+import Highcharts from 'highcharts'
+import loadWordcloud from 'highcharts/modules/wordcloud'
 
+loadWordcloud(Highcharts)
 
 Vue.use(VueRouter)
 Vue.use(Vuesax)

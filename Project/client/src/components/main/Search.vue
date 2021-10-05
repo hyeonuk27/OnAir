@@ -1,24 +1,29 @@
 <template>
   <div class="search">
-    <vs-select
-      color="#B9A6C9"
-      class="select-box"
-      placeholder="출발지 선택"
-      width="300px"
-      v-model="departureIdx"
-      >
-      <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in departureList" />
-    </vs-select>
+    <div style="color: #959595; font-size: 14px; text-align: start; margin-top: 10px;">
+      <span>조회하고 싶은 여정을 선택해주세요.</span><br>
+    </div>
+    <div class="search-container">
+      <vs-select
+        color="#B9A6C9"
+        class="select-box"
+        placeholder="출발지 선택"
+        width="300px"
+        v-model="departureIdx"
+        >
+        <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in departureList" />
+      </vs-select>
 
-    <vs-select
-      color="#B9A6C9"
-      class="select-box"
-      placeholder="도착지 선택"
-      width="300px"
-      v-model="arrivalIdx"
-      >
-      <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in arrivalList" />
-    </vs-select>
+      <vs-select
+        color="#B9A6C9"
+        class="select-box"
+        placeholder="도착지 선택"
+        width="300px"
+        v-model="arrivalIdx"
+        >
+        <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item,index) in arrivalList" />
+      </vs-select>
+    </div>
   </div>
 </template>
 
@@ -69,15 +74,19 @@ export default {
 
 <style>
   .search {
-    align-items: center;
     background-color: white;
     border-radius: 10px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.705);
-    display: flex;
-    justify-content: space-between;
     width: 700px;
     height: 100px;
     padding: 0 25px;
+  }
+
+  .search-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
   }
 
   .search::-webkit-scrollbar{

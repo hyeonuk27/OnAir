@@ -43,7 +43,7 @@
 
 - Sub1 : 2021-08-30 ~ 2021-09-03 (1주)
 - Sub2 : 2021-09-06 ~ 2021-09-17 (2주)
-- Sub3 : 2021-09-20 ~ 2021-10-08 (🔥 NOW 🔥)
+- Sub3 : 2021-09-20 ~ 2021-10-08 (3주)
 
 2. 팀원
 
@@ -51,6 +51,7 @@
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                          **박지우**                          |                          **김채은**                          |                          **김현욱**                          |                          **나승호**                          |                          **안수빈**                          |
 | [![Github](./Document/IMG/GitHub-Mark-64px.png)](https://github.com/nu1997) | [![Github](./Document/IMG/GitHub-Mark-64px.png)](https://github.com/chenni0531) | [![Github](./Document/IMG/GitHub-Mark-64px.png)](https://github.com/hyeonuk27) | [![Github](./Document/IMG/GitHub-Mark-64px.png)](https://github.com/qlfflwls5) | [![Github](./Document/IMG/GitHub-Mark-64px.png)](https://github.com/axxsxbxx) |
+| 기획: 주제, 컨셉, 와이어프레임, 아이콘 <br />프론트엔드: 이미지 수집, 차트, 세부 CSS<br />DB: 항공사 데이터 전처리 및 통계함수 로직<br />백엔드: 항공사 정보 및 분석 API<br />문서: README, 데이터 활용 현황, 발표 |                                                              |                                                              |                                                              |                                                              |
 
 
 
@@ -83,9 +84,9 @@
 
 ### 🎨 컨셉 디자인
 
-![디자인-2](./Document/2_Definition/3_Design/1_Art/IMG/d-1.png)
+<img src="./Document/2_Definition/3_Design/1_Art/IMG/d-1.png" alt="디자인-2" style="zoom:67%;" />
 
-![디자인-2](./Document/2_Definition/3_Design/1_Art/IMG/d-2.png)
+<img src="./Document/2_Definition/3_Design/1_Art/IMG/d-2.png" alt="디자인-2" style="zoom:67%;" />
 
 
 
@@ -184,3 +185,19 @@ client
 ## 4️⃣ 프로젝트 결과물
 
 [기획 발표](Document/1_Concept/Presentation)
+
+최종 발표
+
+![Screen Shot 2021-10-07 at 5.07.30](Document/IMG/Screen Shot 2021-10-07 at 5.07.30.png)
+
+![Screen Shot 2021-10-07 at 5.07.59](Document/IMG/Screen Shot 2021-10-07 at 5.07.59.png)
+
+![Screen Shot 2021-10-07 at 5.07.40](Document/IMG/Screen Shot 2021-10-07 at 5.07.40.png)
+
+![Screen Shot 2021-10-07 at 5.07.50](Document/IMG/Screen Shot 2021-10-07 at 5.07.50.png)
+
+![Screen Shot 2021-10-07 at 5.07.17](Document/IMG/Screen Shot 2021-10-07 at 5.07.17.png)
+
+
+
+<img src="Document/IMG/Screen Shot 2021-10-07 at 5.09.51.png" alt="Screen Shot 2021-10-07 at 5.09.51" style="zoom:150%;" />

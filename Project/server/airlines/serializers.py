@@ -30,7 +30,7 @@ class ArrivalListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Arrival
-        fields = ('id', 'name', )
+        fields = ('id', 'name')
 
 class LogSerializer(serializers.ModelSerializer):
 

@@ -64,9 +64,9 @@ export default {
   height: 100%;
 }
 .review-list-pagination {
-  margin: 40px 100px 50px 0px;
   display: flex;
   justify-content: center;
+  margin: 40px 100px 50px 0px;
 }
 .vs-pagination--mb {
   display: flex;

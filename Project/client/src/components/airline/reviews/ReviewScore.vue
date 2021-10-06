@@ -34,10 +34,10 @@ export default {
   },
   data() {
     return {
-      seat: 0,
-      service: 0,
       checkin: 0,
       food: 0,
+      seat: 0,
+      service: 0,
     }
   },
   methods: {
@@ -61,30 +61,27 @@ export default {
 </script>
 
 <style>
+.not-score {
+  border: 2px solid #b9a6c9;
+  border-radius: 70%;
+  height: 20px;
+  margin: 0 2px;
+  width: 20px;
+}
 .review-score-detail {
+  align-items: center;
   display: flex;
   grid-column: 2;
   grid-row: 2;
   padding: 20px;
-  align-items: center;
 }
-
 .score {
   background-color: #b9a6c9;
   border-radius: 70%;
-  width: 20px;
   height: 20px;
   margin: 0 2px;
-}
-
-.not-score {
-  border: 2px solid #b9a6c9;
-  border-radius: 70%;
   width: 20px;
-  height: 20px;
-  margin: 0 2px;
 }
-
 .score-title {
   margin-right: 20px;
 }

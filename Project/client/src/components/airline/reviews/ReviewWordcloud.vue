@@ -39,22 +39,20 @@ export default {
       return {
         series: [{
           colors: [
-            '#3D2F6B', 
-            '#B9A6C9', 
-            '#85456B'
+            '#3D2F6B', '#85456B', '#B9A6C9'
           ], 
           rotation: {
             from: 0,
             to: 0,
           },
-          minFontSize: 8,
+          data: this.data,
           duration: 0,
+          minFontSize: 8,
+          name: '빈도수',
           placementStrategy: 'random',
           spiral: 'archimedean',
           style: {'fontFamily': 'sans-serif'},
           type: 'wordcloud',
-          data: this.data,
-          name: '빈도수'
         }],
         credits: {
           enabled: false
@@ -72,35 +70,35 @@ export default {
 </script>
 
 <style>
-.highcharts-figure, .highcharts-data-table table {
-  width: 100%; 
-  margin: 1rem auto;
-}
-.highcharts-data-table table {
-	font-family: Verdana, sans-serif;
-	border-collapse: collapse;
-	border: 1px solid rgba(180, 180, 180, 0.658);
-	margin: 10px auto;
-	text-align: center;
-	width: 100%;
-	max-width: 500px;
-}
 .highcharts-data-table caption {
-  padding: 1em 0;
   font-size: 1.2em;
   color: #555;
+  padding: 1em 0;
+}
+.highcharts-data-table table {
+  border: 1px solid rgba(180, 180, 180, 0.658);
+	border-collapse: collapse;
+	font-family: Verdana, sans-serif;
+	margin: 10px auto;
+	max-width: 500px;
+	text-align: center;
+	width: 100%;
+}
+.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+  padding: 0.5em;
 }
 .highcharts-data-table th {
 	font-weight: 600;
   padding: 0.5em;
 }
-.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
-  padding: 0.5em;
+.highcharts-data-table tr:hover {
+  background: #f1f7ff;
 }
 .highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
   background: #f8f8f8;
 }
-.highcharts-data-table tr:hover {
-  background: #f1f7ff;
+.highcharts-figure, .highcharts-data-table table {
+  margin: 1rem auto;
+  width: 100%; 
 }
 </style>

@@ -18,11 +18,11 @@ export default {
           width: 450,
         },
         colors: [
-          '#FFEDF9',
-          '#C8AEE2', 
-          '#B9A6C9',
-          '#A999CF',
           '#3D2F6B',
+          '#A999CF',
+          '#B9A6C9',
+          '#C8AEE2', 
+          '#FFEDF9',
         ], 
         credits: {
           enabled: false

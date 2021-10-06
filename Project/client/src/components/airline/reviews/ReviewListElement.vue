@@ -139,8 +139,8 @@ export default {
         buttons: {
           cancel: '취소',
           confirm: {
+            className: 'confirm-btn',
             text: '확인',
-            className: 'confirm-btn'
           },
         },
       })
@@ -190,14 +190,14 @@ export default {
 
 <style>
 .arrival-container {
-  display: inline-flex; 
   align-items: center;
+  display: inline-flex; 
 }
 .dropdown {
+  background-color: rgba(0, 0, 0, 0);
   grid-column: 4;
   grid-row: 1;
   justify-self: end;
-  background-color: rgba(0, 0, 0, 0);
 }
 .dropdown-menu {
   text-align: center;
@@ -208,8 +208,8 @@ export default {
 }
 .material-icons {
   font-size: 10px; 
-  transform: rotate(90deg);
   margin-right: 3px;
+  transform: rotate(90deg);
 }
 .review-el-score {
   display: flex;
@@ -221,11 +221,11 @@ export default {
   border: 1px solid rgba(180, 180, 180, 0.658);
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.151);
   display: grid;
-  grid-template-columns: 250px 200px 200px 350px;
   grid-auto-rows: 90px 40px 70px;
-  width: 1000px;
+  grid-template-columns: 250px 200px 200px 350px;
   height: 290px;
   margin-bottom: 20px;
+  width: 1000px;
 }
 .review-list-el-arrival {
   grid-column: 4;
@@ -240,14 +240,14 @@ export default {
   text-align: start;
 }
 .review-list-el-content {
-  padding-left: 20px;
+  font-size: 15px;
   grid-column: 2;
   grid-row: 3;
-  text-align: start;
-  font-size: 15px;
-  overflow: hidden;
-  width: 700px;
   height: 139px;
+  overflow: hidden;
+  padding-left: 20px;
+  text-align: start;
+  width: 700px;
 }
 .review-list-el-date {
   grid-column: 2;
@@ -258,53 +258,53 @@ export default {
 .review-list-el-name {
   grid-column: 1;
   grid-row: 1;
+  margin-left: 50px;
   padding: 20px;
   text-align: start;
-  margin-left: 50px;
   width: 220px;
 }
 .review-list-el-profile {
+  border-radius: 70%;
   grid-column: 1;
   grid-row: 1;
+  height: 40px;
   margin: 17px;
   margin-top: 25px;
-  border-radius: 70%;
-  height: 40px;
   width: 40px;
 }
 .review-list-el-score {
+  font-size: 12px;
   grid-column: 1;
   grid-row: 2;
   padding: 15px;
-  text-align: start;
-  font-size: 12px;
   padding-top: 34px;
+  text-align: start;
 }
 .review-list-el-title {
-  padding-left: 20px;
   display: flex;
+  font-size: 15px;
+  font-weight: 550;
   grid-column: 2;
   grid-row: 2;
-  font-weight: 550;
+  height: 20px;
+  overflow: hidden;
+  padding-left: 20px;
   text-align: start;
   white-space: 100%;
-  font-size: 15px;
-  overflow: hidden;
   width: 700px;
-  height: 20px;
 }
 .review-score {
   background-color: #b9a6c9;
   border-radius: 70%;
-  width: 15px;
   height: 15px;
   margin: 1.8px;
+  width: 15px;
 }
 .review-not-score {
   border: 2px solid #b9a6c9;
   border-radius: 70%;
-  width: 15px;
   height: 15px;
   margin: 1.8px;
+  width: 15px;
 }
 </style>

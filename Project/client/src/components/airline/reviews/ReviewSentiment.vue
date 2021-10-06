@@ -23,9 +23,9 @@ export default {
   },
   data() {
     return {
-      positive: 0,
-      negative: 0,
       isSentimentRendered: false,
+      negative: 0,
+      positive: 0,
     }
   },
   methods: {
@@ -52,7 +52,10 @@ export default {
           height: 100,
           width: 450,
         },
-        colors: ['rgba(13, 110, 253, 0.75)', 'rgba(220, 53, 69, 0.75)'],
+        colors: [
+          'rgba(13, 110, 253, 0.75)', 
+          'rgba(220, 53, 69, 0.75)'
+        ],
         credits: {
           enabled: false
         },

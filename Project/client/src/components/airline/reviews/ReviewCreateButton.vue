@@ -42,10 +42,10 @@ export default {
 .review-button {
   background-color: rgb(182, 168, 198);
   border: 0;
-  color: white;
-  width: 80px;
-  height: 40px;
   border-radius: 5px;
+  color: white;
+  height: 40px;
+  width: 80px;
 }
 .review-button:hover {
   background-color: rgba(0, 0, 0, 0.3);

@@ -50,8 +50,8 @@ export default {
   text-align: center;
 }
 .keyword-tag {
-  color: #3D2F6B;
   background-color: #DAD6DD;
+  color: #3D2F6B;
   font-size: 18px;
   margin-right: 1rem;
   padding: 3px 10px 3px;

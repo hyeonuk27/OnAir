@@ -15,16 +15,16 @@
 <script>
 export default {
   name: 'SearchLogElement',
-  props: [
-    'log'
-  ],
+  props: {
+    log: Object,
+  },
   methods: {
     goAirline: function () {
       if (this.token != null) {
         this.logCreate()
       }
       this.$router.push({
-        name: "Airline",
+        name: 'Airline',
         params: {
           airlineId: this.log.airline,
           arrivalId: this.log.arrival,
@@ -42,41 +42,37 @@ export default {
 </script>
 
 <style>
-  .search-log-el {
-    border: 1px solid rgba(180, 180, 180, 0.658);
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.151);
-    cursor: pointer;
-    display: grid;
-    grid-template-columns: 300px 300px 400px;
-    grid-auto-rows: 40px 50px 60px;
-    width: 1000px;
-    height: 150px;
-    margin-bottom: 20px;
-    transition: 0.2s;
-  }
-
-  .search-log-el:hover {
-    background-color: rgba(223, 223, 223, 0.904);
-  }
-
-  .search-log-date {
-    grid-column: 1;
-    grid-row: 2;
-    padding: 20px;
-    text-align: start;
-  }
-
-  .search-log-airline {
-    grid-column: 2;
-    grid-row: 2;
-    padding: 20px;
-    text-align: start;
-  }
-
-  .search-log-arrival {
-    grid-column: 3;
-    grid-row: 2;
-    padding: 20px;
-    text-align: start;
-  }
+.search-log-airline {
+  grid-column: 2;
+  grid-row: 2;
+  padding: 20px;
+  text-align: start;
+}
+.search-log-arrival {
+  grid-column: 3;
+  grid-row: 2;
+  padding: 20px;
+  text-align: start;
+}
+.search-log-date {
+  grid-column: 1;
+  grid-row: 2;
+  padding: 20px;
+  text-align: start;
+}
+.search-log-el {
+  border: 1px solid rgba(180, 180, 180, 0.658);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.151);
+  cursor: pointer;
+  display: grid;
+  grid-auto-rows: 40px 50px 60px;
+  grid-template-columns: 300px 300px 400px;
+  height: 150px;
+  margin-bottom: 20px;
+  transition: 0.2s;
+  width: 1000px;
+}
+.search-log-el:hover {
+  background-color: rgba(223, 223, 223, 0.904);
+}
 </style>

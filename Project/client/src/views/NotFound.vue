@@ -19,29 +19,25 @@ export default {
 </script>
 
 <style>
-  .not-found {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 150px;
-  }
-
-  .not-found-container {
-    width: 1000px;
-    min-height: 650px;
-  }
-
-  .not-found-body {
-    margin: 60px 0px;
-  }
-
-  .not-found-img {
-    justify-content: center;
-    width: 180px;
-    object-fit: cover;
-  }
-
-  .not-found-text {
-    text-align: center;
-  }
+.not-found {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 150px;
+}
+.not-found-body {
+  margin: 60px 0px;
+}
+.not-found-container {
+  min-height: 650px;
+  width: 1000px;
+}
+.not-found-img {
+  justify-content: center;
+  object-fit: cover;
+  width: 180px;
+}
+.not-found-text {
+  text-align: center;
+}
 </style>

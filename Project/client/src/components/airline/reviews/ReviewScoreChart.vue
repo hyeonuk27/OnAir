@@ -6,8 +6,10 @@
 
 <script>
 export default {
-  name: "ReviewScoreChart",
-  props: ['chartData'],
+  name: 'ReviewScoreChart',
+  props: {
+    chartData: Object,
+  },
   data () {
     return {
       rateChartOptions: {
@@ -16,25 +18,25 @@ export default {
           width: 450,
         },
         colors: [
-          '#FFEDF9',
-          '#C8AEE2', 
-          '#B9A6C9',
-          '#A999CF',
           '#3D2F6B',
+          '#A999CF',
+          '#B9A6C9',
+          '#C8AEE2', 
+          '#FFEDF9',
         ], 
         credits: {
-            enabled: false
+          enabled: false
         },
         exporting: {
-            enabled: false
+          enabled: false
         },
         title: {
           text: '평점 분포',
-          style: {"color": '#3D2F6B', "font-weight": 'bold'}
+          style: {'color': '#3D2F6B', "font-weight": 'bold'}
         },
         tooltip: {
           pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-          },
+        },
         accessibility: {
           point: {
             valueSuffix: '%'

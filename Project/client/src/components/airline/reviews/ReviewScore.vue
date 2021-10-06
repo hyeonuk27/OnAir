@@ -24,11 +24,11 @@
 </template>
 
 <script>
-import axios from "axios";
-import API from "@/common/drf.js";
+import API from '@/common/drf.js'
+import axios from 'axios'
 
 export default {
-  name: "ReviewScore",
+  name: 'ReviewScore',
   props: {
     airlineId: String,
   },
@@ -38,29 +38,26 @@ export default {
       service: 0,
       checkin: 0,
       food: 0,
-    };
+    }
   },
   methods: {
     getScore: function () {
       axios({
         url: `${API.URL}${API.ROUTES.reviewDetail}score/${this.airlineId}/`,
-        method: "get",
+        method: 'get',
       })
-        .then((res) => {
-          this.seat = parseInt(res.data["seat_score"]);
-          this.service = parseInt(res.data["service_score"]);
-          this.checkin = parseInt(res.data["checkin_score"]);
-          this.food = parseInt(res.data["food_score"]);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      .then((res) => {
+        this.seat = parseInt(res.data['seat_score'])
+        this.service = parseInt(res.data['service_score'])
+        this.checkin = parseInt(res.data['checkin_score'])
+        this.food = parseInt(res.data['food_score'])
+      })
     },
   },
   created() {
-    this.getScore();
+    this.getScore()
   },
-};
+}
 </script>
 
 <style>

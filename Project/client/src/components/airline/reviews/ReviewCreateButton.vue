@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "ReviewCreateButton",
+  name: 'ReviewCreateButton',
   props: {
     airlineId: String,
     arrivalId: String,
@@ -15,22 +15,22 @@ export default {
   data() {
     return {
       flag: 1,
-    };
+    }
   },
   methods: {
-    moveToReviewForm() {
+    moveToReviewForm: function () {
       this.$router.push({
-        name: "Form",
+        name: 'Form',
         params: {
           airlineId: this.airlineId,
           arrivalId: this.arrivalId,
           arrivalName: this.arrivalName,
           flag: this.flag,
         },
-      });
+      })
     },
   },
-};
+}
 </script>
 
 <style>

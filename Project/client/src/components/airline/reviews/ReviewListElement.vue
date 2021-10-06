@@ -30,8 +30,11 @@
     </div>
     <div class="review-list-el-arrival">
       <div>ARRIVAL</div>
-      <div style="display: inline-flex; align-items: center;">
-        <span style="font-size: 16px; transform: rotate(90deg); margin-right: 3px;" class="material-icons">flight</span> {{ review.arrivalname }}
+      <div class="arrival-container">
+        <span class="material-icons">
+          flight
+        </span> 
+        {{ review.arrivalname }}
       </div>
     </div>
     <img
@@ -113,38 +116,31 @@
 </template>
 
 <script>
-import axios from "axios"
+import API from '@/common/drf.js'
+import axios from 'axios'
 import swal from 'sweetalert'
-import API from "@/common/drf.js"
-import { mapState } from "vuex"
+import { mapState } from 'vuex'
 
 export default {
-  name: "ReviewListElement",
+  name: 'ReviewListElement',
   props: {
     review: Object,
   },
   data() {
     return {
       flag: 1,
-    };
+    }
   },
   methods: {
-    setToken: function () {
-      const token = localStorage.getItem("token")
-      const config = {
-        Authorization: token,
-      }
-      return config
-    },
     deleteReview: function (reviewId) {
       swal({
-        title: "게시글을 삭제하시겠습니까?",
-        icon: "warning",
+        title: '게시글을 삭제하시겠습니까?',
+        icon: 'warning',
         buttons: {
-          cancel: "취소",
+          cancel: '취소',
           confirm: {
-            text: "확인",
-            className: "confirm-btn"
+            text: '확인',
+            className: 'confirm-btn'
           },
         },
       })
@@ -153,43 +149,74 @@ export default {
           const headers = this.setToken()
           axios({
             url: API.URL + API.ROUTES.reviewDetail + reviewId,
-            method: "delete",
+            method: 'delete',
             headers,
           })
           .then(() => {
-            this.$emit("reviewListUpdate")
+            this.$emit('reviewListUpdate')
             swal({
-              title: "게시글이 삭제되었습니다.",
-              icon: "success",
+              title: '게시글이 삭제되었습니다.',
+              icon: 'success',
               buttons: {
                 confirm: {
-                  text: "확인",
-                  className: "confirm-btn"
+                  text: '확인',
+                  className: 'confirm-btn'
                 },
               },
             })
           })
-          .catch((err) => {
-            console.log(err)
-          })
         }
       })
-      
-    },
-    moveToReviewForm: function (reviewId) {
-      this.$router.push({ name: "Update", params: { reviewId: reviewId, flag: this.flag } });
     },
     moveToMyReview: function (userId) {
-      this.$router.push({ name: "MyReview", params: { userId: userId } });
-    }
+      this.$router.push({ name: 'MyReview', params: { userId: userId } })
+    },
+    moveToReviewForm: function (reviewId) {
+      this.$router.push({ name: 'Update', params: { reviewId: reviewId, flag: this.flag } })
+    },
+    setToken: function () {
+      const token = localStorage.getItem('token')
+      const config = {
+        Authorization: token,
+      }
+      return config
+    },
   },
   computed: {
-    ...mapState(["userId"]),
+    ...mapState(['userId']),
   },
 }
 </script>
 
 <style>
+.arrival-container {
+  display: inline-flex; 
+  align-items: center;
+}
+.dropdown {
+  grid-column: 4;
+  grid-row: 1;
+  justify-self: end;
+  background-color: rgba(0, 0, 0, 0);
+}
+.dropdown-menu {
+  text-align: center;
+}
+.dropdown-item:hover {
+  background-color: rgba(223, 223, 223, 0.904);
+  transition: 0.3s;
+}
+.material-icons {
+  font-size: 10px; 
+  transform: rotate(90deg);
+  margin-right: 3px;
+}
+.review-el-score {
+  display: flex;
+  grid-column: 2;
+  grid-row: 2;
+  padding: 5px;
+}
 .review-list-el {
   border: 1px solid rgba(180, 180, 180, 0.658);
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.151);
@@ -200,7 +227,34 @@ export default {
   height: 290px;
   margin-bottom: 20px;
 }
-
+.review-list-el-arrival {
+  grid-column: 4;
+  grid-row: 1;
+  padding: 20px;
+  text-align: start;
+}
+.review-list-el-class {
+  grid-column: 3;
+  grid-row: 1;
+  padding: 20px;
+  text-align: start;
+}
+.review-list-el-content {
+  padding-left: 20px;
+  grid-column: 2;
+  grid-row: 3;
+  text-align: start;
+  font-size: 15px;
+  overflow: hidden;
+  width: 700px;
+  height: 139px;
+}
+.review-list-el-date {
+  grid-column: 2;
+  grid-row: 1;
+  padding: 20px;
+  text-align: start;
+}
 .review-list-el-name {
   grid-column: 1;
   grid-row: 1;
@@ -209,7 +263,6 @@ export default {
   margin-left: 50px;
   width: 220px;
 }
-
 .review-list-el-profile {
   grid-column: 1;
   grid-row: 1;
@@ -219,28 +272,14 @@ export default {
   height: 40px;
   width: 40px;
 }
-
-.review-list-el-date {
-  grid-column: 2;
-  grid-row: 1;
-  padding: 20px;
+.review-list-el-score {
+  grid-column: 1;
+  grid-row: 2;
+  padding: 15px;
   text-align: start;
+  font-size: 12px;
+  padding-top: 34px;
 }
-
-.review-list-el-class {
-  grid-column: 3;
-  grid-row: 1;
-  padding: 20px;
-  text-align: start;
-}
-
-.review-list-el-arrival {
-  grid-column: 4;
-  grid-row: 1;
-  padding: 20px;
-  text-align: start;
-}
-
 .review-list-el-title {
   padding-left: 20px;
   display: flex;
@@ -254,34 +293,6 @@ export default {
   width: 700px;
   height: 20px;
 }
-
-.review-list-el-content {
-  padding-left: 20px;
-  grid-column: 2;
-  grid-row: 3;
-  text-align: start;
-  font-size: 15px;
-  overflow: hidden;
-  width: 700px;
-  height: 139px;
-}
-
-.review-list-el-score {
-  grid-column: 1;
-  grid-row: 2;
-  padding: 15px;
-  text-align: start;
-  font-size: 12px;
-  padding-top: 34px;
-}
-
-.review-el-score {
-  display: flex;
-  grid-column: 2;
-  grid-row: 2;
-  padding: 5px;
-}
-
 .review-score {
   background-color: #b9a6c9;
   border-radius: 70%;
@@ -289,28 +300,11 @@ export default {
   height: 15px;
   margin: 1.8px;
 }
-
 .review-not-score {
   border: 2px solid #b9a6c9;
   border-radius: 70%;
   width: 15px;
   height: 15px;
   margin: 1.8px;
-}
-
-.dropdown {
-  grid-column: 4;
-  grid-row: 1;
-  justify-self: end;
-  background-color: rgba(0, 0, 0, 0);
-}
-
-.dropdown-menu {
-  text-align: center;
-}
-
-.dropdown-item:hover {
-  background-color: rgba(223, 223, 223, 0.904);
-  transition: 0.3s;
 }
 </style>

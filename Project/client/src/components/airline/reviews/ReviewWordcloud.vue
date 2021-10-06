@@ -7,77 +7,75 @@
 </template>
 
 <script>
-import axios from "axios"
-import API from "@/common/drf.js"
+import API from '@/common/drf.js'
+import axios from 'axios'
 
 export default {
-  name: "ReviewWordcloud",
+  name: 'ReviewWordcloud',
   props: {
     airlineId: String,
-  },
-  created() {
-    this.getKeyword()
   },
   data() {
     return {
       data: [],
-    };
-  },
-  computed: {
-    wordCloud: function() {
-      return {
-        series: [{
-            colors: [
-              '#3D2F6B', '#B9A6C9', '#85456B'], 
-              // '#3D2F6B', '#632A6D', '#85456B'], 
-            rotation: {
-                from: 0,
-                to: 0,
-            },
-            minFontSize: 8,
-            duration: 0,
-            placementStrategy: 'random',
-            spiral: 'archimedean',
-            style: {"fontFamily":"sans-serif"},
-            type: 'wordcloud',
-            data: this.data,
-            name: '빈도수'
-        }],
-        credits: {
-            enabled: false
-        },
-        exporting: {
-            enabled: false
-        },
-        title: {
-            text: null
-        }
-      }
     }
   },
   methods: {
     getKeyword: function () {
       axios({
         url: `${API.URL}${API.ROUTES.reviewDetail}wordcloud/${this.airlineId}/`,
-        method: "get",
+        method: 'get',
       })
       .then((res) => {
         this.data = res.data
       })
-      .catch((err) => {
-        console.log(err);
-      })
     },
-  }
+  },
+  created() {
+    this.getKeyword()
+  },
+  computed: {
+    wordCloud: function () {
+      return {
+        series: [{
+          colors: [
+            '#3D2F6B', 
+            '#B9A6C9', 
+            '#85456B'
+          ], 
+          rotation: {
+            from: 0,
+            to: 0,
+          },
+          minFontSize: 8,
+          duration: 0,
+          placementStrategy: 'random',
+          spiral: 'archimedean',
+          style: {'fontFamily': 'sans-serif'},
+          type: 'wordcloud',
+          data: this.data,
+          name: '빈도수'
+        }],
+        credits: {
+          enabled: false
+        },
+        exporting: {
+          enabled: false
+        },
+        title: {
+          text: null
+        }
+      }
+    }
+  },
 }
-
 </script>
+
 <style>
 .highcharts-figure, .highcharts-data-table table {
   width: 100%; 
   margin: 1rem auto;
 }
-
 .highcharts-data-table table {
 	font-family: Verdana, sans-serif;
 	border-collapse: collapse;

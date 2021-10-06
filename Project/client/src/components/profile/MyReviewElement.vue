@@ -34,7 +34,11 @@
       {{review.airline_name}}
     </div>
     <div class="my-review-el-img">
-      <span style="font-size: 30px;">ICN <span style="transform: rotate(90deg);" class="material-icons">flight</span> {{review.arrival_name.substring(0, 3)}}</span>
+      <span style="font-size: 30px;">
+        ICN 
+        <span style="transform: rotate(90deg);" class="material-icons">flight</span> 
+        {{review.arrival_name.substring(0, 3)}}
+      </span>
     </div>
     <div class="my-review-el-score">
       <div v-for="index in review.score" :key="index" class="my-review-score"></div>
@@ -47,14 +51,17 @@
 </template>
 
 <script>
-import axios from "axios";
+import API from '@/common/drf.js'
+import axios from 'axios'
 import swal from 'sweetalert'
-import API from "@/common/drf.js";
-import { mapState } from 'vuex';
+import { mapState } from 'vuex'
 
 export default {
   name: 'MyReviewElement',
-  props: ['review', 'name'],
+  props: {
+    name: String,
+    review: Object,
+  },
   data() {
     return {
       flag: 0,
@@ -63,7 +70,7 @@ export default {
   methods: {
     goAirline: function () {
       this.$router.push({
-        name: "Airline",
+        name: 'Airline',
         params: {
           airlineId: this.review.airline,
           arrivalId: this.review.arrival,
@@ -71,21 +78,21 @@ export default {
       })
     },
     setToken: function () {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token')
       const config = {
         Authorization: token,
-      };
-      return config;
+      }
+      return config
     },
     deleteReview: function (reviewId) {
       swal({
-        title: "게시글을 삭제하시겠습니까?",
-        icon: "warning",
+        title: '게시글을 삭제하시겠습니까?',
+        icon: 'warning',
         buttons: {
-          cancel: "취소",
+          cancel: '취소',
           confirm: {
-            text: "확인",
-            className: "confirm-btn"
+            text: '확인',
+            className: 'confirm-btn'
           },
         },
       })
@@ -94,141 +101,133 @@ export default {
           const headers = this.setToken()
           axios({
             url: API.URL + API.ROUTES.reviewDetail + reviewId,
-            method: "delete",
+            method: 'delete',
             headers,
           })
           .then(() => {
-            this.$emit("myReviewsUpdate")
+            this.$emit('myReviewsUpdate')
             swal({
-              title: "게시글이 삭제되었습니다.",
-              icon: "success",
+              title: '게시글이 삭제되었습니다.',
+              icon: 'success',
               buttons: {
                 confirm: {
-                  text: "확인",
-                  className: "confirm-btn"
+                  text: '확인',
+                  className: 'confirm-btn'
                 },
               },
             })
-          })
-          .catch((err) => {
-            console.log(err)
           })
         }
       })
     },
     moveToReviewForm: function (reviewId) {
-      this.$router.push({ name: "Update", params: { reviewId: reviewId, flag: this.flag, userId: this.userId  } });
+      this.$router.push({ 
+        name: 'Update', 
+        params: { 
+          reviewId: reviewId, 
+          flag: this.flag, 
+          userId: this.userId 
+        } 
+      })
     },
   },
   computed: {
-    ...mapState(["userId"]),
+    ...mapState([
+      'userId'
+    ]),
   },
 }
 </script>
 
 <style>
-  .dropdown {
-    grid-column: 4;
-    grid-row: 1;
-    justify-self: end;
-    background-color: rgba(0, 0, 0, 0);
-  }
-
-  .dropdown-item:hover {
-    background-color: rgba(223, 223, 223, 0.904);
-    transition: 0.3s
-  }
-
-  .dropdown-menu {
-    text-align: center;
-  }
-
-  .my-review-el {
-    border: 1px solid rgba(180, 180, 180, 0.658);
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.151);
-    cursor: pointer;
-    display: grid;
-    grid-template-columns: 250px 200px 200px 350px;
-    grid-auto-rows: 90px 40px 70px;
-    width: 1000px;
-    height: 200px;
-    margin-bottom: 20px;
-    transition: 0.2s;
-  }
-
-  .my-review-el:hover {
-    background-color: rgba(223, 223, 223, 0.904);
-  }
-
-  .my-review-el-name {
-    grid-column: 1;
-    grid-row: 1;
-    padding: 20px;
-    text-align: start;
-  }
-
-  .my-review-el-date {
-    grid-column: 2;
-    grid-row: 1;
-    padding: 20px;
-    text-align: start;
-  }
-
-  .my-review-el-seat {
-    grid-column: 3;
-    grid-row: 1;
-    padding: 20px;
-    text-align: start;
-  }
-
-  .my-review-el-airline {
-    grid-column: 4;
-    grid-row: 1;
-    padding: 20px;
-    text-align: start;
-  }
-
-  .my-review-el-img {
-    grid-column: 1;
-    grid-row: 2 / 3;
-    padding: 20px;
-    text-align: start;
-  }
-
-  .my-review-el-score {
-    display: flex;
-    grid-column: 2;
-    grid-row: 2;
-    padding: 20px;
-  }
-
-  .my-review-el-content {
-    grid-column: 2 / 5;
-    grid-row: 3;
-    padding: 20px;
-    text-align: start;
-  }
-
-  .my-review-el-content div {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    width: 600px;
-  }
-
-  .my-review-score {
-    background-color: #B9A6C9;
-    border-radius: 70%;
-    width: 20px;
-    height: 20px;
-    margin: 0 2px;
-  }
-
-  .my-review-not-score {
-    border: 2px solid #B9A6C9;
-    border-radius: 70%;
-    width: 20px;
-    height: 20px;
-    margin: 0 2px;
-  }
+.dropdown {
+  background-color: rgba(0, 0, 0, 0);
+  grid-column: 4;
+  grid-row: 1;
+  justify-self: end;
+}
+.dropdown-item:hover {
+  background-color: rgba(223, 223, 223, 0.904);
+  transition: 0.3s
+}
+.dropdown-menu {
+  text-align: center;
+}
+.my-review-el {
+  border: 1px solid rgba(180, 180, 180, 0.658);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.151);
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 250px 200px 200px 350px;
+  grid-auto-rows: 90px 40px 70px;
+  height: 200px;
+  margin-bottom: 20px;
+  transition: 0.2s;
+  width: 1000px;
+}
+.my-review-el:hover {
+  background-color: rgba(223, 223, 223, 0.904);
+}
+.my-review-el-airline {
+  grid-column: 4;
+  grid-row: 1;
+  padding: 20px;
+  text-align: start;
+}
+.my-review-el-content {
+  grid-column: 2 / 5;
+  grid-row: 3;
+  padding: 20px;
+  text-align: start;
+}
+.my-review-el-content div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 600px;
+}
+.my-review-el-date {
+  grid-column: 2;
+  grid-row: 1;
+  padding: 20px;
+  text-align: start;
+}
+.my-review-el-img {
+  grid-column: 1;
+  grid-row: 2 / 3;
+  padding: 20px;
+  text-align: start;
+}
+.my-review-el-name {
+  grid-column: 1;
+  grid-row: 1;
+  padding: 20px;
+  text-align: start;
+}
+.my-review-el-score {
+  display: flex;
+  grid-column: 2;
+  grid-row: 2;
+  padding: 20px;
+}
+.my-review-el-seat {
+  grid-column: 3;
+  grid-row: 1;
+  padding: 20px;
+  text-align: start;
+}
+.my-review-score {
+  background-color: #B9A6C9;
+  border-radius: 70%;
+  height: 20px;
+  margin: 0 2px;
+  width: 20px;
+}
+.my-review-not-score {
+  border: 2px solid #B9A6C9;
+  border-radius: 70%;
+  height: 20px;
+  margin: 0 2px;
+  width: 20px;
+}
 </style>

@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 from .serializers import UserSerializer
 from .utils import check_login
@@ -14,8 +14,8 @@ import requests
 import jwt
 
 JWT_SECRET_KEY = config('JWT_SECRET_KEY')
-
 User = get_user_model()
+
 
 def make_random_id():
     return ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(13))
@@ -27,12 +27,10 @@ def login(request):
     url = 'https://oauth2.googleapis.com/tokeninfo?id_token='
     response = requests.get(url+token)
     user = response.json()
-    # 로그인
     if User.objects.filter(google_id = user['sub']).exists():
         user_info = User.objects.get(google_id=user['sub'])
         encoded_jwt = jwt.encode({'id': user_info.id}, JWT_SECRET_KEY, algorithm='HS256')
         serializer = UserSerializer(user_info)
-    # 회원가입
     else:
         while True:
             user_id = make_random_id()

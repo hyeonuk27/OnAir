@@ -62,7 +62,7 @@ const routes = [
   },
   {
     path: '/404',
-    name: 'NotFound',
+    name: 'NotFoundPage',
     component: NotFound
   },
   { path: '*',

@@ -2,12 +2,12 @@
   <div class="airline">
     <div class="airline-container">
       <AirlineInfo
-      v-if="isInfoRendered"
-      :airlineInfo="airlineInfo"
+        v-if="isInfoRendered"
+        :airlineInfo="airlineInfo"
       />
       <div
-      v-else
-      style="height: 700px;"
+        v-else
+        style="height: 700px;"
       >
       </div>
       <div class="tab-container">
@@ -17,31 +17,29 @@
         <label class="airline-tablabel" for="tab-review">항공사 리뷰</label>
         <section class="airline-tab" id="content-analysis">
           <AnalysisTab
-          v-if="isStatisticsRendered"
-          :report="report"
+            v-if="isStatisticsRendered"
+            :report="report"
           />
           <div
-          v-else
-          id="loading"
-          style="height: 700px;"
-          >
-          </div>
+            v-else
+            id="loading"
+            style="height: 700px;"
+          ></div>
         </section>
         <section class="airline-tab" id="content-review">
           <ReviewTab 
-          v-if="isInfoRendered & isChartRendered"
-          :airlineInfo="airlineInfo"
-          :airlineId="airlineId"
-          :arrivalId="arrivalId"
-          :arrivalName="arrivalName"
-          :chartData="reviewTotalRateChartData"
+            v-if="isInfoRendered & isChartRendered"
+            :airlineInfo="airlineInfo"
+            :airlineId="airlineId"
+            :arrivalId="arrivalId"
+            :arrivalName="arrivalName"
+            :chartData="reviewTotalRateChartData"
           />
           <div
-          v-else
-          id="loading"
-          style="height: 700px;"
-          >
-          </div>
+            v-else
+            id="loading"
+            style="height: 700px;"
+          ></div>
         </section>
       </div>
     </div>
@@ -50,12 +48,11 @@
 
 
 <script>
-import AirlineInfo from "@/components/airline/statistics/AirlineInfo"
-import AnalysisTab from "@/components/airline/statistics/AnalysisTab"
-import ReviewTab from "@/components/airline/statistics/ReviewTab"
-
-import axios from "axios"
-import API from "@/common/drf.js"
+import axios from 'axios'
+import API from '@/common/drf.js'
+import AirlineInfo from '@/components/airline/statistics/AirlineInfo'
+import AnalysisTab from '@/components/airline/statistics/AnalysisTab'
+import ReviewTab from '@/components/airline/statistics/ReviewTab'
 
 export default {
   name: 'AirlineDetail',
@@ -83,49 +80,42 @@ export default {
         type: 'material'
       })
       axios({
-        url: API.URL + API.ROUTES.getAirlines + this.arrivalId + '/' + this.airlineId + '/',
-        method: "get",
+        url: `${API.URL}${API.ROUTES.getAirlines}${this.arrivalId}/${this.airlineId}/`,
+        method: 'get',
       })
-        .then((res) => {
-          const report = res.data.data
-          this.report = report
-          this.isStatisticsRendered = true
-          this.$vs.loading.close()
-          this.arrivalName = report.arrival_name
-        })
-        .catch((err) => {
-          this.$vs.loading.close()
-          this.$router.replace({name: 'NotFound'})
-          console.log(err)
-        })
+      .then((res) => {
+        const report = res.data.data
+        this.report = report
+        this.isStatisticsRendered = true
+        this.$vs.loading.close()
+        this.arrivalName = report.arrival_name
+      })
+      .catch(() => {
+        this.$vs.loading.close()
+        this.$router.replace({ name: 'NotFoundPage' })
+      })
     },
     getAirlineInfo: function () {
       axios({
-        url: API.URL + API.ROUTES.getAirlineInfo + this.airlineId + '/',
-        method: "get",
+        url: `${API.URL}${API.ROUTES.getAirlineInfo}${this.airlineId}/`,
+        method: 'get',
       })
-        .then((res) => {
-          const airlineInfo = res.data
-          this.airlineInfo = airlineInfo
-          this.isInfoRendered = true
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+      .then((res) => {
+        const airlineInfo = res.data
+        this.airlineInfo = airlineInfo
+        this.isInfoRendered = true
+      })
     },
     getAirlineTotalRates: function () {
       axios({
-        url: API.URL + API.ROUTES.reviewDetail + 'score/'  + this.airlineId + '/',
-        method: "get",
+        url: `${API.URL}${API.ROUTES.reviewDetail}score/${this.airlineId}/`,
+        method: 'get',
       })
-        .then((res) => {
-          const chartData = res.data
-          this.reviewTotalRateChartData = chartData
-          this.isChartRendered = true
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+      .then((res) => {
+        const chartData = res.data
+        this.reviewTotalRateChartData = chartData
+        this.isChartRendered = true
+      })
     }
   },
   created() {
@@ -139,60 +129,52 @@ export default {
 </script>
 
 <style>
-  .airline {
-    display: flex;
-    justify-content: center;
-    margin-top: 150px;
-  }
-
-  .tab-container {
-    min-width: 1000px;
-    max-width: 1000px;
-    padding-top: 40px;
-    margin: 0 auto;
-    text-align: start;
-  }
-
-  .airline-container {
-    width: 1000px;
-    min-width: 1000px;
-  }
-
-  .airline-tab {
-    display: none;
-    padding: 20px 0 0;
-    border-top: 2px solid #3D2F6B;
-    text-align: center;
-  }
-
-  .airline-tabradio {
-    display: none;
-  }
-
-  .airline-tablabel {
-    display: inline-flex;
-    margin: 0 0 -1px;
-    padding: 15px 25px;
-    font-weight: 600;
-    text-align: center;
-    color: #bbb;
-    border: 1px solid transparent;
-  }
-
-  .airline-tablabel:hover {
-    color: #3D2F6B;
-    cursor: pointer;
-  }
-
-  .airline-tabradio:checked + .airline-tablabel {
-    color: #555;
-    border: 1px solid #ddd;
-    border-top: 2px solid #3D2F6B;
-    border-bottom: 2px solid #ffffff;
-  }
-
-  #tab-analysis:checked ~ #content-analysis,
-  #tab-review:checked ~ #content-review {
-    display: block;
-  }
+.airline {
+  display: flex;
+  justify-content: center;
+  margin-top: 150px;
+}
+.airline-container {
+  min-width: 1000px;
+  width: 1000px;
+}
+.airline-tab {
+  border-top: 2px solid #3D2F6B;
+  display: none;
+  padding: 20px 0 0;
+  text-align: center;
+}
+.airline-tablabel {
+  border: 1px solid transparent;
+  color: #bbb;
+  display: inline-flex;
+  font-weight: 600;
+  margin: 0 0 -1px;
+  padding: 15px 25px;
+  text-align: center;
+}
+.airline-tablabel:hover {
+  color: #3D2F6B;
+  cursor: pointer;
+}
+.airline-tabradio {
+  display: none;
+}
+.airline-tabradio:checked + .airline-tablabel {
+  border: 1px solid #ddd;
+  border-bottom: 2px solid #ffffff;
+  border-top: 2px solid #3D2F6B;
+  color: #555;
+}
+#tab-analysis:checked ~ #content-analysis,
+#tab-review:checked ~ #content-review {
+  display: block;
+}
+.tab-container {
+  margin: 0 auto;
+  max-width: 1000px;
+  min-width: 1000px;
+  padding-top: 40px;
+  text-align: start;
+}
 </style>

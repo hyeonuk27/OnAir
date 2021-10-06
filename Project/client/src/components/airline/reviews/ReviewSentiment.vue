@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import API from '@/common/drf.js'
 import axios from 'axios'
+import API from '@/common/drf.js'
 
 export default {
   name: 'ReviewSentiment',

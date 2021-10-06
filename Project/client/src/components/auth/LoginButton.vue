@@ -6,8 +6,8 @@
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script>
-import API from '@/common/drf.js'
 import axios from 'axios'
+import API from '@/common/drf.js'
 
 export default {
   name: 'LoginButton',

@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import API from '@/common/drf.js'
 import axios from 'axios'
+import API from '@/common/drf.js'
 import SearchLogElement from '@/components/profile/SearchLogElement'
 import {mapState} from 'vuex'
 

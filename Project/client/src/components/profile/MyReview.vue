@@ -31,8 +31,8 @@
 </template>
 
 <script>
-import API from '@/common/drf.js'
 import axios from 'axios'
+import API from '@/common/drf.js'
 import MyReviewElement from '@/components/profile/MyReviewElement'
 
 export default {

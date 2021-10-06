@@ -4,7 +4,7 @@
 
 ## 👥 팀원 소개
 
-![banner-long](Document/IMG/banner-long.png)
+<center><img src="Document/IMG/banner-long.png"></center>
 
 
 

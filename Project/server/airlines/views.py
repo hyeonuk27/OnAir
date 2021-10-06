@@ -262,7 +262,6 @@ def airline_report(request, arrival_id, airline_id):
     monthly_delay = airlinedata
     monthly_delay['date'] = monthly_delay['date'].str[:7]
     monthly_delay = monthly_delay.groupby(['date'], as_index=False).mean().groupby('date')['delayed_time'].mean().round(2).reset_index()
-    delay_month_list = monthly_delay['date'].values.tolist()
     delay_month_avg_time = monthly_delay['delayed_time'].values.tolist()
 
 

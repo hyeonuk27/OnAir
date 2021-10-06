@@ -1,6 +1,6 @@
 <template>
   <div style="display: flex; justify-content: center;">
-    <div style="width: 1190px;">
+    <div style="width: 1190px;" class="user-select-none">
       <nav v-if="this.$route.name === 'Main'" class="nav justify-content-end">
         <div v-if="isLogin" style="height: 30px;" class="nav-menu d-flex mt-5">
           <div style="color: white; cursor: pointer; text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.26);" class="nav-element nav-element-main" @click="moveToMypage">마이페이지</div>

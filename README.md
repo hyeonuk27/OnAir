@@ -24,10 +24,10 @@
   - [📋 기술 스택](#📋 기술 스택)
   - [🎨 컨셉 디자인](#🎨 컨셉 디자인)
 - [2️⃣ 프로젝트 구조](#2️⃣ 프로젝트 구조)
-  - Backend
-  - Frontend
-- 프로젝트 산출물
-- 프로젝트 결과물
+  - [🔙 Backend](#- Back)
+  - [🏞 Frontend](#- Front)
+- [3️⃣ 프로젝트 산출물](#3️⃣ 프로젝트 산출물)
+- [4️⃣ 프로젝트 결과물](#4️⃣ 프로젝트 결과물)
 
 
 
@@ -47,11 +47,10 @@
 
 2. 팀원
 
-|                                                              |                                                              |                                                              |                                                              |                                                              |
+|                             팀장                             |                             팀원                             |                             팀원                             |                             팀원                             |                             팀원                             |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                          **박지우**                          |                          **김채은**                          |                          **김현욱**                          |                          **나승호**                          |                          **안수빈**                          |
 | [![Github](./Document/IMG/GitHub-Mark-64px.png)](https://github.com/nu1997) | [![Github](./Document/IMG/GitHub-Mark-64px.png)](https://github.com/chenni0531) | [![Github](./Document/IMG/GitHub-Mark-64px.png)](https://github.com/hyeonuk27) | [![Github](./Document/IMG/GitHub-Mark-64px.png)](https://github.com/qlfflwls5) | [![Github](./Document/IMG/GitHub-Mark-64px.png)](https://github.com/axxsxbxx) |
-|                기획<br />디자인<br />통계, DB                |                   기획<br />머신러닝(분석)                   |                   기획<br />머신러닝(분석)                   |                   기획<br />머신러닝(예측)                   |                       기획<br />크롤링                       |
 
 
 
@@ -59,23 +58,26 @@
 
 1. 이슈관리 : Jira
 2. 형상관리 : Gitlab
-3. 커뮤니케이션 : Mattetmost, Notion. Slack
+3. 커뮤니케이션 : Webex, Mattetmost, Notion, Slack
 4. 개발 환경
    - OS : Windows 10
    - IDE
-     - Visual Studio Code 1.58
+     - Visual Studio Code 1.60.2
      - UI/UX : Adobe XD
    - Database : MySQL Workbench 8.0.22
    - Server : AWS EC2 (MobaXterm)
      - Ubuntu 20.04.2 LTS
      - Docker 20.10.7
+     - Jenkins 2.303.1
 5. 상세 사용
    - Backend
-     - Django 3.2.7
+     - Django 3.2.7, Django Rest Framework 3.12.4
+     - pandas 1.3.3, scikit-learn 1.0, statsmodels 0.12.2, pykomoran 0.1.6.post1
    - Frontend
      - HTML5, CSS3, JavaScript(ES6)
      - Vue 2.6.11, Vuex 3.4.0
-   - AWS EC2
+     - Node.js 14.16.1, NPM 6.14.12
+     - Vuesax 3.12.2, Highcharts 9.2.2
 
 
 
@@ -146,23 +148,38 @@ client
 
 > 기술  및 운영 관련 문서
 
-- [Architecture]((Document/2_Definition/1_Architecture))
-  
-  - MySQL 연결
-  - EC2 시간 설정
-  - AWS EC2에 Spark 설치
-  
-- Analysis
+0. [PreRequisites (사전학습)](Document/0_Prerequisites)
+1. [Concept (기획)](Document/1_Concept)
+2. [Definition (정의)](Document/2_Definition)
+   1. [Architecture (아키텍처)](Document/2_Definition/1_Architecture)
+      - [MySQL 연결](Document/2_Definition/1_Architecture/[MySQL]MySQL 연결.md)
+      - [EC2 시간 설정](Document/2_Definition/1_Architecture/[AWS]EC2 시간 설정)
+      - [AWS EC2에 Spark 설치](Document/2_Definition/1_Architecture/[Spark]AWS EC2에 Spark 설치하기)
+   2. [Requirements (요구사항)](Document/2_Definition/2_Requirements)
+      - [예측 분석 계획](Document/2_Definition/2_Requirements/감성 분석 계획.md)
+      - [감성 분석 계획](Document/2_Definition/2_Requirements/예측 분석 계획.md)
+   3. [Design](Document/3_Design)
+      - [Art](Document/3_Design/1_Art)
+      - [Wireframe](Document/3_Design/2_Wireframe)
+3. [Developtment (개발)](Document/3_Development)
+   1. [Convention](Document/3_Development/1_Convention/Git_convention.md)
+      - [Git](Document/3_Development/1_Convention/Git_convention.md)
+      - [Jira](Document/3_Development/1_Convention/Jira_convention.md)
+   2. [Data Analysis (데이터 분석)](Document/3_Development/2_Data_Analysis)
+      - [예측분석](Document/3_Development/2_Data_Analysis/AirlineAnalysis)
+      - [크롤링](Document/3_Development/2_Data_Analysis/DataCrawling)
+      - [감성분석](Document/3_Development/2_Data_Analysis/ReviewAnalysis)
+   3. [ML (Machine Learning)](Document/3_Development/3_ML)
+4. [Testing (테스트 시나리오)](Document/4_Testing)
+5. [Deployment (배포)](Document/5_Deployment)
+   - [Auto Deploy (자동 배포)](Document/5_Deployment/1_AutoDeploy)
+6. [Operations (운영)](Document/6_Operations)
+   1. [Git - Jira Integrations](Document/6_Operations/1_Integrations/Jira_Integration.md)
+   2. [Plugins](Document/6_Operations/2_Plugins)
+      - [Gitlab - Mattermost Connect Plugin](Document/6_Operations/2_Plugins/Gitlab.md)
+      - [Jira - Mattermost Connect Plugin](Document/6_Operations/2_Plugins/Jira.md)
 
-  - [예측분석](Document/3_Development/2_Analysis/AirlineAnalysis)
-  - [크롤링](Document/3_Development/2_Analysis/DataCrawling)
-  - [감성분석](Document/3_Development/2_Analysis/ReviewAnalysis)
 
-- [Deploy](Document/5_Deployment/1_AutoDeploy)
-
-  ##### --- 추가중입니다
-
-  
 
 ## 4️⃣ 프로젝트 결과물
 

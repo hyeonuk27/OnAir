@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-    <div class="navbar-container">
+    <div class="navbar-container user-select-none">
       <nav v-if="this.$route.name === 'Main'" class="nav justify-content-end">
         <div v-if="isLogin" style="height: 30px;" class="nav-menu d-flex mt-5">
           <div class="nav-element nav-element-main" @click="moveToMypage">마이페이지</div>

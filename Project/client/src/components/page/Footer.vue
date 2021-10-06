@@ -46,10 +46,10 @@ export default {
       'setArrival'
     ]),
     moveToMain: function () {
-      this.setDeparture([])
-      this.setArrival([])
       if (this.$route.path !== '/') {
-        this.$router.push({ name:'"Main' })
+        this.setDeparture([])
+        this.setArrival([])
+        this.$router.push({ name:'Main' })
       }
     },
   }

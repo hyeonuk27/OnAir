@@ -1,7 +1,7 @@
 <template>
   <div class='main' :style="{backgroundImage: 'linear-gradient( rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08) ), url('+ bgImg +')'}">
     <div class="main-container">
-      <div class="arrival-info">
+      <div class="arrival-info user-select-none">
         <span>
           {{departure}}
           <span class="material-icons flight-icon">
@@ -32,14 +32,14 @@
             :arrivalId="arrivalId"
           />
         </div>
-        <div class="main-intro" v-else>
+        <div class="main-intro user-select-none" v-else>
           <span style="font-size: 17px; font-weight: bold;">On:Air는 당신의 편안한 비행을 위해 항공사의 지연률 통계 및 예측, 리뷰 감성분석 서비스를 제공합니다.</span><br><br><br>
           <span style="margin-left: 20px; margin-right: 150px;">항공사 출발 데이터 통계</span>
           <span style="margin-right: 140px;">빅데이터 기반 출발 지연 예측</span>
           <span>리뷰 키워드 도출 및 감성분석</span><br>
           <img style="border-radius: 5px; width: 300px; object-fit: cover; margin-right: 30px; margin-top: 10px;" src="@/assets/intro1.png" alt="onair-data">
           <img style="border-radius: 5px; width: 306px; object-fit: cover; margin-right: 30px; margin-top: 10px;" src="@/assets/intro2.png" alt="onair-predict">
-          <img style="border-radius: 5px; width: 296px; object-fit: cover; margin-top: 10px;" src="@/assets/intro3.png" alt="onair-review">
+          <img style="border-radius: 5px; width: 297px; object-fit: cover; margin-top: 10px;" src="@/assets/intro3.png" alt="onair-review">
         </div>
       </div>
     </div>

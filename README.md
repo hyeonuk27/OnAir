@@ -198,6 +198,37 @@ client
 
 ![Screen Shot 2021-10-07 at 5.07.17](Document/IMG/Screen Shot 2021-10-07 at 5.07.17.png)
 
+![Screen Shot 2021-10-07 at 6.10.03](Document/IMG/Screen Shot 2021-10-07 at 6.10.03.png)
 
 
-<img src="Document/IMG/Screen Shot 2021-10-07 at 5.09.51.png" alt="Screen Shot 2021-10-07 at 5.09.51" style="zoom:150%;" />
+
+![Screen Shot 2021-10-07 at 6.10.18](Document/IMG/Screen Shot 2021-10-07 at 6.10.18.png)
+
+![Screen Shot 2021-10-07 at 6.10.34](Document/IMG/Screen Shot 2021-10-07 at 6.10.34.png)
+
+![Screen Shot 2021-10-07 at 6.10.37](Document/IMG/Screen Shot 2021-10-07 at 6.10.37.png)
+
+
+
+
+
+![Screen Shot 2021-10-07 at 6.10.43](Document/IMG/Screen Shot 2021-10-07 at 6.10.43.png)
+
+![Screen Shot 2021-10-07 at 6.10.51](Document/IMG/Screen Shot 2021-10-07 at 6.10.51.png)
+
+![Screen Shot 2021-10-07 at 6.10.55](Document/IMG/Screen Shot 2021-10-07 at 6.10.55.png)
+
+
+
+![Screen Shot 2021-10-07 at 6.11.05](Document/IMG/Screen Shot 2021-10-07 at 6.11.05.png)
+
+
+
+![Screen Shot 2021-10-07 at 6.11.23](Document/IMG/Screen Shot 2021-10-07 at 6.11.23.png)
+
+![Screen Shot 2021-10-07 at 6.11.09](Document/IMG/Screen Shot 2021-10-07 at 6.11.09.png)
+
+![Screen Shot 2021-10-07 at 6.11.18](Document/IMG/Screen Shot 2021-10-07 at 6.11.18.png)
+
+![Screen Shot 2021-10-07 at 6.11.34](Document/IMG/Screen Shot 2021-10-07 at 6.11.34.png)
+

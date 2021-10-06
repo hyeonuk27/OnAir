@@ -21,12 +21,17 @@ class Airline(models.Model):
     under_30 = models.IntegerField()
     under_60 = models.IntegerField()
     over_60 = models.IntegerField()
+    
+    def __str__(self):
+        return self.name
 
 class Arrival(models.Model):
     id = models.CharField(max_length=13, primary_key=True)
     name = models.CharField(max_length=50)
-    image_url = models.TextField()
-
+    # image_url = models.TextField()
+    
+    def __str__(self):
+        return self.name
 
 class Review(models.Model):
     id = models.CharField(max_length=13, primary_key=True)
@@ -56,6 +61,9 @@ class Review(models.Model):
     def arrivalname(self):
         return self.arrival.name
 
+    def __str__(self):
+        return self.title
+
 
 class Log(models.Model):
     id = models.CharField(max_length=13, primary_key=True)
@@ -65,34 +73,28 @@ class Log(models.Model):
     arrival = models.ForeignKey(Arrival, on_delete=models.CASCADE, related_name='logs')
 
 
-class Statistics(models.Model):
-    id = models.CharField(max_length=13, primary_key=True)
-    date = models.DateTimeField()
-    airline = models.CharField(max_length=20)
-    arrival = models.CharField(max_length=50)
-    state = models.CharField(max_length=10)
-    reason = models.CharField(max_length=50, null=True, blank=True)
-    passengers = models.IntegerField()
-    delayed_time = models.IntegerField()
+# class Statistics(models.Model):
+#     id = models.CharField(max_length=13, primary_key=True)
+#     date = models.DateTimeField()
+#     airline = models.CharField(max_length=20)
+#     arrival = models.CharField(max_length=50)
+#     state = models.CharField(max_length=10)
+#     reason = models.CharField(max_length=50, null=True, blank=True)
+#     passengers = models.IntegerField()
+#     delayed_time = models.IntegerField()
 
 
 class StatisticsResult(models.Model):
     id = models.CharField(max_length=13, primary_key=True)
-    # 목적지
     arrival = models.CharField(max_length=50)
-    # 항공사
     airline = models.CharField(max_length=20)
-    # 목적지에 대한 총운항횟수
     total = models.IntegerField()
-    # 30분내 출발확률
     under_30 = models.FloatField()
-    # 30분 초과 60분 이하 출발확률
     under_60 = models.FloatField()
-    # 60분 초과 출발확률
     over_60 = models.FloatField()
-    # 지연률
     delay_rate = models.FloatField()
-    # 평균 지연시간
     delay_time = models.IntegerField()
-    # 결항률
     cancel_rate = models.FloatField()
+
+    def __str__(self):
+        return self.arrival, self.airline

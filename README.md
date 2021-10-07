@@ -127,10 +127,14 @@
 
 2. 팀원
 
+
+
 |                             팀장                             |                             팀원                             |                             팀원                             |                             팀원                             |                             팀원                             |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                          **박지우**                          |                          **김채은**                          |                          **김현욱**                          |                          **나승호**                          |                          **안수빈**                          |
 | <a href="https://github.com/nu1997"><img src="https://avatars.githubusercontent.com/u/70439178?v=4" style="width: 150px;"></a> | <a href="https://github.com/chenni0531"><img src="https://avatars.githubusercontent.com/u/77473588?v=4" style="width: 150px;"></a> | <a href="https://github.com/hyeonuk27"><img src="https://avatars.githubusercontent.com/u/79366855?v=4" style="width: 150px;"></a> | <a href="https://github.com/qlfflwls5"><img src="https://avatars.githubusercontent.com/u/73304577?v=4" style="width: 150px;"></a> | <a href="https://github.com/axxsxbxx"><img src="https://avatars.githubusercontent.com/u/69948717?v=4" style="width: 150px;"></a> |
+
+
 
 <br/>
 

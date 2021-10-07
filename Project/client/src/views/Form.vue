@@ -15,22 +15,20 @@
           <div class="mx-4 review-circle"></div>
           <div class="review-circle"></div>
         </div>
-
-        <div id="info" class="mb-3 d-flex justify-content-between">
+        <div id="info" class="mb-3 d-flex justify-content-between text-start">
           <div id="title" class="mb-3">
-            제목 &nbsp;
-            <input
+            <vs-input
               type="text"
+              label="제목"
               v-model="title"
               placeholder="제목을 입력하세요."
-              size="50"
+              style="width:500px;"
             />
           </div>
-          
           <div id="date">
-            출발일 &nbsp;
-            <input
+            <vs-input
               type="date"
+              label="출발일"
               id="start"
               name="trip-start"
               value="0000.00.00."
@@ -38,7 +36,6 @@
             />
           </div>
         </div>
-
         <div id="content" class="mt-4">
           <textarea
             type="text"

@@ -108,7 +108,7 @@ export default {
       this.setArrival(arrivalCode)
       this.bgImg = `https://j5a203.p.ssafy.io/static/airlines/images/city_bg/${arrivalCode.toLowerCase()}.jpeg`
       axios({
-        url: `${API.UR}${API.ROUTES.getAirlines}${arrivalId}/`,
+        url: `${API.URL}${API.ROUTES.getAirlines}${arrivalId}/`,
         method: 'get',
       })
       .then((res) => {

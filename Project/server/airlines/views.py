@@ -9,9 +9,6 @@ from .models import Airline, Arrival, Review, Log, StatisticsResult
 from .serializers import AirlineDetailSerializer, ReviewListSerializer, ReviewSerializer, LogListSerializer, ArrivalListSerializer, LogSerializer
 
 from decouple import config
-from drf_yasg import openapi
-from drf_yasg.utils import swagger_auto_schema
-from PyKomoran import Komoran, DEFAULT_MODEL
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -87,14 +84,6 @@ def user_review_list(request, user_id):
     return Response(data)
 
 
-@swagger_auto_schema(
-    method='post',
-    request_body=openapi.Schema(
-        type=openapi.TYPE_OBJECT,
-        properties={
-            'airline_id': openapi.Schema(type=openapi.TYPE_STRING, description='The desc'),
-            'arrival_id': openapi.Schema(type=openapi.TYPE_STRING, description='The desc'),
-        }))
 @api_view(['GET', 'POST'])
 @check_login
 def user_log_list(request):
@@ -385,7 +374,8 @@ def review_keyword(request, airline_id):
     for review in reviews:
         airline_review += review.content.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
         airline_review += review.title.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
-
+    
+    from PyKomoran import Komoran, DEFAULT_MODEL
     komoran = Komoran(DEFAULT_MODEL['LIGHT'])
     target_tags = ['NNG']
     noun_adj_list = komoran.get_morphes_by_tags(airline_review, tag_list=target_tags)
@@ -410,7 +400,8 @@ def review_wordcloud(request, airline_id):
     for review in reviews:
         airline_review += review.content.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
         airline_review += review.title.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
-
+    
+    from PyKomoran import Komoran, DEFAULT_MODEL
     komoran = Komoran(DEFAULT_MODEL['LIGHT'])
     target_tags = ['NNG', 'VA']
     noun_adj_list = komoran.get_morphes_by_tags(airline_review, tag_list=target_tags)

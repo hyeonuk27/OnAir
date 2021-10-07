@@ -10,7 +10,7 @@
       </div>
       <div class="analysis-head">
         <p class="analysis-head-total"> 
-          총 운항횟수 
+          총 운항 횟수 
           <span style="background-color: #3D2F6B;" class="analysis-numbers">
             {{ report.total }}</span> 회
         </p>
@@ -78,8 +78,8 @@ export default {
         },
         colors: [
           '#3D2F6B', 
-          '#B81F5A',
           '#B9A6C9', 
+          '#B81F5A',
         ], 
         credits: {
           enabled: false
@@ -231,7 +231,7 @@ export default {
           enabled: false
         },
         title: {
-          text: '지연사유별 평균지연시간',
+          text: '지연 사유별 평균 지연시간',
           style: {'color': '#3D2F6B', 'font-weight': 'bold'}
         },
         xAxis: {
@@ -342,7 +342,7 @@ export default {
           enabled: false
         },
         title: {
-          text: '월별 이용객 에 따른 지연률 예측',
+          text: '월별 이용객에 따른 지연률 예측',
           style: {'color': '#3D2F6B', 'font-weight': 'bold'}
         },
         xAxis: {
@@ -488,7 +488,7 @@ export default {
           enabled: false
         },
         title: {
-          text: '지연사유별 평균지연시간',
+          text: '지연 사유별 평균 지연시간',
           style: {'color': '#3D2F6B', 'font-weight': 'bold'}
         },
         xAxis: {

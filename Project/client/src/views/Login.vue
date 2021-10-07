@@ -13,23 +13,19 @@
 </template>
 
 <script>
-import LoginButton from "@/components/auth/LoginButton"
+import LoginButton from '@/components/auth/LoginButton'
 
 export default {
   name: 'Login',
   components: {
     LoginButton,
   },
-  methods: {
-
-  },
-  
 }
 </script>
 
 <style>
-  .login-container {
-    margin-top: 200px;
-    min-height: 500px;
-  }
+.login-container {
+  margin-top: 200px;
+  min-height: 500px;
+}
 </style>

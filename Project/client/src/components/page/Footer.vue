@@ -1,6 +1,6 @@
 <template>
-  <div class='footer'>
-    <div class='footer-container'>
+  <div class="footer">
+    <div class="footer-container">
       <div style="display: flex;">
         <div class="onair-logo">
           <img style="width: 130px;" src="@/assets/onair_logo.png" alt="onair-logo">
@@ -21,7 +21,7 @@
         <span>알고 타자! 믿고 타자! 같이 타자!</span>
       </div>
       <div class="footer-content">
-        <img style="width: 72px; object-fit: cover; margin-left: 25px;" src="@/assets/favicon.png" alt="">
+        <img class="footer-favicon" src="@/assets/favicon.png" alt="onair-favicon">
         <div class="onair-info">
           <span class="info">
             On-Air(온에어)는 빅데이터를 활용하여 소비자가 항공사 별 서비스 품질을 시각화한 통합 웹 서비스입니다. 
@@ -40,21 +40,16 @@ import { mapActions } from 'vuex'
 
 export default {
   name: 'Footer',
-  data() {
-    return {
-
-    }
-  },
   methods: {
     ...mapActions([
       'setDeparture',
       'setArrival'
     ]),
-    moveToMain: function() {
-      if (this.$route.path !== "/") {
+    moveToMain: function () {
+      if (this.$route.path !== '/') {
         this.setDeparture([])
         this.setArrival([])
-        this.$router.push({ name: "Main" })
+        this.$router.push({ name:'Main' })
       }
     },
   }
@@ -62,71 +57,69 @@ export default {
 </script>
 
 <style>
-  .footer {
-    background-color: #EFEDF2;
-    display: flex;
-    justify-content: center;
-    padding: 30px 0px 30px 0px;
-  }
+.copyright {
+  color: #656F8C;
+  font-size: 10px;
+  margin-top: 10px;
+  text-align: right;
+}
+.footer {
+  background-color: #EFEDF2;
+  display: flex;
+  justify-content: center;
+  padding: 30px 0px 30px 0px;
+}
+.footer-container {
+  text-align: left;
+  width: 1100px;
+}
+.footer-content {
+  display: flex;
+  margin-bottom: 20px;
+}
+.footer-favicon {
+  margin-left: 25px;
+  object-fit: cover; 
+  width: 72px; 
+}
+.footer-onair {
+  color: #3D2F6B;
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 220px;
+}
+.footer-router {
+  margin-bottom: 30px;
+  margin-left: 50px;
+  padding-top: 23px;
+}
+.footer-router span {
+  cursor: pointer;
+  margin-right: 143px;
+}
+.info {
+  font-size: 13px;
+}
+.notion-link, .copyright {
+  margin-bottom: 5px;
+}
+.onair-info {
+  color: #656F8C;
+  margin-left: 123px;
+  text-align: justify;
+}
+.onair-logo {
+  margin-right: 40px;
+  margin-top: 10px;
+}
 
-  .footer-container {
-    text-align: left;
-    width: 1100px;
-  }
-
-  .footer-content {
-    display: flex;
-    margin-bottom: 20px;
-  }
-
-  .footer-onair {
-    font-weight: 600;
-    font-size: 14px;
-    color: #3D2F6B;
-    margin-left: 220px;
-  }
+.onair-plus {
+  color: #3D2F6B;
+  padding-top: 23px;
+  text-align: right;
+}
 
 
-  .footer-router {
-    margin-left: 50px;
-    padding-top: 23px;
-    margin-bottom: 30px;
-  }
 
-  .footer-router span {
-    cursor: pointer;
-    margin-right: 143px;
-  }
 
-  .onair-logo {
-    margin-top: 10px;
-    margin-right: 40px;
-  }
-
-  .onair-info {
-    text-align: justify;
-    color: #656F8C;
-    margin-left: 123px;
-  }
-
-  .info {
-    font-size: 13px;
-  }
-
-  .onair-plus {
-    color: #3D2F6B;
-    padding-top: 23px;
-    text-align: right;
-  }
-
-  .notion-link, .copyright {
-    margin-bottom: 5px;
-  }
-
-  .copyright {
-    font-size: 10px;
-    color: #656F8C;
-    margin-top: 10px;
-    text-align: right;
-  }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class='LoginBtn'>
+  <div>
     <div id="my-signin2"></div>
   </div>
 </template>
@@ -12,7 +12,7 @@ import API from '@/common/drf.js'
 export default {
   name: 'LoginButton',
   methods: {
-    onSuccess: function(googleUser) {
+    onSuccess: function (googleUser) {
       const accessToken = googleUser.getAuthResponse().id_token
       axios({
         url: API.URL + API.ROUTES.login,
@@ -26,12 +26,9 @@ export default {
         localStorage.setItem('userId', res.data.info.id)
         localStorage.setItem('name', res.data.info.name)
         localStorage.setItem('profileUrl', res.data.info.profile_url)
-        this.$router.push({ name: "Main" })
+        this.$router.push({ name: 'Main' })
         window.location.reload()
       })
-    },
-    onFailure: function(error) {
-      console.log(error);
     },
   },
   mounted() {
@@ -42,7 +39,6 @@ export default {
       longtitle: true,
       theme: 'light',
       onsuccess: this.onSuccess,
-      onfailure: this.onFailure,
     })
   },
 }

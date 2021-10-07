@@ -19,12 +19,15 @@
 </template>
 
 <script>
-import axios from "axios";
-import API from "@/common/drf.js";
-import ReviewListElement from "@/components/airline/reviews/ReviewListElement";
+import axios from 'axios'
+import API from '@/common/drf.js'
+import ReviewListElement from '@/components/airline/reviews/ReviewListElement'
 
 export default {
-  name: "ReviewList",
+  name: 'ReviewList',
+  components: {
+    ReviewListElement,
+  },
   props: {
     airlineId: String,
   },
@@ -33,46 +36,38 @@ export default {
       pageNum: 1,
       pageTotal: 0,
       reviewList: [],
-    };
-  },
-  components: {
-    ReviewListElement,
+    }
   },
   methods: {
     getReviewList: function () {
       axios({
-        url: API.URL + API.ROUTES.reviewList + this.airlineId + "/",
-        method: "get",
+        url: `${API.URL}${API.ROUTES.reviewList}${this.airlineId}/`,
+        method: 'get',
         params: {
           page: this.pageNum,
         },
       })
-        .then((res) => {
-          this.pageTotal = res.data[res.data.length - 1]["page_total"];
-          this.reviewList = res.data.slice(0, 5);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      .then((res) => {
+        this.pageTotal = res.data[res.data.length - 1]['page_total']
+        this.reviewList = res.data.slice(0, 5)
+      })
     },
   },
   created() {
-    this.getReviewList();
+    this.getReviewList()
   },
-};
+}
 </script>
 
 <style>
 #review-list-container {
   height: 100%;
 }
-
 .review-list-pagination {
-  margin: 40px 100px 50px 0px;
   display: flex;
   justify-content: center;
+  margin: 40px 100px 50px 0px;
 }
-
 .vs-pagination--mb {
   display: flex;
   justify-content: center !important;

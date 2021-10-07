@@ -118,9 +118,11 @@
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                          **박지우**                          |                          **김채은**                          |                          **김현욱**                          |                          **나승호**                          |                          **안수빈**                          |
 | [![Github](./Document/IMG/GitHub-Mark-64px.png)](https://github.com/nu1997) | [![Github](./Document/IMG/GitHub-Mark-64px.png)](https://github.com/chenni0531) | [![Github](./Document/IMG/GitHub-Mark-64px.png)](https://github.com/hyeonuk27) | [![Github](./Document/IMG/GitHub-Mark-64px.png)](https://github.com/qlfflwls5) | [![Github](./Document/IMG/GitHub-Mark-64px.png)](https://github.com/axxsxbxx) |
-| 기획: 주제, 컨셉, 와이어프레임, 아이콘 <br />프론트엔드: 이미지 수집, 차트, 세부 CSS<br />DB: 항공사 데이터 전처리 및 통계함수 로직<br />백엔드: 항공사 정보 및 분석 API<br />문서: README, 데이터 활용 현황, 발표 |                                                              |                                                              | 기획: 주제, UI<br> Data: 데이터 전처리 및 머신러닝<br> DevOps: EC2 설정, HTTPS설정, MySQL설정, CI/CD(Jenkins) 구축<br> 프론트엔드: 기본 설정, 메인 페이지, 검색 페이지, 프로필 페이지, 네비게이션 바, 푸터<br> 백엔드: 머신러닝 모델 사용 및 API 작성<br> 문서: 개발 과정 문서화, 포팅매뉴얼 |                                                              |
+| 기획: 주제, 컨셉, 와이어프레임, 아이콘 디자인<br />프론트엔드: 이미지 수집, 항공사 조회 페이지, `Highchart.js`, 세부 CSS<br />백엔드: 항공사 정보 및 분석 API<br />Data: 항공사 데이터 전처리 및 통계함수 로직<br />문서: README, 데이터 활용 현황, 발표 |                                                              |                                                              | 기획: 주제, UI<br> DevOps: EC2 설정, HTTPS설정, MySQL설정, CI/CD(Jenkins) 구축<br/>프론트엔드: 기본 설정, 메인 페이지, 검색 페이지, 프로필 페이지, 네비게이션 바, 푸터<br/>  백엔드: 머신러닝 모델 사용 및 API 작성<br/> Data: 데이터 전처리 및 머신러닝<br/> 문서: 개발 과정 문서화, 포팅매뉴얼 |                                                              |
 
-### 📋 기술 스택
+<br/>
+
+### 기술 스택
 
 1. 이슈관리 : Jira
 2. 형상관리 : Gitlab
@@ -145,9 +147,9 @@
      - Node.js 14.16.1, NPM 6.14.12
      - Vuesax 3.12.2, Highcharts 9.2.2
 
+<br/>
 
-
-### 🎨 컨셉 디자인
+### 컨셉 디자인
 
 <img src="./Document/2_Definition/3_Design/1_Art/IMG/d-1.png" alt="디자인-2" style="zoom: 33%;" /><img src="./Document/2_Definition/3_Design/1_Art/IMG/d-2.png" alt="디자인-2" style="zoom: 33%;" />
 

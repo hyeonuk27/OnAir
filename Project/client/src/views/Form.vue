@@ -267,7 +267,7 @@ export default {
         food_score: this.foodScore,
       }
       axios({
-        url: `${API.URL}${API.ROUTES.reviewDetail}${this.reviewId} + /`,
+        url: `${API.URL}${API.ROUTES.reviewDetail}${this.reviewId}/`,
         method: 'put',
         data,
         headers,

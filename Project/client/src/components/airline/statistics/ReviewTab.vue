@@ -6,7 +6,7 @@
       </h5>
       <div class="review-head">
         <p class="review-head-total">
-          {{ airlineInfo.name }} 총 운항횟수
+          {{ airlineInfo.name }} 총 운항 횟수
           <span style="background-color: #3D2F6B;" class="review-numbers"> {{ airlineInfo.total_flight }}</span> 회
         </p>
         <p class="review-head-delay-rate">

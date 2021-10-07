@@ -1,9 +1,5 @@
 # On : Air 오늘의 항공 정보 분석 서비스 ✈️ 
 
-
-
-## 👥 팀원 소개
-
 <center><img src="Document/IMG/banner-long.png"></center>
 
 
@@ -18,32 +14,102 @@
 
 
 
-## 목차
+## Getting Started 
 
-- [1️⃣ 프로젝트 소개](#1️⃣-프로젝트-소개)
+#### Prerequisites
+
+```
+npm install -g @vue/cli
+```
+
+
+
+#### Installation
+
+1. Get a free API Key at openweathers.com
+
+2. Create Mysql DB
+
+3. Create `.env` for Django (at 'Project/server') like this:
+
+   ```
+   SECRET_KEY=<YOUR_DJANGO_KEY>
+   MYSQL_USER=<YOUR_MYSQL_USERNAME>
+   MYSQL_PASSWORD=<YOUR_MYSQL_PASSWORD>
+   JWT_SECRET_KEY=<YOUR_JWT_SECRET_KEY>
+   WEATHER_API_KEY=<YOUR_WEATHER_API_KEY>
+   ```
+
+4. Clone the repo
+
+    ```bash
+    git clone https://lab.ssafy.com/s05-bigdata-dist/S05P21A203.git
+    ```
+5. Install NPM packages
+
+    ```bash
+    npm install
+    ```
+
+6. Activate virtual environment and install pip 
+
+   ```bash
+   python -m venv venv
+   ```
+
+   ```bash
+   source venv/Scripts/activate
+   source venv/bin/activate
+   ```
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+   ```bash
+   python manage.py migrate
+   ```
+
+   ```bash
+   python manage.py runserver
+   ```
+
+   
+
+#### Contact
+
+##### via [Notion](https://jiu-park.notion.site/8d8a98436ed448d38bc4381f707df3b5)
+
+##### via [Email](jiwooapark@gmail.com)
+
+
+
+## 프로젝트 목차
+
+- #### [1️⃣ 프로젝트 소개](#1️⃣-프로젝트-소개)
+  
   - [📋 기술 스택](#📋 기술 스택)
   - [🎨 컨셉 디자인](#🎨 컨셉 디자인)
-- [2️⃣ 프로젝트 구조](#2️⃣ 프로젝트 구조)
+- #### [2️⃣ 프로젝트 구조](#2️⃣ 프로젝트 구조)
+  
   - [🔙 Backend](#- Back)
   - [🏞 Frontend](#- Front)
-- [3️⃣ 프로젝트 산출물](#3️⃣ 프로젝트 산출물)
-- [4️⃣ 프로젝트 결과물](#4️⃣ 프로젝트 결과물)
+- #### [3️⃣ 프로젝트 산출물](#3️⃣ 프로젝트 산출물)
+- #### [4️⃣ 프로젝트 결과물](#4️⃣ 프로젝트 결과물)
 
 
 
 ## 1️⃣ 프로젝트 소개
 
-
-
-### <center>https://j5a203.p.ssafy.io</center>
-
-
-
 1. 일정 : 2021-08-30 ~ 2021-10-08 (총 6주)
 
 - Sub1 : 2021-08-30 ~ 2021-09-03 (1주)
+
 - Sub2 : 2021-09-06 ~ 2021-09-17 (2주)
+
 - Sub3 : 2021-09-20 ~ 2021-10-08 (3주)
+
+  
 
 2. 팀원
 
@@ -51,7 +117,7 @@
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                          **박지우**                          |                          **김채은**                          |                          **김현욱**                          |                          **나승호**                          |                          **안수빈**                          |
 | [![Github](./Document/IMG/GitHub-Mark-64px.png)](https://github.com/nu1997) | [![Github](./Document/IMG/GitHub-Mark-64px.png)](https://github.com/chenni0531) | [![Github](./Document/IMG/GitHub-Mark-64px.png)](https://github.com/hyeonuk27) | [![Github](./Document/IMG/GitHub-Mark-64px.png)](https://github.com/qlfflwls5) | [![Github](./Document/IMG/GitHub-Mark-64px.png)](https://github.com/axxsxbxx) |
-| 기획: 주제, 컨셉, 와이어프레임, 아이콘 <br />프론트엔드: 이미지 수집, 차트, 세부 CSS<br />DB: 항공사 데이터 전처리 및 통계함수 로직<br />백엔드: 항공사 정보 및 분석 API<br />문서: README, 데이터 활용 현황, 발표 |                                                              |                                                              |                                                              |                                                              |
+| 기획: 주제, 컨셉, 와이어프레임, 아이콘 <br />프론트엔드: 이미지 수집, 항공사 세부 페이지, 차트, 세부 CSS<br />DB: 항공사 데이터 전처리 및 통계함수 로직<br />백엔드: 항공사 정보 및 분석 API<br />문서: README, 데이터 활용 현황, 발표 |                                                              |                                                              |                                                              |                                                              |
 
 
 
@@ -84,9 +150,7 @@
 
 ### 🎨 컨셉 디자인
 
-<img src="./Document/2_Definition/3_Design/1_Art/IMG/d-1.png" alt="디자인-2" style="zoom:67%;" />
-
-<img src="./Document/2_Definition/3_Design/1_Art/IMG/d-2.png" alt="디자인-2" style="zoom:67%;" />
+<img src="./Document/2_Definition/3_Design/1_Art/IMG/d-1.png" alt="디자인-2" style="zoom: 33%;" /><img src="./Document/2_Definition/3_Design/1_Art/IMG/d-2.png" alt="디자인-2" style="zoom: 33%;" />
 
 
 
@@ -187,48 +251,3 @@ client
 [기획 발표](Document/1_Concept/Presentation)
 
 최종 발표
-
-![Screen Shot 2021-10-07 at 5.07.30](Document/IMG/Screen Shot 2021-10-07 at 5.07.30.png)
-
-![Screen Shot 2021-10-07 at 5.07.59](Document/IMG/Screen Shot 2021-10-07 at 5.07.59.png)
-
-![Screen Shot 2021-10-07 at 5.07.40](Document/IMG/Screen Shot 2021-10-07 at 5.07.40.png)
-
-![Screen Shot 2021-10-07 at 5.07.50](Document/IMG/Screen Shot 2021-10-07 at 5.07.50.png)
-
-![Screen Shot 2021-10-07 at 5.07.17](Document/IMG/Screen Shot 2021-10-07 at 5.07.17.png)
-
-![Screen Shot 2021-10-07 at 6.10.03](Document/IMG/Screen Shot 2021-10-07 at 6.10.03.png)
-
-
-
-![Screen Shot 2021-10-07 at 6.10.18](Document/IMG/Screen Shot 2021-10-07 at 6.10.18.png)
-
-![Screen Shot 2021-10-07 at 6.10.34](Document/IMG/Screen Shot 2021-10-07 at 6.10.34.png)
-
-![Screen Shot 2021-10-07 at 6.10.37](Document/IMG/Screen Shot 2021-10-07 at 6.10.37.png)
-
-
-
-
-
-![Screen Shot 2021-10-07 at 6.10.43](Document/IMG/Screen Shot 2021-10-07 at 6.10.43.png)
-
-![Screen Shot 2021-10-07 at 6.10.51](Document/IMG/Screen Shot 2021-10-07 at 6.10.51.png)
-
-![Screen Shot 2021-10-07 at 6.10.55](Document/IMG/Screen Shot 2021-10-07 at 6.10.55.png)
-
-
-
-![Screen Shot 2021-10-07 at 6.11.05](Document/IMG/Screen Shot 2021-10-07 at 6.11.05.png)
-
-
-
-![Screen Shot 2021-10-07 at 6.11.23](Document/IMG/Screen Shot 2021-10-07 at 6.11.23.png)
-
-![Screen Shot 2021-10-07 at 6.11.09](Document/IMG/Screen Shot 2021-10-07 at 6.11.09.png)
-
-![Screen Shot 2021-10-07 at 6.11.18](Document/IMG/Screen Shot 2021-10-07 at 6.11.18.png)
-
-![Screen Shot 2021-10-07 at 6.11.34](Document/IMG/Screen Shot 2021-10-07 at 6.11.34.png)
-

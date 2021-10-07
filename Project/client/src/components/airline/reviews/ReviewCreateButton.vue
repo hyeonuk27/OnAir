@@ -49,6 +49,6 @@ export default {
 }
 .review-button:hover {
   background-color: rgba(0, 0, 0, 0.3);
-  transition: 0.3s
+  transition: 0.3s;
 }
 </style>

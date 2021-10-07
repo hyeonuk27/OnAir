@@ -12,15 +12,15 @@
 >
 > On-Air(온에어)는 빅데이터를 활용하여 소비자가 항공사 별 서비스 품질을 시각화한 통합 웹 서비스이다. 데이터를 가공, 분석하여 지연률, 결항률 통계를 시각화하여 제공하며 현재 운행중인 비행기의 지연 시간을 다각도로 예측하여 예비 이용객이 참고할 수 있도록 하였다. 또한 항공사에 대한 리뷰를 남기고 리뷰를 기반으로 한 실사용자의 항공사 별 평가를 감정 분석하여 제공한다.
 
-
+<br>
 
 ## Getting Started 
 
 #### Prerequisites
 
-```
-npm install -g @vue/cli
-```
+    ```
+    npm install -g @vue/cli
+    ```
 
 
 
@@ -74,30 +74,31 @@ npm install -g @vue/cli
    python manage.py runserver
    ```
 
-   
-
-#### Contact
-
-##### via [Notion](https://jiu-park.notion.site/8d8a98436ed448d38bc4381f707df3b5)
-
-##### via [Email](jiwooapark@gmail.com)
-
-
+   <br>
 
 ## 프로젝트 목차
 
-- #### [1️⃣ 프로젝트 소개](#1️⃣-프로젝트-소개)
+- [1️⃣ 프로젝트 소개](#1️⃣-프로젝트-소개)
   
-  - [📋 기술 스택](#📋 기술 스택)
-  - [🎨 컨셉 디자인](#🎨 컨셉 디자인)
-- #### [2️⃣ 프로젝트 구조](#2️⃣ 프로젝트 구조)
+  - [기술 스택](#📋 기술 스택)
+  - [컨셉 디자인](# 컨셉 디자인)
   
-  - [🔙 Backend](#- Back)
-  - [🏞 Frontend](#- Front)
-- #### [3️⃣ 프로젝트 산출물](#3️⃣ 프로젝트 산출물)
-- #### [4️⃣ 프로젝트 결과물](#4️⃣ 프로젝트 결과물)
+  <br>
+  
+- [2️⃣ 프로젝트 구조](#2️⃣ 프로젝트 구조)
+  
+  - [Backend](#-Back)
+  - [Frontend](#-Front)
+  
+  <br>
+  
+- [3️⃣ 프로젝트 산출물](#3️⃣ 프로젝트 산출물)
 
+  <br>
 
+- [4️⃣ 프로젝트 결과물](#4️⃣ 프로젝트 결과물)
+
+<br>
 
 ## 1️⃣ 프로젝트 소개
 
@@ -152,7 +153,7 @@ npm install -g @vue/cli
 
 <img src="./Document/2_Definition/3_Design/1_Art/IMG/d-1.png" alt="디자인-2" style="zoom: 33%;" /><img src="./Document/2_Definition/3_Design/1_Art/IMG/d-2.png" alt="디자인-2" style="zoom: 33%;" />
 
-
+<br>
 
 ## 2️⃣ 프로젝트 구조
 
@@ -207,7 +208,7 @@ client
 		└── profile
 ```
 
-
+<br>
 
 ## 3️⃣ 프로젝트 산출물
 
@@ -244,10 +245,20 @@ client
       - [Gitlab - Mattermost Connect Plugin](Document/6_Operations/2_Plugins/Gitlab.md)
       - [Jira - Mattermost Connect Plugin](Document/6_Operations/2_Plugins/Jira.md)
 
-
+<br>
 
 ## 4️⃣ 프로젝트 결과물
 
 [기획 발표](Document/1_Concept/Presentation)
 
 최종 발표
+
+
+
+<br>
+
+### Contact
+
+##### via [Notion](https://jiu-park.notion.site/8d8a98436ed448d38bc4381f707df3b5)
+
+##### via [Email](jiwooapark@gmail.com)

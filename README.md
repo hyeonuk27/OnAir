@@ -263,7 +263,7 @@ client
 
 [기획 발표](Document/1_Concept/Presentation)
 
-최종 발표
+[최종 발표](Document/8_Preview/Presentation)
 
 
 

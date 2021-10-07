@@ -3,16 +3,14 @@
     <div class="main-container">
       <div class="arrival-info user-select-none">
         <span>
-          {{departure}}
-          <span class="material-icons flight-icon">
+          {{departure}}<span class="material-icons flight-icon">
             flight
           </span>
         </span>
         <span style="margin-top: 250px; margin-left: 350px;">
           <span class="material-icons flight-icon">
             flight
-          </span>
-          {{arrival}}
+          </span>{{arrival}}
         </span>
       </div>
       <div class="search-box">

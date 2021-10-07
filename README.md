@@ -187,7 +187,7 @@ client
 ├── public
 └── src
 	├── assets
-  │ 	
+  │
 	├── common
 	│ 	└── modules
 	├── components

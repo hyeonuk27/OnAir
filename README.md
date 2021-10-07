@@ -184,24 +184,25 @@ client
 ├── node_modules
 ├── public
 └── src
-    ├── assets
-    │
-	 ├── common
-	 │ 	└── modules
-	 ├── components
-    │   ├── airline
-    │   ├── auth
-    │   ├── main
-    │   ├── page
-    │   │   ├── Footer
-    │   │   └── Navbar
-    │   └── profile
-    │    
-	 └── views
-		  ├── airline
-		  ├── login
-		  ├── main
-		  └── profile
+   ├── assets
+   │
+   ├── common
+   │ 	└── modules
+   ├── components
+   │   ├── airline
+   │   ├── auth
+   │   ├── main
+   │   ├── page
+   │   │   ├── Footer
+   │   │   └── Navbar
+   │   └── profile
+   │    
+   └── views
+      ├── airline
+      ├── login
+      ├── main
+      └── profile
+
 ```
 
 <br>

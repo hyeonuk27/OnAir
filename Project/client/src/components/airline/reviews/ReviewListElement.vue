@@ -248,6 +248,7 @@ export default {
   padding-left: 20px;
   text-align: start;
   width: 700px;
+  margin-top: 35px;
 }
 .review-list-el-date {
   grid-column: 2;
@@ -271,6 +272,7 @@ export default {
   margin: 17px;
   margin-top: 25px;
   width: 40px;
+  cursor: pointer;
 }
 .review-list-el-score {
   font-size: 12px;
@@ -279,6 +281,7 @@ export default {
   padding: 15px;
   padding-top: 34px;
   text-align: start;
+  margin-left: 50px;
 }
 .review-list-el-title {
   display: flex;
@@ -292,6 +295,7 @@ export default {
   text-align: start;
   white-space: 100%;
   width: 700px;
+  margin-top: 35px;
 }
 .review-score {
   background-color: #b9a6c9;

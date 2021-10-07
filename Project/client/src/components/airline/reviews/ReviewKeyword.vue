@@ -1,6 +1,6 @@
 <template>
   <div class="mt-2 mb-5">
-    <div class="keyword">
+    <div v-if="isRendered" class="keyword">
       <span
         v-for="(keyword, idx) in keywordList"
         :key="idx"
@@ -8,6 +8,9 @@
       >
         {{ '# ' + keyword[0] + ' ' }}
       </span>
+    </div>
+    <div v-else style="display: flex; justify-content: center; align-items: center; height: 24px; font-weight: bold; color: #3D2F6B; font-size: 16px;">
+      상위 키워드 분석중입니다 ...
     </div>
   </div>
 </template>
@@ -24,6 +27,7 @@ export default {
   data() {
     return {
       keywordList: [],
+      isRendered: false,
     }
   },
   methods: {
@@ -35,6 +39,7 @@ export default {
         })
         .then((res) => {
           this.keywordList = res.data.slice(0, 5)
+          this.isRendered = true
         })
       }
     },

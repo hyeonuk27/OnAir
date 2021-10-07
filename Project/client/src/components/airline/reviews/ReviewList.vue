@@ -1,6 +1,8 @@
 <template>
   <div id="review-list-container">
-    <div>
+    <div
+      v-if="isRendered"
+    >
       <ReviewListElement
         v-for="(review, idx) in reviewList"
         :key="idx"
@@ -14,6 +16,9 @@
         color="#B9A6C9"
         @change="getReviewList"
       ></vs-pagination>
+    </div>
+    <div v-else style="display: flex; justify-content: center; align-items: center; height: 200px; font-weight: bold; color: #3D2F6B;">
+      리뷰 로딩중입니다 ...
     </div>
   </div>
 </template>
@@ -36,6 +41,7 @@ export default {
       pageNum: 1,
       pageTotal: 0,
       reviewList: [],
+      isRendered: false,
     }
   },
   methods: {
@@ -50,6 +56,7 @@ export default {
       .then((res) => {
         this.pageTotal = res.data[res.data.length - 1]['page_total']
         this.reviewList = res.data.slice(0, 5)
+        this.isRendered = true
       })
     },
   },

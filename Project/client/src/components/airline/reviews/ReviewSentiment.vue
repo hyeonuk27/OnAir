@@ -7,8 +7,9 @@
   </div>
   <div
     v-else
-    style="height: 700px;"
+    style="height: 100px; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #3D2F6B;"
   >
+    리뷰 감성 분석중입니다 ...
   </div>
 </template>
 

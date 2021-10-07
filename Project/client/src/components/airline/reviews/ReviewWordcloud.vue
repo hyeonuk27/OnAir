@@ -1,8 +1,13 @@
 <template>
-  <div class="mx-2">
+  <div v-if="isRendered" class="mx-2">
     <figure class="highcharts-figure">
       <charts :options="wordCloud" />
     </figure>
+  </div>
+  <div
+    v-else
+    style="display: flex; justify-content: center; align-items: center; height: 400px; font-weight: bold; color: #3D2F6B;">
+    워드 클라우드 생성중입니다 ...
   </div>
 </template>
 
@@ -18,6 +23,7 @@ export default {
   data() {
     return {
       data: [],
+      isRendered: false,
     }
   },
   methods: {
@@ -28,6 +34,7 @@ export default {
       })
       .then((res) => {
         this.data = res.data
+        this.isRendered = true
       })
     },
   },

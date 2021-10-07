@@ -6,7 +6,7 @@
       </h5>
       <div class="review-head">
         <p class="review-head-total">
-          {{ airlineInfo.name }} 총 운항횟수
+          {{ airlineInfo.name }} 총 운항 횟수
           <span style="background-color: #3D2F6B;" class="review-numbers"> {{ airlineInfo.total_flight }}</span> 회
         </p>
         <p class="review-head-delay-rate">
@@ -26,7 +26,6 @@
       <div>
         <ReviewWordcloud :airlineId="airlineId"/>
       </div>
-
       <div class="review-rate-container">
         <div class="review-rate-left">
           <div class="review-sentiment">
@@ -45,7 +44,6 @@
         </div>
       </div>
       <div>
-        <!-- 리뷰 작성 버튼 -->
         <ReviewCreateButton
           :airlineId="airlineId"
           :arrivalId="arrivalId"
@@ -53,7 +51,6 @@
         />
       </div>
       <div>
-        <!-- 리뷰 리스트 -->
         <ReviewList :airlineId="airlineId" />
       </div>
     </div>
@@ -61,31 +58,37 @@
 </template>
 
 <script>
-import ReviewKeyword from "@/components/airline/reviews/ReviewKeyword";
-import ReviewWordcloud from "@/components/airline/reviews/ReviewWordcloud";
-import ReviewSentiment from "@/components/airline/reviews/ReviewSentiment";
-import ReviewScore from "@/components/airline/reviews/ReviewScore";
-import ReviewScoreChart from "@/components/airline/reviews/ReviewScoreChart";
-import ReviewCreateButton from "@/components/airline/reviews/ReviewCreateButton";
-import ReviewList from "@/components/airline/reviews/ReviewList";
+import ReviewCreateButton from '@/components/airline/reviews/ReviewCreateButton'
+import ReviewKeyword from '@/components/airline/reviews/ReviewKeyword'
+import ReviewList from '@/components/airline/reviews/ReviewList'
+import ReviewScore from '@/components/airline/reviews/ReviewScore'
+import ReviewScoreChart from '@/components/airline/reviews/ReviewScoreChart'
+import ReviewSentiment from '@/components/airline/reviews/ReviewSentiment'
+import ReviewWordcloud from '@/components/airline/reviews/ReviewWordcloud'
 
 export default {
-  name: "ReviewTab",
-  props: ["airlineInfo", "airlineId", "arrivalId", "arrivalName", 'chartData'],
+  name: 'ReviewTab',
+  props: {
+    airlineInfo: Object,
+    airlineId: String,
+    arrivalId: String,
+    arrivalName: String,
+    chartData: Object,
+  },
   components: {
+    ReviewCreateButton,
     ReviewKeyword,
-    ReviewWordcloud,
-    ReviewSentiment,
+    ReviewList,
     ReviewScore,
     ReviewScoreChart,
-    ReviewCreateButton,
-    ReviewList,
+    ReviewSentiment,
+    ReviewWordcloud,
   },
   data() {
     return {
       reviewChartOptions: {
         chart: {
-          type: "bar",
+          type: 'bar',
           height: 120,
           width: 1000
         },
@@ -93,10 +96,10 @@ export default {
           '#3D2F6B', '#B9A6C9', '#B81F5A'
         ], 
         credits: {
-            enabled: false
+          enabled: false
         },
         exporting: {
-            enabled: false
+          enabled: false
         },
         title: {
           text: null,
@@ -116,30 +119,27 @@ export default {
         },
         plotOptions: {
           bar: {
-            stacking: "percent",
+            stacking: 'percent',
           },
         },
         legend: {
           enabled: true,
         },
-        series: [
-          {
-            name: "30분 내 출발",
+        series: [{
+            name: '30분 내 출발',
             data: [this.airlineInfo.under_30],
-          },
-          {
-            name: "30분 초과 60분 내 출발",
+          }, {
+            name: '30분 초과 60분 내 출발',
             data: [this.airlineInfo.under_60],
-          },
-          {
-            name: "60분 이상 지연",
+          }, {
+            name: '60분 이상 지연',
             data: [this.airlineInfo.over_60],
           },
         ],
       },
-    };
+    }
   },
-};
+}
 </script>
 
 <style scoped>
@@ -147,80 +147,67 @@ export default {
   height: auto;
   min-height: 1000px;
 }
-
-.review-preview {
-  max-width: 1000px;
+.review-head {
+  display: grid;
+  font-size: 14px;
+  font-weight: bold;
+  grid-auto-rows: min-content;
+  grid-gap: 5px 10px;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 10px;
 }
-
+.review-head-cancel-rate {
+  grid-column: 3;
+  grid-row: 1;
+}
+.review-head-delay-rate {
+  grid-column: 2;
+  grid-row: 1;
+}
+.review-head-total {
+  grid-column: 1;
+  grid-row: 1;
+}
 .review-numbers {
   border-radius: 70%;
   color: white;
   display: inline-block;
   font-weight: 400;
-  padding: 8px 0px 7px 0px;
-  width: 40px;
   height: 40px;
+  padding: 8px 0px 7px 0px;
   text-align: center;
   top: -10px;
+  width: 40px;
 }
-
-.review-head {
-  display: grid;
-  padding: 10px;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 5px 10px;
-  grid-auto-rows: min-content;
-  font-size: 14px;
-  font-weight: bold;
+.review-preview {
+  max-width: 1000px;
 }
-
-.review-head-total {
-  grid-column: 1;
-  grid-row: 1;
-}
-
-.review-head-delay-rate {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-.review-head-cancel-rate {
-  grid-column: 3;
-  grid-row: 1;
-}
-
 .review-rate-container {
+  border: 1px solid rgba(180, 180, 180, 0.658);
   display: grid;
+  grid-gap: 20px;
   grid-template-columns: 450px 450px;
   grid-template-rows: 1fr 2fr;
-  grid-gap: 20px;
-  padding: 20px;
-  border: 1px solid rgba(180, 180, 180, 0.658);
   margin-bottom: 25px;
+  padding: 20px;
 }
-
+.review-rate-detail {
+  align-items: center;
+  display: flex;
+  height: 340px;
+  justify-content: center;
+}
 .review-rate-left {
   grid-column: 1;
   grid-row: 1 / 3;
 }
-
 .review-rate-right {
   grid-column: 2;
   grid-row: 1 / 3;
 }
-
-.review-rate-detail {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 340px;
-}
-
 .review-sentiment {
+  align-items: center;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
-
-
 </style>

@@ -3,6 +3,7 @@ from django.conf import settings
 
 User = settings.AUTH_USER_MODEL
 
+
 class Airline(models.Model):
     id = models.CharField(max_length=13, primary_key=True)
     name = models.CharField(max_length=20)
@@ -25,6 +26,7 @@ class Airline(models.Model):
     def __str__(self):
         return self.name
 
+
 class Arrival(models.Model):
     id = models.CharField(max_length=13, primary_key=True)
     name = models.CharField(max_length=50)
@@ -32,6 +34,7 @@ class Arrival(models.Model):
     
     def __str__(self):
         return self.name
+
 
 class Review(models.Model):
     id = models.CharField(max_length=13, primary_key=True)
@@ -71,17 +74,6 @@ class Log(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='logs')
     airline = models.ForeignKey(Airline, on_delete=models.CASCADE, related_name='logs')
     arrival = models.ForeignKey(Arrival, on_delete=models.CASCADE, related_name='logs')
-
-
-# class Statistics(models.Model):
-#     id = models.CharField(max_length=13, primary_key=True)
-#     date = models.DateTimeField()
-#     airline = models.CharField(max_length=20)
-#     arrival = models.CharField(max_length=50)
-#     state = models.CharField(max_length=10)
-#     reason = models.CharField(max_length=50, null=True, blank=True)
-#     passengers = models.IntegerField()
-#     delayed_time = models.IntegerField()
 
 
 class StatisticsResult(models.Model):

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "ReviewCreateButton",
+  name: 'ReviewCreateButton',
   props: {
     airlineId: String,
     arrivalId: String,
@@ -15,22 +15,22 @@ export default {
   data() {
     return {
       flag: 1,
-    };
+    }
   },
   methods: {
-    moveToReviewForm() {
+    moveToReviewForm: function () {
       this.$router.push({
-        name: "Form",
+        name: 'Form',
         params: {
           airlineId: this.airlineId,
           arrivalId: this.arrivalId,
           arrivalName: this.arrivalName,
           flag: this.flag,
         },
-      });
+      })
     },
   },
-};
+}
 </script>
 
 <style>
@@ -42,13 +42,13 @@ export default {
 .review-button {
   background-color: rgb(182, 168, 198);
   border: 0;
-  color: white;
-  width: 80px;
-  height: 40px;
   border-radius: 5px;
+  color: white;
+  height: 40px;
+  width: 80px;
 }
 .review-button:hover {
   background-color: rgba(0, 0, 0, 0.3);
-  transition: 0.3s
+  transition: 0.3s;
 }
 </style>

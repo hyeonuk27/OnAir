@@ -1,56 +1,38 @@
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.db.models import Avg
 from django.http import HttpResponse
-
-from .models import Airline, Arrival, Review, Log, StatisticsResult
-from accounts.models import User
-from .models import Review
-from .serializers import AirlineDetailSerializer, AirlineReportSerializer, ReviewListSerializer, ReviewSerializer, LogListSerializer, ArrivalListSerializer, LogSerializer
-from accounts.utils import check_login
-
 from django.core.paginator import Paginator
 
+from accounts.models import User
+from accounts.utils import check_login
+from .models import Airline, Arrival, Review, Log, StatisticsResult
+from .serializers import AirlineDetailSerializer, ReviewListSerializer, ReviewSerializer, LogListSerializer, ArrivalListSerializer, LogSerializer
+
+from decouple import config
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework.decorators import authentication_classes, permission_classes
-from rest_framework.permissions import IsAuthenticated
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework import status
 
-from airlines import serializers
-
-import string
-import random
-from drf_yasg import openapi
-from drf_yasg.utils import swagger_auto_schema
-
-import json
-import pandas as pd
-import numpy as np
+from collections import Counter
+from datetime import datetime
 import joblib
-from decouple import config
-
-import requests
-import ssl
 import json
 import jwt
-from urllib.request import urlopen
-
+import numpy as np
+import pandas as pd
+import random
+import requests
+import string
 import time
-# import datetime as dt
-from datetime import datetime
-from collections import Counter
 
 JWT_SECRET_KEY = config('JWT_SECRET_KEY')
 
-# id 생성
+
 def make_random_id():
     return ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(13))
 
 
-# 머신러닝 원핫인코딩 인코더
 def get_encoded(data,labelencoder_dict,onehotencoder_dict):
-    # except passengers
     data_exc = data.iloc[:, :-1]
     encoded_x = None
     for i in range(0,data_exc.shape[1]):
@@ -69,9 +51,7 @@ def get_encoded(data,labelencoder_dict,onehotencoder_dict):
     return encoded_x
 
 
-# 머신러닝 원핫인코딩 인코더 - 목적지, 항공사, 날씨로만 예측용
 def get_encoded_weather(data,labelencoder_dict,onehotencoder_dict):
-    # except passengers
     data_exc = data
     encoded_x = None
     for i in range(0,data_exc.shape[1]):
@@ -88,8 +68,6 @@ def get_encoded_weather(data,labelencoder_dict,onehotencoder_dict):
     return encoded_x
 
 
-# 유저가 작성한 리뷰 리스트 + 계정 정보
-# 로그인 불필요
 @api_view(['GET'])
 def user_review_list(request, user_id):
     user_reviews = Review.objects.filter(user_id=user_id).order_by('-created_at')
@@ -106,15 +84,6 @@ def user_review_list(request, user_id):
     return Response(data)
 
 
-# 로그인 필요
-@swagger_auto_schema(
-    method='post',
-    request_body=openapi.Schema(
-        type=openapi.TYPE_OBJECT,
-        properties={
-            'airline_id': openapi.Schema(type=openapi.TYPE_STRING, description='The desc'),
-            'arrival_id': openapi.Schema(type=openapi.TYPE_STRING, description='The desc'),
-        }))
 @api_view(['GET', 'POST'])
 @check_login
 def user_log_list(request):
@@ -141,7 +110,6 @@ def user_log_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-# 검색 시 도착지 목록; 로그인 불필요
 @api_view(['GET'])
 def arrival_list(request):
     arrivals = get_list_or_404(Arrival)
@@ -150,32 +118,27 @@ def arrival_list(request):
     return Response(data)
 
 
-
-# 검색 시 항공사 리스트
 @api_view(['GET'])
 def airline_list(request, arrival_id):
     arrival = get_object_or_404(Arrival, pk=arrival_id)
-    # 직접 JSON 형태의 데이터를 만들어서 반환
     response_data = {'Airlines': []}
     airlines = get_list_or_404(Airline)
-    # 머신러닝 모델 및 인코더, 스케일러 로딩
+
     model = joblib.load('predict_models/ml_delay/delay_rate_predict.pkl')
     labelencoder = joblib.load('predict_models/ml_delay/labelencoder_dict.pkl')
     onehotencoder = joblib.load('predict_models/ml_delay/onehotencoder_dict.pkl')
     scaler = joblib.load('predict_models/ml_delay/passengers_min_max_scaler.pkl')
-    # Openweathermap API로 인천 공항의 현재 날씨 받아오기
+
     URL = 'https://api.openweathermap.org/data/2.5/weather?lat=37.46&lon=126.44&appid=%s' % config('WEATHER_API_KEY')
     weather = requests.get(url=URL).json().get('weather')[0].get('main')
     for airline in airlines:
-        # 목적지, 항공사에 해당하는 통계 결과 가져오기
         statistics_result = StatisticsResult.objects.filter(airline=airline.name, arrival=arrival.name).first()
         if statistics_result == None:
             continue
-        # 목적지, 항공사에 해당하는 이번달 이용객수 예측값 가져오기
         df = pd.read_csv('predict_models/ets_passengers/predict_data/%s.csv' % airline.name)
         predicted_data = df[df['date'].str.startswith('%s' % datetime.today().strftime("%Y-%m"))]['passengers']
         scaled_passengers = scaler.transform(pd.DataFrame([[predicted_data]]))
-        # 머신러닝 모델 가져와서 오늘 날씨, 이번달 이용객수의 지연률 예측
+
         data = pd.DataFrame([[airline.name, arrival.name, weather, scaled_passengers]], columns = ['airline', 'arrival', 'weather', 'passengers'])
         input_data = get_encoded(data, labelencoder, onehotencoder)
         response_data.get('Airlines').append(
@@ -190,8 +153,8 @@ def airline_list(request, arrival_id):
             }
         )
     
-    # Python의 dictionary를 Json형태로 반환하기 위함
     return HttpResponse(json.dumps(response_data), content_type = 'application/json; charset=utf8')
+
 
 @api_view(['GET'])
 def airline_report(request, arrival_id, airline_id):
@@ -206,16 +169,14 @@ def airline_report(request, arrival_id, airline_id):
 
     URL = 'https://api.openweathermap.org/data/2.5/weather?lat=37.46&lon=126.44&appid=%s' % config('WEATHER_API_KEY')
     weather = requests.get(url=URL).json().get('weather')[0].get('main')
-    # 목적지, 항공사에 해당하는 이번달 이용객수 예측값 가져오기
+
     df = pd.read_csv('predict_models/ets_passengers/predict_data/%s.csv' % airline.name)
     predicted_data = df[df['date'].str.startswith('%s' % datetime.today().strftime("%Y-%m"))]['passengers']
     scaled_passengers = scaler.transform(pd.DataFrame([[predicted_data]]))
-    # 머신러닝 모델 가져와서 오늘 날씨, 이번달 이용객수의 지연률 예측
+    
     data = pd.DataFrame([[airline.name, arrival.name, weather, scaled_passengers]], columns = ['airline', 'arrival', 'weather', 'passengers'])
     total_input_data = get_encoded(data, labelencoder, onehotencoder)
 
-    # 오늘 날씨, 이번달 이용객수에 따른 예측값은 항공사 리스트로부터 router.push의 파라미터로 받는다.
-    # 날씨에 따른 지연률 예측값 리스트
     weather_model = joblib.load('predict_models/ml_delay/delay_rate_weather_predict.pkl')
     weather_list = ['Clear', 'Clouds', 'Mist', 'Haze', 'Rain', 'Fog', 'Snow', 'Dust', 'Drizzle', 'Thunderstorm', 'Typhoon', 'Smoke']
     predicted_by_weather = []
@@ -224,7 +185,6 @@ def airline_report(request, arrival_id, airline_id):
         input_data = get_encoded_weather(df, labelencoder, onehotencoder)
         predicted_by_weather.append(round(weather_model.predict_proba(input_data)[0, 1] * 100, 2))
     
-    # 월별 이용객수에 따른 향후 3개월 지연률 예측값 리스트
     passengers_model = joblib.load('predict_models/ml_delay/delay_rate_passengers_predict.pkl')
     month = datetime.today().month
     month_list = [
@@ -232,21 +192,18 @@ def airline_report(request, arrival_id, airline_id):
         '%d월' % (month + 1) if (month + 1) < 13 else (month + 1 - 12), 
         '%d월' % (month + 2) if (month + 2) < 13 else (month + 2 - 12)
     ]
-    # 이번달부터 3개월 이용객수 예측 파일 로드
     predicted_data = pd.read_csv('predict_models/ets_passengers/predict_data/%s.csv' % airline.name)
     predicted_by_passengers = []
-    # 1개월마다 지연률 예측값 구하기
+
     for i in range(3):
         scaled_passengers = scaler.transform(pd.DataFrame([[predicted_data['passengers'].values[i]]]))
         df = pd.DataFrame([[airline.name, arrival.name, scaled_passengers]], columns = ['airline', 'arrival', 'passengers'])
         input_data = get_encoded(df, labelencoder, onehotencoder)
         predicted_by_passengers.append(round(passengers_model.predict_proba(input_data)[0, 1] * 100, 2))
     
-# 통계
     df = pd.read_csv('./statistics/delaydatas/statistics_data.csv', index_col=0)
     df = df.drop(columns=['passengers'])
 
-# 전체 지연 사유 분포
     airline_filter = df[df['airline'] != airline.name].index
     airlinedata = df.drop(airline_filter)
     airlinedata['reason']= airlinedata['reason'].replace(['에 의한 지연'],['기타에 의한 지연'])
@@ -258,14 +215,11 @@ def airline_report(request, arrival_id, airline_id):
     total_delay_list = total_delay['reason'].values.tolist()[:6]
     total_delay_cnt = total_delay['state'].values.tolist()[:6]
 
-# 월별 평균 지연시간
     monthly_delay = airlinedata
     monthly_delay['date'] = monthly_delay['date'].str[:7]
     monthly_delay = monthly_delay.groupby(['date'], as_index=False).mean().groupby('date')['delayed_time'].mean().round(2).reset_index()
     delay_month_avg_time = monthly_delay['delayed_time'].values.tolist()
 
-
-# 목적지별 지연 사유 분포
     arrival_filter = delaydata[delaydata['arrival'] != arrival.name].index
     arrivals_data = delaydata.drop(arrival_filter)
     arrivals_delay_reason = arrivals_data.groupby(['reason'], as_index=False).size().reset_index()
@@ -273,23 +227,20 @@ def airline_report(request, arrival_id, airline_id):
     arrival_delay_list = arrivals_delay_reason['reason'].values.tolist()[:6]
     arrival_delay_cnt = arrivals_delay_reason['size'].values.tolist()[:6]
     
-# 지연사유별 평균 지연시간
     arrivals_delay = arrivals_data.groupby(['arrival', 'reason'], as_index=False).mean().reset_index()
     arrivals_delay = arrivals_delay.sort_values(by=['delayed_time'], ascending=False)
     arrival_reason_list = arrivals_delay['reason'].values.tolist()[:6]
     arrival_avg_time = arrivals_delay['delayed_time'].values.tolist()[:6]
 
-# 월별 이용객 시계열
     monthly = pd.read_csv(f'predict_models/ets_passengers/{airline.name}.csv')
     dates_list = monthly['date'].values.tolist()
-    # print(dates_list)
     dates_list = list(map(lambda x: int((time.mktime(datetime.strptime(x, "%Y-%m-%d").timetuple()) + 32400) * 1000), dates_list))
     passengers_cnt = monthly['passengers'].values.tolist()
 
     monthly_data = list()
     for i in range(len(dates_list)):
         monthly_data.append([dates_list[i], passengers_cnt[i]])
-#
+
     response_data = {
         'data': {
             'airline_id': airline.id,
@@ -320,7 +271,6 @@ def airline_report(request, arrival_id, airline_id):
     return HttpResponse(json.dumps(response_data), content_type = 'application/json; charset=utf8')
 
 
-# 로그인 불필요
 @api_view(['GET'])
 def airline_details(request, airline_id):
     airline = get_object_or_404(Airline, pk=airline_id)
@@ -360,9 +310,7 @@ def review_list(request, airline_id):
 @api_view(['GET', 'DELETE', 'PUT'])
 @check_login
 def review_detail(request, review_id):
-    print(review_id)
     review = get_object_or_404(Review, id=review_id)
-    print(review)
     if request.user == review.user:
         if request.method == 'GET':
             serializer = ReviewSerializer(review)
@@ -401,6 +349,7 @@ def review_score(request, airline_id):
     
     return Response(review_score)
 
+
 @api_view(['GET'])
 def review_sentiment(request, airline_id):
     sentiments = pd.read_csv('npl/sentiment.csv', sep='\t')
@@ -425,7 +374,7 @@ def review_keyword(request, airline_id):
     for review in reviews:
         airline_review += review.content.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
         airline_review += review.title.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
-
+    
     from PyKomoran import Komoran, DEFAULT_MODEL
     komoran = Komoran(DEFAULT_MODEL['LIGHT'])
     target_tags = ['NNG']
@@ -451,7 +400,7 @@ def review_wordcloud(request, airline_id):
     for review in reviews:
         airline_review += review.content.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
         airline_review += review.title.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]","")
-
+    
     from PyKomoran import Komoran, DEFAULT_MODEL
     komoran = Komoran(DEFAULT_MODEL['LIGHT'])
     target_tags = ['NNG', 'VA']

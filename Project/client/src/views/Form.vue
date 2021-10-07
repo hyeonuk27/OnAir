@@ -11,34 +11,11 @@
         </p>
         <div style="color: #656F8C;">도착지 ✈ {{arrivalName}}</div>
         <div id="circles" class="d-flex justify-content-center">
-          <div
-            style="
-              width: 13px;
-              height: 13px;
-              border-radius: 50%;
-              background-color: #656f8c;
-            "
-          ></div>
-          <div
-            class="mx-4"
-            style="
-              width: 13px;
-              height: 13px;
-              border-radius: 50%;
-              background-color: #656f8c;
-            "
-          ></div>
-          <div
-            style="
-              width: 13px;
-              height: 13px;
-              border-radius: 50%;
-              background-color: #656f8c;
-            "
-          ></div>
+          <div class="review-circle"></div>
+          <div class="mx-4 review-circle"></div>
+          <div class="review-circle"></div>
         </div>
 
-        <!-- 제목 -->
         <div id="info" class="mb-3 d-flex justify-content-between">
           <div id="title" class="mb-3">
             제목 &nbsp;
@@ -50,7 +27,6 @@
             />
           </div>
           
-          <!-- 여행 출발일 -->
           <div id="date">
             출발일 &nbsp;
             <input
@@ -63,7 +39,6 @@
           </div>
         </div>
 
-        <!-- 내용 -->
         <div id="content" class="mt-4">
           <textarea
             type="text"
@@ -75,7 +50,6 @@
       </div>
 
       <div id="select-box">
-        <!-- CLASS -->
         <vs-select
           color="#B9A6C9"
           class="select-box review-form-select"
@@ -92,7 +66,6 @@
           />
         </vs-select>
 
-        <!-- 전체 평점 -->
         <vs-select
           color="#B9A6C9"
           class="select-box review-form-select mb-5"
@@ -109,7 +82,6 @@
           />
         </vs-select>
 
-        <!-- 좌석 평점 -->
         <vs-select
           color="#B9A6C9"
           class="select-box review-form-select"
@@ -126,7 +98,6 @@
           />
         </vs-select>
 
-        <!-- 서비스 평점 -->
         <vs-select
           color="#B9A6C9"
           class="select-box review-form-select"
@@ -143,7 +114,6 @@
           />
         </vs-select>
 
-        <!-- 체크인 평점 -->
         <vs-select
           color="#B9A6C9"
           class="select-box review-form-select"
@@ -176,7 +146,6 @@
           />
         </vs-select>
 
-        <!-- 필수 항목 모두 입력 시 버튼 활성화 -->
         <button
           v-if="this.$route.name === 'Form'"
           @click="createReview"
@@ -211,23 +180,23 @@
 </template>
 
 <script>
-import axios from "axios";
-import API from "@/common/drf.js";
+import axios from 'axios'
+import API from '@/common/drf.js'
 
 export default {
-  name: "Form",
+  name: 'Form',
   data() {
     return {
       flag: 0,
-      userId: "",
-      reviewId: "",
-      arrivalId: "",
-      arrivalName: "",
-      airlineId: "",
-      title: "",
-      content: "",
-      flightAt: "",
-      seat: "",
+      userId: '',
+      reviewId: '',
+      arrivalId: '',
+      arrivalName: '',
+      airlineId: '',
+      title: '',
+      content: '',
+      flightAt: '',
+      seat: '',
       score: 0,
       seatScore: 0,
       serviceScore: 0,
@@ -235,21 +204,19 @@ export default {
       foodScore: 0,
       scoreList: [1, 2, 3, 4, 5],
       arrivalList: [],
-      seatList: ["퍼스트", "비즈니스", "이코노미"],
-    };
+      seatList: ['퍼스트', '비즈니스', '이코노미'],
+    }
   },
   methods: {
     setToken: function () {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token')
       const config = {
         Authorization: token,
-      };
-      return config;
+      }
+      return config
     },
-    // views.py 수정 후 확인해야 함.
     createReview: function () {
-      const headers = this.setToken();
-
+      const headers = this.setToken()
       const data = {
         arrival: this.arrivalId,
         airline_id: this.airlineId,
@@ -262,34 +229,30 @@ export default {
         service_score: this.serviceScore,
         checkin_score: this.checkinScore,
         food_score: this.foodScore,
-      };
+      }
       axios({
-        url: API.URL + API.ROUTES.reviewList + this.airlineId + "/",
-        method: "post",
+        url: `${API.URL}${API.ROUTES.reviewList}${this.airlineId}/`,
+        method: 'post',
         data,
         headers,
       })
       .then(() => {
         if (this.flag == 1) {
           this.$router.push({
-            name: "Airline",
+            name: 'Airline',
             params: { airlineId: this.airlineId, arrivalId: this.arrivalId },
-          });
+          })
         }
         else {
           this.$router.push({
-            name: "MyReview",
+            name: 'MyReview',
             params: { userId: this.userId },
-          });
+          })
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
     },
     updateReview: function () {
-      const headers = this.setToken();
-
+      const headers = this.setToken()
       const data = {
         arrival: this.arrivalId,
         airline_id: this.airlineId,
@@ -302,42 +265,37 @@ export default {
         service_score: this.serviceScore,
         checkin_score: this.checkinScore,
         food_score: this.foodScore,
-      };
+      }
       axios({
-        url: API.URL + API.ROUTES.reviewDetail + this.reviewId + "/",
-        method: "put",
+        url: `${API.URL}${API.ROUTES.reviewDetail}${this.reviewId}/`,
+        method: 'put',
         data,
         headers,
       })
       .then(() => {
         if (this.flag == 1) {
           this.$router.push({
-            name: "Airline",
+            name: 'Airline',
             params: { airlineId: this.airlineId, arrivalId: this.arrivalId },
           });
         }
         else {
           this.$router.push({
-            name: "MyReview",
+            name: 'MyReview',
             params: { userId: this.userId },
-          });
+          })
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
     },
     setReview: function () {
-      const headers = this.setToken();
-
+      const headers = this.setToken()
       axios({
         url: API.URL + API.ROUTES.reviewDetail + this.reviewId,
-        method: "get",
+        method: 'get',
         headers,
       })
       .then((res) => {
-        const review = res.data;
-
+        const review = res.data
         this.reviewId = review.id,
         this.arrivalId = review.arrival,
         this.airlineId = review.airline,
@@ -351,9 +309,6 @@ export default {
         this.checkinScore = review.checkin_score,
         this.foodScore = review.food_score
       })
-      .catch((err) => {
-        console.log(err);
-      });
     },
   },
   created() {
@@ -364,66 +319,65 @@ export default {
     this.airlineId = this.$route.params.airlineId
     this.reviewId = this.$route.params.reviewId
     if (this.reviewId) {
-      this.setReview();
+      this.setReview()
     }
   },
-};
+}
 </script>
 
 <style>
-.review-form-select {
-  justify-content: center;
-  width: 200px;
-  margin-left: 47px;
-  margin-bottom: 10px;
+#circles {
+  margin-bottom: 40px;
+  margin-top: 30px;
 }
-
+.disable {
+  background-color: #585858;
+  color: rgb(128, 128, 128);
+  height: 40px;
+  margin-left: 47px;
+  margin-top: 20px;
+  width: 200px;
+}
+#info {
+  margin-left: 40px;
+  margin-right: 40px;
+}
+#review-box {
+  border: 5px solid #dad6dd;
+  height: 800px;
+  padding: 30px;
+  width: 900px;
+}
+.review-circle {
+  background-color: #656f8c;
+  border-radius: 50%;
+  height: 13px;
+  width: 13px;
+}
 .review-form {
   display: flex;
   margin: 160px auto;
   width: 1190px;
 }
-
-#review-box {
-  border: 5px solid #dad6dd;
-  padding: 30px;
-  width: 900px;
-  height: 800px;
+.review-form-select {
+  justify-content: center;
+  margin-bottom: 10px;
+  margin-left: 47px;
+  width: 200px;
 }
-
-#info {
-  margin-left: 40px;
-  margin-right: 40px;
-}
-
 #select-box {
   background-color: #dad6dd;
-  width: 300px;
   height: 800px;
   padding-top: 230px;
   text-align: left;
+  width: 300px;
 }
-
-#circles {
-  margin-top: 30px;
-  margin-bottom: 40px;
-}
-
 .submit {
   background-color: #3d2f6b;
   color: white;
-  margin-top: 20px;
-  margin-left: 47px;
-  width: 200px;
   height: 40px;
-}
-
-.disable {
-  background-color: #585858;
-  color: rgb(128, 128, 128);
-  margin-top: 20px;
   margin-left: 47px;
+  margin-top: 20px;
   width: 200px;
-  height: 40px;
 }
 </style>

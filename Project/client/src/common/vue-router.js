@@ -1,14 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import swal from 'sweetalert'
-import Main from '@/views/Main.vue'
-import Login from '@/views/Login.vue'
+
 import Airline from '@/views/Airline.vue'
-import Profile from '@/views/Profile.vue'
-import NotFound from '@/views/NotFound.vue'
-import ProfileUpdate from '@/components/profile/ProfileUpdate.vue'
-import MyReview from '@/components/profile/MyReview.vue'
 import Form from '@/views/Form.vue'
+import Login from '@/views/Login.vue'
+import Main from '@/views/Main.vue'
+import MyReview from '@/components/profile/MyReview.vue'
+import NotFound from '@/views/NotFound.vue'
+import Profile from '@/views/Profile.vue'
+import ProfileUpdate from '@/components/profile/ProfileUpdate.vue'
 import SearchLog from '@/components/profile/SearchLog.vue'
 
 Vue.use(VueRouter)
@@ -35,14 +36,14 @@ const routes = [
     component: Profile
   },
   {
-    path: '/profile/:userId/update',
-    name: 'ProfileUpdate',
-    component: ProfileUpdate
-  },
-  {
     path: '/profile/:userId/reviews',
     name: 'MyReview',
     component: MyReview
+  },
+  {
+    path: '/profile/:userId/update',
+    name: 'ProfileUpdate',
+    component: ProfileUpdate
   },
   {
     path: '/form',
@@ -61,7 +62,7 @@ const routes = [
   },
   {
     path: '/404',
-    name: 'NotFound',
+    name: 'NotFoundPage',
     component: NotFound
   },
   { path: '*',
@@ -94,12 +95,12 @@ router.beforeEach((to, from, next) => {
   
   if (authRequired && !isLoggedIn) {
     swal({
-      title: "로그인이 필요한 페이지입니다.",
-      icon: "warning",
+      title: '로그인이 필요한 페이지입니다.',
+      icon: 'warning',
       buttons: {
         confirm: {
-          text: "확인",
-          className: "confirm-btn"
+          text: '확인',
+          className: 'confirm-btn'
         },
       },
     })

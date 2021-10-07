@@ -31,7 +31,7 @@
     <div class="review-list-el-arrival">
       <div>ARRIVAL</div>
       <div class="arrival-container">
-        <span class="material-icons">
+        <span class="material-icons review-material-icons">
           flight
         </span> 
         {{ review.arrivalname }}
@@ -193,23 +193,21 @@ export default {
   align-items: center;
   display: inline-flex; 
 }
+
 .dropdown {
   background-color: rgba(0, 0, 0, 0);
   grid-column: 4;
   grid-row: 1;
   justify-self: end;
 }
+
 .dropdown-menu {
   text-align: center;
 }
+
 .dropdown-item:hover {
   background-color: rgba(223, 223, 223, 0.904);
   transition: 0.3s;
-}
-.material-icons {
-  font-size: 10px; 
-  margin-right: 3px;
-  transform: rotate(90deg);
 }
 .review-el-score {
   display: flex;
@@ -217,6 +215,7 @@ export default {
   grid-row: 2;
   padding: 5px;
 }
+
 .review-list-el {
   border: 1px solid rgba(180, 180, 180, 0.658);
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.151);
@@ -248,7 +247,6 @@ export default {
   padding-left: 20px;
   text-align: start;
   width: 700px;
-  margin-top: 35px;
 }
 .review-list-el-date {
   grid-column: 2;
@@ -270,7 +268,6 @@ export default {
   grid-row: 1;
   height: 40px;
   margin: 17px;
-  margin-top: 25px;
   width: 40px;
   cursor: pointer;
 }
@@ -295,8 +292,14 @@ export default {
   text-align: start;
   white-space: 100%;
   width: 700px;
-  margin-top: 35px;
 }
+
+.review-material-icons {
+  font-size: 10px; 
+  margin-right: 3px;
+  transform: rotate(90deg);
+}
+
 .review-score {
   background-color: #b9a6c9;
   border-radius: 70%;

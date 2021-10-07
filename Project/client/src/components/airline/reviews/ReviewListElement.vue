@@ -243,7 +243,7 @@ export default {
   grid-column: 2;
   grid-row: 3;
   height: 139px;
-  overflow: hidden;
+  overflow: scroll;
   padding-left: 20px;
   text-align: start;
   width: 700px;

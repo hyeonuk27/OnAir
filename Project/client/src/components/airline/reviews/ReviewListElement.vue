@@ -295,7 +295,7 @@ export default {
 }
 
 .review-material-icons {
-  font-size: 10px; 
+  font-size: 24px; 
   margin-right: 3px;
   transform: rotate(90deg);
 }

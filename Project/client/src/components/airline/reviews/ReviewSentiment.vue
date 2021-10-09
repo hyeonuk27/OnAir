@@ -51,7 +51,7 @@ export default {
         chart: {
           type: 'bar',
           height: 100,
-          width: 450,
+          width: 225,
         },
         colors: [
           'rgba(13, 110, 253, 0.75)', 

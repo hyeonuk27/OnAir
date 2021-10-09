@@ -76,7 +76,7 @@ export default {
 }
 .airline-info-wrapper {
   display: grid;
-  grid-template-columns: 200px 35px 45px 1fr;
+  grid-template-columns: 200px 40px 45px 1fr;
   grid-gap: 0px 20px;
   width: 1000px;
 }
@@ -120,7 +120,7 @@ export default {
   grid-column: 2 / 3;
   grid-row: 1;
   justify-content: center;
-  width: 35px;
+  width: 40px;
 }
 .website {
   padding: 5px;

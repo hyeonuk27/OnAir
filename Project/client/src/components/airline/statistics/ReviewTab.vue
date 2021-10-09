@@ -183,7 +183,7 @@ export default {
   max-width: 1000px;
 }
 .review-rate-container {
-  border: 1px solid rgba(180, 180, 180, 0.658);
+  /* border: 1px solid rgba(180, 180, 180, 0.658); */
   display: grid;
   grid-gap: 20px;
   grid-template-columns: 450px 450px;

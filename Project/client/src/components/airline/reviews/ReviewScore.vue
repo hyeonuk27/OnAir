@@ -1,5 +1,11 @@
 <template>
   <div>
+    <p class="review-score-title">평점 상세</p>
+    <div class="review-score-detail">
+      <div class="score-title">총평점</div>
+      <div v-for="i in total" :key="i" class="score"></div>
+      <div v-for="j in 5 - total" :key="'no' + j" class="not-score"></div>
+    </div>
     <div class="review-score-detail">
       <div class="score-title">레그룸</div>
       <div v-for="i in seat" :key="i" class="score"></div>
@@ -34,6 +40,7 @@ export default {
   },
   data() {
     return {
+      total: 0,
       checkin: 0,
       food: 0,
       seat: 0,
@@ -47,6 +54,7 @@ export default {
         method: 'get',
       })
       .then((res) => {
+        this.total = parseInt(res.data['score'])
         this.seat = parseInt(res.data['seat_score'])
         this.service = parseInt(res.data['service_score'])
         this.checkin = parseInt(res.data['checkin_score'])
@@ -73,7 +81,13 @@ export default {
   display: flex;
   grid-column: 2;
   grid-row: 2;
-  padding: 20px;
+  padding: 10px;
+}
+.review-score-title {
+  font-weight: bold;
+  margin-bottom: 18px;
+  color: #3D2F6B;
+  font-size: 17px;
 }
 .score {
   background-color: #b9a6c9;
@@ -84,5 +98,6 @@ export default {
 }
 .score-title {
   margin-right: 20px;
+  font-weight: bold;
 }
 </style>
